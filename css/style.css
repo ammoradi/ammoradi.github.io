@@ -1,0 +1,120 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+
+a, a:visited , a:active{
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    background-color: #ffffff;
+    overflow-x: hidden;
+}
+
+.font.josefin{
+    font-family: 'Josefin Slab', serif;
+}
+
+.typed-cursor{
+    display: none;
+}
+
+.head{
+    width: 100%;
+    height: 60vh;
+    background-color: #ffc00f;
+    border-bottom: 4px solid #23221e;
+    position: relative;
+}
+
+.head .logo-container{
+    width: 50%;
+    float: right;
+    height: 100%;
+}
+
+.head .logo-container #myImg{
+    height: 100%;
+    width: auto;
+    background-image: url("../images/image2.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+}
+
+.head .title-container{
+    width: 50%;
+    float: left;
+    height: 100%;
+    position: relative;
+}
+
+.head .title-container .texts{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.head .title-container .texts h1{
+    font-size: 2.5rem;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.head .title-container .texts h2{
+    font-weight: 100;
+    margin-top: 0;
+    color: white;
+    text-align: right;
+    display: block;
+    height: 25px;
+}
+
+.head .title-container .icons{
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.head .title-container .icons .icon{
+    margin-bottom: 0;
+    margin-top: 15px;
+    display: block;
+}
+
+.head .title-container .icons .icon.github:before{
+    font-size: 1.7rem;
+}
+
+.head .title-container .icons .icon.linkedin:before{
+    font-size: 1.6rem;
+}
+
+.icon.github:before {
+    font-family: 'icomon';
+    content: "\eab0";
+}
+
+.icon.linkedin:before {
+    font-family: 'icomon';
+    content: "\eac9";
+}
+
+@font-face {
+    font-family: "icomon";
+    src: url("../fonts/icomoon/icomoon.eot"),
+         url("../fonts/icomoon/icomoon.woff") format("woff"),
+         url("../fonts/icomoon/icomoon.ttf") format("truetype"),
+         url("../fonts/icomoon/icomoon.svg") format("svg");
+}

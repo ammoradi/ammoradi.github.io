@@ -5,7 +5,7 @@ var myName = new Typed('#myName', {
 });
 
 var myWork = new Typed('#myWork', {
-    strings: ["Hardware Engineering Student", "Web Designer", "Front-End Developer"],
+    strings: ["Hardware Engineering Student", "Front-End Developer", "Mobile Application Developer", "JavaScript Lover"],
     loop: false,
     typeSpeed: 100,
     startDelay: 2800

@@ -16,16 +16,34 @@ body {
     font-family: 'Josefin Slab', serif;
 }
 
+.font.nastaliq{
+    font-family: 'nastaliq', serif;
+}
+
 .typed-cursor{
     display: none;
 }
 
+.icon.github:before {
+    font-family: 'icomon';
+    content: "\eab0";
+}
+
+.icon.linkedin:before {
+    font-family: 'icomon';
+    content: "\eac9";
+}
+
 .head{
+    float: left;
     width: 100%;
     height: 60vh;
     background-color: #ffc00f;
     border-bottom: 4px solid #23221e;
     position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .head .logo-container{
@@ -101,14 +119,19 @@ body {
     font-size: 1.6rem;
 }
 
-.icon.github:before {
-    font-family: 'icomon';
-    content: "\eab0";
+.body{
+    float: left;
+    width: 100%;
+    height: 40vh;
+    position: relative;
+    float: right;
 }
 
-.icon.linkedin:before {
-    font-family: 'icomon';
-    content: "\eac9";
+.body #mySlogan{
+    margin: 0;
+    text-align: center;
+    line-height: 40vh;
+    font-size: 3.5rem;
 }
 
 @font-face {

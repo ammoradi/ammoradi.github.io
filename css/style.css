@@ -118,3 +118,10 @@ body {
          url("../fonts/icomoon/icomoon.ttf") format("truetype"),
          url("../fonts/icomoon/icomoon.svg") format("svg");
 }
+
+@font-face {
+    font-family: "nastaliq";
+    src: url("../fonts/nastaliq/IranNastaliq-Web.woff") format("woff"),
+         url("../fonts/nastaliq/IranNastaliq-Web.woff2") format("woff2"),
+         url("../fonts/nastaliq/IranNastaliq-Web.ttf") format("truetype");
+}

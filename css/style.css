@@ -1,150 +1,166 @@
-*{
-    font-family: 'Open Sans', sans-serif;
+* {
+  font-family: "Open Sans", sans-serif;
 }
 
-a, a:visited , a:active{
-    text-decoration: none;
-    color: inherit;
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: inherit;
 }
 
 body {
-    background-color: #ffffff;
-    overflow-x: hidden;
+  background-color: #ffffff;
+  overflow-x: hidden;
 }
 
-.font.josefin{
-    font-family: 'Josefin Slab', serif;
+.font.josefin {
+  font-family: "Josefin Slab", serif;
 }
 
-.font.nastaliq{
-    font-family: 'nastaliq', serif;
+.font.nastaliq {
+  font-family: "nastaliq", serif;
 }
 
-.typed-cursor{
-    display: none;
+.typed-cursor {
+  display: none;
 }
 
 .icon.github:before {
-    font-family: 'icomon';
-    content: "\eab0";
+  font-family: "icomon";
+  content: "\eab0";
 }
 
 .icon.linkedin:before {
-    font-family: 'icomon';
-    content: "\eac9";
+  font-family: "icomon";
+  content: "\eac9";
 }
 
-.head{
-    float: left;
-    width: 100%;
-    height: 60vh;
-    background-color: #ffc00f;
-    border-bottom: 4px solid #23221e;
-    position: relative;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+.head {
+  float: left;
+  width: 100%;
+  height: 60vh;
+  background-color: #ffc00f;
+  border-bottom: 4px solid #23221e;
+  position: relative;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
-.head .logo-container{
-    width: 50%;
-    float: right;
-    height: 100%;
+.head .logo-container {
+  width: 50%;
+  float: right;
+  height: 100%;
 }
 
-.head .logo-container #myImg{
-    height: 100%;
-    width: auto;
-    background-image: url("../images/image2.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: auto 100%;
+.head .logo-container #myImg {
+  height: 100%;
+  width: auto;
+  background-image: url("../images/image2.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 100%;
 }
 
-.head .title-container{
-    width: 50%;
-    float: left;
-    height: 100%;
-    position: relative;
+.head .title-container {
+  width: 50%;
+  float: left;
+  height: 100%;
+  position: relative;
 }
 
-.head .title-container .texts{
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
+.head .title-container .texts {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
-.head .title-container .texts h1{
-    font-size: 2.5rem;
-    text-align: right;
-    margin-bottom: 10px;
+.head .title-container .texts h1 {
+  font-size: 2.5rem;
+  text-align: right;
+  margin-bottom: 10px;
 }
 
-.head .title-container .texts h2{
-    font-weight: 100;
-    margin-top: 0;
-    color: white;
-    text-align: right;
-    display: block;
-    height: 25px;
+.head .title-container .texts h2 {
+  font-weight: 100;
+  margin-top: 0;
+  color: white;
+  text-align: right;
+  display: block;
+  height: 25px;
+  font-size: 1.5rem;
 }
 
-.head .title-container .icons{
-    position: absolute;
-    right: -60px;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
+.head .title-container .icons {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
-.head .title-container .icons .icon{
-    margin-bottom: 0;
-    margin-top: 15px;
-    display: block;
+.head .title-container .icons .icon {
+  margin-bottom: 0;
+  margin-top: 15px;
+  display: block;
 }
 
-.head .title-container .icons .icon.github:before{
-    font-size: 1.7rem;
+.head .title-container .icons .icon.github:before {
+  font-size: 1.7rem;
 }
 
-.head .title-container .icons .icon.linkedin:before{
-    font-size: 1.6rem;
+.head .title-container .icons .icon.linkedin:before {
+  font-size: 1.6rem;
 }
 
-.body{
-    float: left;
-    width: 100%;
-    height: 40vh;
-    position: relative;
-    float: right;
+.body {
+  float: left;
+  width: 100%;
+  height: 40vh;
+  position: relative;
+  float: right;
 }
 
-.body #mySlogan{
-    margin: 0;
-    text-align: center;
-    line-height: 40vh;
-    font-size: 3.5rem;
+.body #mySlogan {
+  margin: 0;
+  text-align: center;
+  line-height: 40vh;
+  font-size: 3.5rem;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .head .logo-container {
+    width: 200px;
+    height: 200px;
+    clear: both;
+    margin: 50px calc((100% - 200px) / 2);
+  }
+  .head .logo-container #myImg {
+    border-radius: 100%;
+    border: 5px solid black
+  }
 }
 
 @font-face {
-    font-family: "icomon";
-    src: url("../fonts/icomoon/icomoon.eot"),
-         url("../fonts/icomoon/icomoon.woff") format("woff"),
-         url("../fonts/icomoon/icomoon.ttf") format("truetype"),
-         url("../fonts/icomoon/icomoon.svg") format("svg");
+  font-family: "icomon";
+  src: url("../fonts/icomoon/icomoon.eot"),
+    url("../fonts/icomoon/icomoon.woff") format("woff"),
+    url("../fonts/icomoon/icomoon.ttf") format("truetype"),
+    url("../fonts/icomoon/icomoon.svg") format("svg");
 }
 
 @font-face {
-    font-family: "nastaliq";
-    src: url("../fonts/nastaliq/IranNastaliq-Web.woff") format("woff"),
-         url("../fonts/nastaliq/IranNastaliq-Web.woff2") format("woff2"),
-         url("../fonts/nastaliq/IranNastaliq-Web.ttf") format("truetype");
+  font-family: "nastaliq";
+  src: url("../fonts/nastaliq/IranNastaliq-Web.woff") format("woff"),
+    url("../fonts/nastaliq/IranNastaliq-Web.woff2") format("woff2"),
+    url("../fonts/nastaliq/IranNastaliq-Web.ttf") format("truetype");
 }

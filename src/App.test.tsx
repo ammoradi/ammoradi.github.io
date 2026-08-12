@@ -12,10 +12,10 @@ describe('portfolio', () => {
     expect(screen.getByText('100+')).toBeInTheDocument()
   })
 
-  it('moves between impact stories with explicit controls', () => {
+  it('moves between impact stories with company selectors', () => {
     render(<App />)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Next impact' }))
+    fireEvent.click(screen.getByRole('button', { name: /Show AlphaSense impact/i }))
     expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
     expect(screen.getByText('4k+')).toBeInTheDocument()
     expect(screen.getByText('100k+')).toBeInTheDocument()
@@ -30,10 +30,9 @@ describe('portfolio', () => {
 
     expect(screen.getByRole('link', { name: 'Impact' })).toHaveAttribute('href', '#top')
     expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '#skills')
-    expect(screen.getByRole('link', { name: 'Education' })).toHaveAttribute('href', '#education')
+    expect(screen.getAllByRole('link', { name: /^Resume/i })[0]).toHaveAttribute('href', '#resume')
     expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute('href', 'https://www.linkedin.com/in/ammoradi/')
     expect(screen.getByRole('link', { name: 'GitHub profile' })).toHaveAttribute('href', 'https://github.com/ammoradi')
-    expect(screen.getByRole('link', { name: /^Resume/i })).toHaveAttribute('href', '#resume')
     expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument()
   })
 
@@ -56,7 +55,8 @@ describe('portfolio', () => {
     expect(document.querySelector('.hero-identity')?.textContent).toContain('Frontend Tech Lead · AI Product Engineer')
     expect(document.querySelector('.hero-identity')?.textContent).not.toContain('Amir Mohammad Moradi')
     expect(document.querySelector('.portrait-number')).not.toBeInTheDocument()
-    expect(document.querySelector('.portrait-label')?.textContent).toBe('FrontendAI')
+    expect(document.querySelector('.portrait-label')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Next impact' })).not.toBeInTheDocument()
   })
 
   it('links to a scrollable resume preview with an explicit download', () => {
@@ -71,14 +71,12 @@ describe('portfolio', () => {
     expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute('download')
   })
 
-  it('keeps education and keyboard navigation landmarks', () => {
+  it('keeps keyboard navigation landmarks and the Codex credit', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: 'Engineering fundamentals.' })).toBeInTheDocument()
-    expect(screen.getByText(/Iran University of Science and Technology/i)).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Engineering fundamentals.' })).not.toBeInTheDocument()
+    expect(screen.getByLabelText('Made with love with Codex')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute('href', '#main-content')
     expect(document.querySelector('#main-content')).toBeInTheDocument()
-    expect(document.querySelector('#resume')?.compareDocumentPosition(document.querySelector('#education')!))
-      .toBe(Node.DOCUMENT_POSITION_FOLLOWING)
   })
 })

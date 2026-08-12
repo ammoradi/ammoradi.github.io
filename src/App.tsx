@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import { ChevronDown, ChevronLeft, ChevronRight, Download } from 'lucide-react'
+import { ChevronDown, Download, Heart } from 'lucide-react'
 import { FaAws, FaCodeBranch, FaGithub, FaLinkedinIn, FaRobot } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 import {
@@ -214,7 +214,7 @@ function App() {
         <nav className="site-nav" aria-label="Primary navigation">
           <a href="#top">Impact</a>
           <a href="#skills">Toolkit</a>
-          <a href="#education">Education</a>
+          <a href="#resume">Resume</a>
         </nav>
         <div className="header-links" aria-label="Professional profiles">
           <a className="header-icon" href="https://www.linkedin.com/in/ammoradi/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
@@ -278,21 +278,12 @@ function App() {
                   ))}
                 </dl>
               </article>
-              <button className="impact-nav impact-nav-previous" type="button" aria-label="Previous impact" onClick={() => setCarouselStep((step) => step - 1)}>
-                <ChevronLeft aria-hidden="true" />
-              </button>
-              <button className="impact-nav impact-nav-next" type="button" aria-label="Next impact" onClick={() => setCarouselStep((step) => step + 1)}>
-                <ChevronRight aria-hidden="true" />
-              </button>
             </div>
 
           </div>
 
           <div className="portrait-panel">
             <img src="/portrait.jpg" alt="Illustrated portrait of Amir Mohammad Moradi" />
-            <div className="portrait-label" aria-hidden="true">
-              <span>Frontend</span><span>AI</span>
-            </div>
           </div>
 
           <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
@@ -341,24 +332,13 @@ function App() {
           </article>
         </section>
 
-        <section className="education section" id="education" aria-labelledby="education-title">
-          <SectionHeading id="education-title" eyebrow="03 / Education" title="Engineering fundamentals." />
-          <div className="education-list">
-            <article className="education-item reveal">
-              <p>2014 – 2019</p>
-              <div><h3>Bachelor of Science · Computer Engineering</h3><p>Iran University of Science and Technology · Tehran, Iran</p></div>
-            </article>
-            <article className="education-item reveal">
-              <p>2007 – 2014</p>
-              <div><h3>Diploma · Mathematics Science</h3><p>National Organization for Development of Exceptional Talents · Tonekabon, Iran</p></div>
-            </article>
-          </div>
-        </section>
       </main>
 
       <footer>
         <p>© {new Date().getFullYear()} Amir Mohammad Moradi</p>
-        <p>Measured work. Clear interfaces.</p>
+        <p className="footer-made" aria-label="Made with love with Codex">
+          Made with <Heart aria-hidden="true" /> with Codex
+        </p>
         <a href="#top">Back to top ↑</a>
       </footer>
     </>

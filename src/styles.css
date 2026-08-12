@@ -183,9 +183,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .hero-identity {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.8rem 1.5rem;
 }
 
 .hero-identity > p:last-child {
@@ -202,7 +203,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   align-self: center;
   justify-self: center;
   gap: 0.8rem;
-  padding: 0 3.25rem;
+  padding: 0;
 }
 
 .impact-selector {
@@ -337,29 +338,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-transform: uppercase;
 }
 
-.impact-nav {
-  position: absolute;
-  z-index: 4;
-  top: 50%;
-  display: grid;
-  width: 2.6rem;
-  height: 2.6rem;
-  place-items: center;
-  border: 0;
-  border-radius: 0;
-  color: var(--ink);
-  background: transparent;
-  box-shadow: none;
-  cursor: pointer;
-  transform: translateY(-10%);
-  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
-}
-
-.impact-nav-previous { left: 0.35rem; }
-.impact-nav-next { right: 0.35rem; }
-.impact-nav:hover { color: var(--white); background: transparent; transform: translateY(-10%) scale(1.08); }
-.impact-nav svg { width: 1.1rem; height: 1.1rem; }
-
 .scroll-cue {
   position: absolute;
   z-index: 5;
@@ -415,26 +393,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 @keyframes portrait-slide-in {
   from { opacity: 0; transform: translateX(4rem); }
   to { opacity: 1; transform: translateX(0); }
-}
-
-.portrait-label {
-  position: absolute;
-  z-index: 3;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  display: flex;
-  gap: 0.4rem;
-}
-
-.portrait-label span {
-  padding: 0.45rem 0.65rem;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  background: rgba(246, 185, 0, 0.88);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .section {
@@ -558,33 +516,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   to { transform: translateX(-25%); }
 }
 
-.education { color: var(--white); background: var(--ink); }
-.education .eyebrow { color: var(--yellow); }
-.education-list { border-top: 1px solid rgba(255, 253, 247, 0.42); }
-
-.education-item {
-  display: grid;
-  grid-template-columns: minmax(11rem, 0.28fr) 1fr;
-  gap: 2rem;
-  padding: 2.2rem 0;
-  border-bottom: 1px solid rgba(255, 253, 247, 0.22);
-}
-
-.education-item > p {
-  color: var(--yellow);
-  font-size: 0.75rem;
-  font-weight: 750;
-  text-transform: uppercase;
-}
-
-.education-item h3 {
-  margin-bottom: 0.5rem;
-  font-size: clamp(1.3rem, 2.4vw, 2.4rem);
-  letter-spacing: -0.045em;
-}
-
-.education-item div p { color: rgba(255, 253, 247, 0.64); }
-
 .resume { background: var(--paper); }
 
 .resume-card {
@@ -663,6 +594,20 @@ footer {
 footer p:nth-child(2) { text-align: center; }
 footer a { justify-self: end; }
 
+.footer-made {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+}
+
+.footer-made svg {
+  width: 0.78rem;
+  height: 0.78rem;
+  color: #d9402b;
+  fill: currentColor;
+}
+
 .reveal {
   animation: rise-in 650ms both;
   animation-timeline: view();
@@ -706,15 +651,13 @@ footer a { justify-self: end; }
   .portrait-panel { order: 1; width: 100%; max-width: none; height: min(40svh, 20rem); aspect-ratio: auto; }
   .hero-impact { order: 2; min-height: 43rem; padding: 1.3rem 1rem 1.5rem; }
   .hero-identity { padding: 0 0.25rem; }
-  .impact-stage { width: min(100%, 27rem); padding: 0 2.25rem; }
+  .impact-stage { width: min(100%, 27rem); padding: 0; }
   .impact-selector { gap: 0.3rem; }
   .impact-selector button { min-height: 2.8rem; padding: 0.4rem 0.2rem; font-size: 0.56rem; }
   .impact-focus-card { min-height: 27rem; padding: 2rem; }
   .impact-focus-card h1 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
   .impact-metrics dt { font-size: clamp(1.25rem, 6vw, 1.8rem); }
   .impact-metrics dd { font-size: 0.54rem; }
-  .impact-nav { width: 2.2rem; height: 2.2rem; }
-  .portrait-label { right: 1rem; bottom: 1rem; }
   .section { padding: 4.5rem 1.25rem; }
   .section-heading { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 3rem; }
   .section-heading h2 { font-size: clamp(2.8rem, 13vw, 4.5rem); }
@@ -725,19 +668,18 @@ footer a { justify-self: end; }
   .skill-lane-heading h3 { max-width: none; }
   .technology { width: 6.8rem; min-height: 6.6rem; }
   .technology svg { width: 2.1rem; height: 2.1rem; }
-  .education-item { grid-template-columns: 1fr; gap: 0.8rem; }
   .resume-card-header { align-items: flex-start; flex-direction: column; }
   .resume-download { width: 100%; }
   .resume-preview-scroll { height: 28rem; }
-  footer { grid-template-columns: 1fr auto; gap: 0.8rem; }
-  footer p:nth-child(2) { display: none; }
+  footer { grid-template-columns: 1fr; justify-items: center; gap: 0.8rem; text-align: center; }
+  footer a { justify-self: center; }
 }
 
 @media (max-width: 430px) {
   .site-nav { gap: 0.5rem; }
   .site-nav a { font-size: 0.49rem; }
   .hero-impact { min-height: 41rem; }
-  .impact-stage { padding: 0 2rem; }
+  .impact-stage { padding: 0; }
   .impact-focus-card { min-height: 25rem; padding: 1.65rem; }
   .impact-focus-card h1 { margin-bottom: 0.85rem; }
   .impact-kicker { margin-top: 0.5rem; }

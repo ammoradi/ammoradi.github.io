@@ -286,12 +286,6 @@ function App() {
               </button>
             </div>
 
-            <div className="hero-footer">
-              <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
-                <span>Explore toolkit</span>
-                <ChevronDown aria-hidden="true" />
-              </a>
-            </div>
           </div>
 
           <div className="portrait-panel">
@@ -300,6 +294,11 @@ function App() {
               <span>Frontend</span><span>AI</span>
             </div>
           </div>
+
+          <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
+            <span>Explore toolkit</span>
+            <ChevronDown aria-hidden="true" />
+          </a>
         </section>
 
         <section className="skills section" id="skills" aria-labelledby="skills-title">

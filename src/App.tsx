@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { ChevronDown, Download, Heart } from 'lucide-react'
+import { ChevronDown, Download, ExternalLink, Heart } from 'lucide-react'
 import { FaAws, FaCodeBranch, FaGithub, FaLinkedinIn, FaRobot } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 import {
@@ -41,6 +41,8 @@ type ImpactStory = {
   kicker: string
   title: string
   metrics: Array<{ value: string; label: string }>
+  productUrl?: string
+  images?: Array<{ src: string; alt: string; caption: string }>
 }
 
 type Technology = {
@@ -63,6 +65,12 @@ const impactStories: ImpactStory[] = [
       { value: '3', label: 'frontend teams led' },
       { value: '80%', label: 'end-to-end test coverage' },
       { value: '100+', label: 'manual components removed' },
+    ],
+    productUrl: 'https://bluefors.com/products/dilution-refrigerator-measurement-systems/control-software/',
+    images: [
+      { src: '/bluefors-data-viewer.png', alt: 'Bluefors control software data viewer', caption: 'Live data' },
+      { src: '/bluefors-system-control.png', alt: 'Bluefors control software system diagram', caption: 'System control' },
+      { src: '/bluefors-operation-path.png', alt: 'Bluefors control software operation path dialog', caption: 'Automation' },
     ],
   },
   {
@@ -253,16 +261,47 @@ function App() {
                   <p>{activeStory.company}</p>
                   <span>{String(activeImpact + 1).padStart(2, '0')} / 03</span>
                 </div>
-                <p className="impact-kicker">{activeStory.kicker}</p>
-                <h1 id="hero-title">{activeStory.title}</h1>
-                <dl className="impact-metrics">
-                  {activeStory.metrics.map((metric) => (
-                    <div key={metric.label}>
-                      <dt>{metric.value}</dt>
-                      <dd>{metric.label}</dd>
+                <div className="impact-story-copy">
+                  <p className="impact-kicker">{activeStory.kicker}</p>
+                  <h1 id="hero-title">{activeStory.title}</h1>
+                  {activeStory.images && (
+                    <>
+                      <dl className="impact-metrics impact-metrics-compact">
+                        {activeStory.metrics.map((metric) => (
+                          <div key={metric.label}>
+                            <dt>{metric.value}</dt>
+                            <dd>{metric.label}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                      <a className="impact-product-link" href={activeStory.productUrl} target="_blank" rel="noreferrer">
+                        View Bluefors control software
+                        <ExternalLink aria-hidden="true" />
+                      </a>
+                    </>
+                  )}
+                </div>
+                <div className="impact-story-side">
+                  {activeStory.images ? (
+                    <div className="impact-gallery" aria-label="Bluefors control software screenshots">
+                      {activeStory.images.map((image) => (
+                        <figure className="impact-image-card" key={image.src}>
+                          <img src={image.src} alt={image.alt} />
+                          <figcaption>{image.caption}</figcaption>
+                        </figure>
+                      ))}
                     </div>
-                  ))}
-                </dl>
+                  ) : (
+                    <dl className="impact-metrics">
+                      {activeStory.metrics.map((metric) => (
+                        <div key={metric.label}>
+                          <dt>{metric.value}</dt>
+                          <dd>{metric.label}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </div>
               </article>
               <div className="impact-scroll-progress" aria-hidden="true">
                 <span style={{ '--impact-progress': `${((activeImpact + 1) / impactStories.length) * 100}%` } as CSSProperties} />

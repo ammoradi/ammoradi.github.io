@@ -10,6 +10,11 @@ describe('portfolio', () => {
     expect(screen.queryByRole('button', { name: /Show Bluefors impact/i })).not.toBeInTheDocument()
     expect(screen.getByText('80%')).toBeInTheDocument()
     expect(screen.getByText('100+')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /View Bluefors control software/i })).toHaveAttribute(
+      'href',
+      'https://bluefors.com/products/dilution-refrigerator-measurement-systems/control-software/',
+    )
+    expect(screen.getAllByRole('img', { name: /Bluefors control software/i })).toHaveLength(3)
   })
 
   it('moves between impact stories as the page scrolls', () => {

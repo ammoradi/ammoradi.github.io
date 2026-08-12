@@ -44,11 +44,24 @@ export function ImpactGallery({
     >
       {story.images.map((image, index) => (
         <figure
-          className={`impact-image-card${index === activeImage ? " is-active" : ""}`}
+          className={`impact-image-card${image.presentation ? ` impact-image-card--${image.presentation}` : ""}${index === activeImage ? " is-active" : ""}`}
           key={image.src}
         >
-          <img src={image.src} alt={image.alt} />
-          <figcaption>{image.caption}</figcaption>
+          <a
+            className="impact-image-link"
+            href={story.productUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Visit ${story.company}: ${image.caption}`}
+          >
+            <img src={image.src} alt={image.alt} />
+            <figcaption>
+              <span>{image.caption}</span>
+              <small>
+                © {story.company} / Product imagery: {story.company}
+              </small>
+            </figcaption>
+          </a>
         </figure>
       ))}
       <button

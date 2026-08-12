@@ -277,29 +277,37 @@
   .impact-gallery-bookapo .impact-image-card:nth-child(n) {
     max-width: none;
   }
-  .impact-gallery-bookapo .impact-image-card:nth-child(1) img {
-    aspect-ratio: 4.28 / 1;
-    object-fit: cover;
+  .impact-gallery-bookapo .impact-image-card--portrait img {
+    height: 17rem;
+    aspect-ratio: auto;
+    object-fit: contain;
   }
-  .impact-gallery-bookapo .impact-image-card:nth-child(2) {
+  .impact-gallery-bookapo .impact-image-card--portrait {
     --bookapo-phone-padding-x: 0.75rem;
     width: 68%;
     max-width: 22rem;
     padding-top: 0.75rem;
     background: rgba(255, 253, 247, 0.9);
   }
-  .impact-gallery-bookapo .impact-image-card:nth-child(2) img {
-    height: 17rem;
-    aspect-ratio: auto;
-    object-fit: contain;
-  }
-  .impact-gallery-bookapo .impact-image-card:nth-child(3) {
+  .impact-gallery-bookapo .impact-image-card--landscape {
+    top: auto;
+    right: 0;
+    bottom: 4%;
+    left: auto;
     width: 88%;
     max-width: none;
   }
-  .impact-gallery-bookapo .impact-image-card:nth-child(3) img {
+  .impact-gallery-bookapo .impact-image-card--landscape img {
     width: 100%;
     aspect-ratio: 2.37 / 1;
+  }
+  .impact-image-card figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .impact-image-card figcaption small {
+    text-align: left;
   }
   .gallery-playback {
     right: 0.25rem;

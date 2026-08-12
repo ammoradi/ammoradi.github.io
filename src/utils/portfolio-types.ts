@@ -8,7 +8,12 @@ export type ImpactStory = {
   productUrl?: string;
   productLabel?: string;
   galleryFormat?: "landscape" | "square" | "bookapo";
-  images?: Array<{ src: string; alt: string; caption: string }>;
+  images?: Array<{
+    src: string;
+    alt: string;
+    caption: string;
+    presentation?: "portrait" | "landscape";
+  }>;
 };
 
 export type Technology = {

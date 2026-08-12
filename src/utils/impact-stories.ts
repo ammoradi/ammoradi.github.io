@@ -79,19 +79,16 @@ export const impactStories: ImpactStory[] = [
     galleryFormat: "bookapo",
     images: [
       {
-        src: "/bookapo-audio-library.png",
-        alt: "Bookapo mobile audiobook library",
-        caption: "Audio library",
-      },
-      {
         src: "/bookapo-mobile-app.png",
         alt: "Bookapo mobile app on two phones",
         caption: "Mobile experience",
+        presentation: "portrait",
       },
       {
         src: "/bookapo-web-home.png",
         alt: "Bookapo Persian-language website home page",
         caption: "Web experience",
+        presentation: "landscape",
       },
     ],
   },

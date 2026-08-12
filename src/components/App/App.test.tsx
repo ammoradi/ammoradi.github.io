@@ -26,6 +26,12 @@ describe("portfolio", () => {
     expect(
       screen.getAllByRole("img", { name: /Bluefors control software/i }),
     ).toHaveLength(3);
+    expect(
+      screen.getAllByText("© Bluefors / Product imagery: Bluefors"),
+    ).toHaveLength(3);
+    expect(
+      screen.getAllByRole("link", { name: /^Visit Bluefors:/i }),
+    ).toHaveLength(3);
   });
 
   it("moves between impact stories as the page scrolls", () => {
@@ -54,9 +60,15 @@ describe("portfolio", () => {
     expect(screen.getByText("4k+")).toBeInTheDocument();
     expect(screen.getByText("100k+")).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Visit AlphaSense/i }),
+      screen.getByRole("link", { name: /^Visit AlphaSense$/i }),
     ).toHaveAttribute("href", "https://www.alpha-sense.com/");
     expect(screen.getAllByRole("img", { name: /AlphaSense/i })).toHaveLength(3);
+    expect(
+      screen.getAllByText("© AlphaSense / Product imagery: AlphaSense"),
+    ).toHaveLength(3);
+    expect(
+      screen.getAllByRole("link", { name: /^Visit AlphaSense:/i }),
+    ).toHaveLength(3);
 
     Object.defineProperty(window, "scrollY", {
       configurable: true,
@@ -68,9 +80,15 @@ describe("portfolio", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("2K → 200K+")).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Visit Bookapo/i }),
+      screen.getByRole("link", { name: /^Visit Bookapo$/i }),
     ).toHaveAttribute("href", "https://bookapo.com/");
-    expect(screen.getAllByRole("img", { name: /Bookapo/i })).toHaveLength(3);
+    expect(screen.getAllByRole("img", { name: /Bookapo/i })).toHaveLength(2);
+    expect(
+      screen.getAllByText("© Bookapo / Product imagery: Bookapo"),
+    ).toHaveLength(2);
+    expect(
+      screen.getAllByRole("link", { name: /^Visit Bookapo:/i }),
+    ).toHaveLength(2);
   });
 
   it("provides section navigation alongside LinkedIn, GitHub, and resume", () => {

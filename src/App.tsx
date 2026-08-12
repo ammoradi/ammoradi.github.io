@@ -243,8 +243,9 @@ function App() {
             }}
           >
             <div className="hero-identity">
-              <p className="eyebrow">Helsinki, Finland · 11+ years in software</p>
-              <p>Frontend Tech Lead · AI Product Engineer</p>
+              <p className="eyebrow">
+                Helsinki, Finland · 11+ years in software · Frontend Tech Lead · AI Product Engineer
+              </p>
             </div>
 
             <div className="impact-stage">

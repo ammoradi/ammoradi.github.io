@@ -1,0 +1,114 @@
+.resume {
+  background: var(--page-bg);
+}
+
+.resume .section-heading .eyebrow {
+  color: var(--yellow);
+}
+
+.resume-public-note {
+  max-width: 72rem;
+  margin: calc(clamp(3rem, 6vw, 5.5rem) * -0.55) 0 clamp(2.5rem, 4vw, 4rem);
+}
+
+.resume-public-note > p {
+  max-width: 54rem;
+  color: var(--muted);
+  font-size: clamp(0.95rem, 1.4vw, 1.16rem);
+  line-height: 1.65;
+}
+
+.resume-public-note a {
+  color: var(--page-text);
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+
+.resume-card {
+  max-width: 72rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--page-text);
+  border-radius: 1.2rem;
+  background: var(--page-surface);
+  box-shadow:
+    0.8rem 0.8rem 0 var(--yellow),
+    0 1.4rem 4rem rgba(29, 29, 27, 0.12);
+}
+
+.resume-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  border-bottom: 1px solid var(--page-text);
+}
+
+.resume-card-header > div {
+  display: grid;
+  gap: 0.38rem;
+}
+.resume-card-header > div > p:last-child {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 3.1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--page-text);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: transform 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+.button-dark {
+  color: var(--page-bg);
+  background: var(--page-text);
+}
+
+.resume-preview-scroll {
+  height: min(68svh, 46rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--page-surface);
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+  scrollbar-width: thin;
+}
+
+.resume-preview-scroll::-webkit-scrollbar {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+.resume-preview-scroll::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.resume-preview-scroll::-webkit-scrollbar-thumb {
+  border: 3px solid var(--scroll-track);
+  border-radius: 999px;
+  background: var(--scroll-thumb);
+}
+.resume-preview-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--yellow);
+}
+
+.resume-preview-scroll img {
+  width: 100%;
+  height: auto;
+}
+
+

@@ -1,0 +1,9 @@
+@import "./base.css";
+@import "../components/SiteHeader/site-header.css";
+@import "../components/ImpactSection/impact-section.css";
+@import "./sections.css";
+@import "../components/SkillsSection/skills-section.css";
+@import "../components/ResumeSection/resume-section.css";
+@import "../components/ContactSection/contact-section.css";
+@import "../components/SiteFooter/site-footer.css";
+@import "./responsive.css";

@@ -1,0 +1,56 @@
+footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1.5rem 4vw;
+  border-top: 1px solid var(--page-line);
+  color: var(--muted);
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+body,
+.site-header,
+.hero,
+.hero-impact,
+.impact-focus-card,
+.skills,
+.skill-lane,
+.technology,
+.resume,
+.resume-card,
+.resume-preview-scroll,
+.resume-public-note,
+.contact,
+footer {
+  transition:
+    color 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease;
+}
+
+footer p:nth-child(2) {
+  text-align: center;
+}
+footer a {
+  justify-self: end;
+}
+
+.footer-made {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+}
+
+.footer-made svg {
+  width: 0.78rem;
+  height: 0.78rem;
+  color: #d9402b;
+  fill: currentColor;
+}
+
+

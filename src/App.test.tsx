@@ -20,14 +20,26 @@ describe('portfolio', () => {
     expect(document.body.textContent).not.toContain('+358')
   })
 
-  it('offers the supplied resume as a download', () => {
+  it('links to a scrollable resume preview with an explicit download', () => {
     render(<App />)
-    const resumeLinks = screen.getAllByRole('link', { name: /resume/i })
-    expect(resumeLinks.length).toBeGreaterThanOrEqual(2)
-    resumeLinks.forEach((link) => {
-      expect(link).toHaveAttribute('href', '/Amir_Mohammad_Moradi_Resume.pdf')
-      expect(link).toHaveAttribute('download')
-    })
+
+    expect(screen.getAllByRole('link', { name: /^resume/i })[0]).toHaveAttribute('href', '#resume')
+    expect(screen.getByRole('img', { name: /Preview of Amir Mohammad Moradi's resume/i })).toBeInTheDocument()
+    expect(screen.getByLabelText('Scrollable resume preview')).toHaveAttribute('tabindex', '0')
+    expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute(
+      'href',
+      '/Amir_Mohammad_Moradi_Resume.pdf',
+    )
+    expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute('download')
+  })
+
+  it('shows the expanded Bookapo and AlphaSense metrics', () => {
+    render(<App />)
+
+    expect(screen.getAllByText('2k+').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('4k+').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('100k+').length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/legacy code modernized/i).length).toBeGreaterThan(0)
   })
 
   it('provides semantic navigation and a keyboard skip target', () => {

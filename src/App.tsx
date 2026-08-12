@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { ChevronDown, Download, ExternalLink, Heart } from 'lucide-react'
+import { ChevronDown, Download, ExternalLink, Heart, Moon, Sun } from 'lucide-react'
 import { FaAws, FaCodeBranch, FaGithub, FaLinkedinIn, FaRobot } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 import {
@@ -26,15 +26,7 @@ import {
   SiVitest,
   SiWebpack,
 } from 'react-icons/si'
-import {
-  TbBinaryTree,
-  TbDevices,
-  TbPlugConnected,
-  TbServer,
-  TbTestPipe,
-  TbVector,
-  TbWorldWww,
-} from 'react-icons/tb'
+import { TbBinaryTree, TbDevices, TbPlugConnected, TbServer, TbTestPipe, TbVector, TbWorldWww } from 'react-icons/tb'
 
 type ImpactStory = {
   company: string
@@ -58,6 +50,18 @@ type SkillLane = {
   duration: string
 }
 
+type Theme = 'light' | 'dark'
+
+const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'light'
+
+  const savedTheme = window.localStorage.getItem('portfolio-theme')
+  if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
+  return typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+}
+
 const impactStories: ImpactStory[] = [
   {
     company: 'Bluefors',
@@ -72,9 +76,21 @@ const impactStories: ImpactStory[] = [
     productLabel: 'View Bluefors control software',
     galleryFormat: 'landscape',
     images: [
-      { src: '/bluefors-data-viewer.png', alt: 'Bluefors control software data viewer', caption: 'Live data' },
-      { src: '/bluefors-system-control.png', alt: 'Bluefors control software system diagram', caption: 'System control' },
-      { src: '/bluefors-operation-path.png', alt: 'Bluefors control software operation path dialog', caption: 'Automation' },
+      {
+        src: '/bluefors-data-viewer.png',
+        alt: 'Bluefors control software data viewer',
+        caption: 'Live data',
+      },
+      {
+        src: '/bluefors-system-control.png',
+        alt: 'Bluefors control software system diagram',
+        caption: 'System control',
+      },
+      {
+        src: '/bluefors-operation-path.png',
+        alt: 'Bluefors control software operation path dialog',
+        caption: 'Automation',
+      },
     ],
   },
   {
@@ -91,9 +107,21 @@ const impactStories: ImpactStory[] = [
     productLabel: 'Visit AlphaSense',
     galleryFormat: 'square',
     images: [
-      { src: '/alphasense-industry-monitoring.png', alt: 'AlphaSense industry monitoring interface', caption: 'Industry intelligence' },
-      { src: '/alphasense-expert-transcripts.png', alt: 'AlphaSense expert transcript interface', caption: 'Expert insights' },
-      { src: '/alphasense-notebook.png', alt: 'AlphaSense notebook and broker research interface', caption: 'Research workflow' },
+      {
+        src: '/alphasense-industry-monitoring.png',
+        alt: 'AlphaSense industry monitoring interface',
+        caption: 'Industry intelligence',
+      },
+      {
+        src: '/alphasense-expert-transcripts.png',
+        alt: 'AlphaSense expert transcript interface',
+        caption: 'Expert insights',
+      },
+      {
+        src: '/alphasense-notebook.png',
+        alt: 'AlphaSense notebook and broker research interface',
+        caption: 'Research workflow',
+      },
     ],
   },
   {
@@ -110,8 +138,16 @@ const impactStories: ImpactStory[] = [
     productLabel: 'Visit Bookapo',
     galleryFormat: 'bookapo',
     images: [
-      { src: '/bookapo-audio-library.png', alt: 'Bookapo mobile audiobook library', caption: 'Audio library' },
-      { src: '/bookapo-mobile-app.png', alt: 'Bookapo mobile app on two phones', caption: 'Mobile experience' },
+      {
+        src: '/bookapo-audio-library.png',
+        alt: 'Bookapo mobile audiobook library',
+        caption: 'Audio library',
+      },
+      {
+        src: '/bookapo-mobile-app.png',
+        alt: 'Bookapo mobile app on two phones',
+        caption: 'Mobile experience',
+      },
     ],
   },
 ]
@@ -206,32 +242,62 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 
 function App() {
   const [activeImpact, setActiveImpact] = useState(0)
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const heroRef = useRef<HTMLElement>(null)
+  const pageProgressRef = useRef<HTMLSpanElement>(null)
   const activeStory = impactStories[activeImpact]
 
   useEffect(() => {
-    const updateImpactFromScroll = () => {
+    const updateScrollState = () => {
       const hero = heroRef.current
-      if (!hero) return
+      if (hero) {
+        const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
+        const progress = Math.min(1, Math.max(0, (window.scrollY - hero.offsetTop) / scrollRange))
+        const nextImpact = Math.min(impactStories.length - 1, Math.floor(progress * impactStories.length))
+        setActiveImpact((current) => (current === nextImpact ? current : nextImpact))
+      }
 
-      const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
-      const progress = Math.min(1, Math.max(0, (window.scrollY - hero.offsetTop) / scrollRange))
-      const nextImpact = Math.min(impactStories.length - 1, Math.floor(progress * impactStories.length))
-      setActiveImpact((current) => current === nextImpact ? current : nextImpact)
+      const pageRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const pageProgress = Math.min(1, Math.max(0, window.scrollY / pageRange))
+      if (pageProgressRef.current) pageProgressRef.current.style.transform = `scaleX(${pageProgress})`
     }
 
-    updateImpactFromScroll()
-    window.addEventListener('scroll', updateImpactFromScroll, { passive: true })
-    window.addEventListener('resize', updateImpactFromScroll)
+    updateScrollState()
+    window.addEventListener('scroll', updateScrollState, { passive: true })
+    window.addEventListener('resize', updateScrollState)
     return () => {
-      window.removeEventListener('scroll', updateImpactFromScroll)
-      window.removeEventListener('resize', updateImpactFromScroll)
+      window.removeEventListener('scroll', updateScrollState)
+      window.removeEventListener('resize', updateScrollState)
     }
   }, [])
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'dark' ? '#151513' : '#f5f2ea')
+  }, [theme])
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function' || window.localStorage.getItem('portfolio-theme')) return
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+    const followSystemTheme = (event: MediaQueryListEvent) => setTheme(event.matches ? 'dark' : 'light')
+    systemTheme.addEventListener('change', followSystemTheme)
+    return () => systemTheme.removeEventListener('change', followSystemTheme)
+  }, [])
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    window.localStorage.setItem('portfolio-theme', nextTheme)
+    setTheme(nextTheme)
+  }
+
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
 
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Amir Mohammad Moradi, home">
@@ -245,24 +311,46 @@ function App() {
           <a href="#skills">Toolkit</a>
           <a href="#resume">Resume</a>
         </nav>
-        <div className="header-links" aria-label="Professional profiles">
-          <a className="header-icon" href="https://www.linkedin.com/in/ammoradi/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+        <div className="header-links" aria-label="Header controls">
+          <button
+            className="header-icon theme-toggle"
+            type="button"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            aria-pressed={theme === 'dark'}
+            onClick={toggleTheme}
+          >
+            {theme === 'dark' ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
+          </button>
+          <a
+            className="header-icon"
+            href="https://www.linkedin.com/in/ammoradi/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn profile"
+          >
             <FaLinkedinIn aria-hidden="true" />
           </a>
-          <a className="header-icon" href="https://github.com/ammoradi" target="_blank" rel="noreferrer" aria-label="GitHub profile">
+          <a
+            className="header-icon"
+            href="https://github.com/ammoradi"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub profile"
+          >
             <FaGithub aria-hidden="true" />
           </a>
-          <a className="header-resume" href="#resume">Resume <span aria-hidden="true">↓</span></a>
+          <a className="header-resume" href="#resume">
+            Resume <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <div className="page-progress" aria-hidden="true">
+          <span ref={pageProgressRef} />
         </div>
       </header>
 
       <main id="main-content">
         <section className="hero" id="top" aria-labelledby="hero-title" ref={heroRef}>
-          <div
-            className="hero-impact"
-            aria-roledescription="carousel"
-            aria-label="Selected impact"
-          >
+          <div className="hero-impact" aria-roledescription="carousel" aria-label="Selected impact">
             <div className="hero-identity">
               <p className="eyebrow">
                 Helsinki, Finland · 11+ years in software · Frontend Tech Lead · AI Product Engineer
@@ -325,16 +413,18 @@ function App() {
                   )}
                 </div>
               </article>
-              <div className="impact-scroll-progress" aria-hidden="true">
-                <span style={{ '--impact-progress': `${((activeImpact + 1) / impactStories.length) * 100}%` } as CSSProperties} />
-              </div>
             </div>
 
             <button
               className="scroll-cue"
               type="button"
               aria-label="Explore impact stories"
-              onClick={() => window.scrollBy({ top: window.innerHeight * 0.72, behavior: 'smooth' })}
+              onClick={() =>
+                window.scrollBy({
+                  top: window.innerHeight * 0.72,
+                  behavior: 'smooth',
+                })
+              }
             >
               <span>Scroll through impact stories</span>
               <ChevronDown aria-hidden="true" />
@@ -381,7 +471,6 @@ function App() {
             </div>
           </article>
         </section>
-
       </main>
 
       <footer>

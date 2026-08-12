@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import App from './App'
 
 describe('portfolio', () => {
@@ -21,18 +21,33 @@ describe('portfolio', () => {
     render(<App />)
 
     const hero = document.querySelector('.hero') as HTMLElement
-    Object.defineProperty(hero, 'offsetHeight', { configurable: true, value: 3000 })
+    Object.defineProperty(hero, 'offsetHeight', {
+      configurable: true,
+      value: 3000,
+    })
     Object.defineProperty(hero, 'offsetTop', { configurable: true, value: 0 })
-    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 1000 })
-    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1000 })
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 1000,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      configurable: true,
+      value: 1000,
+    })
     fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
     expect(screen.getByText('4k+')).toBeInTheDocument()
     expect(screen.getByText('100k+')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Visit AlphaSense/i })).toHaveAttribute('href', 'https://www.alpha-sense.com/')
+    expect(screen.getByRole('link', { name: /Visit AlphaSense/i })).toHaveAttribute(
+      'href',
+      'https://www.alpha-sense.com/',
+    )
     expect(screen.getAllByRole('img', { name: /AlphaSense/i })).toHaveLength(3)
 
-    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1900 })
+    Object.defineProperty(window, 'scrollY', {
+      configurable: true,
+      value: 1900,
+    })
     fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A platform scaled 100×/i })).toBeInTheDocument()
     expect(screen.getByText('2k → 200k')).toBeInTheDocument()
@@ -46,9 +61,39 @@ describe('portfolio', () => {
     expect(screen.getByRole('link', { name: 'Impact' })).toHaveAttribute('href', '#top')
     expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '#skills')
     expect(screen.getAllByRole('link', { name: /^Resume/i })[0]).toHaveAttribute('href', '#resume')
-    expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute('href', 'https://www.linkedin.com/in/ammoradi/')
+    expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/ammoradi/',
+    )
     expect(screen.getByRole('link', { name: 'GitHub profile' })).toHaveAttribute('href', 'https://github.com/ammoradi')
     expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument()
+  })
+
+  it('supports a persistent light and dark theme preference', () => {
+    window.localStorage.removeItem('portfolio-theme')
+    render(<App />)
+
+    const toggle = screen.getByRole('button', { name: 'Switch to dark theme' })
+    fireEvent.click(toggle)
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    expect(window.localStorage.getItem('portfolio-theme')).toBe('dark')
+    expect(screen.getByRole('button', { name: 'Switch to light theme' })).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('uses the browser color-scheme preference when no theme is saved', () => {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn().mockReturnValue({
+        matches: true,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }),
+    )
+
+    render(<App />)
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    expect(screen.getByRole('button', { name: 'Switch to light theme' })).toBeInTheDocument()
+    vi.unstubAllGlobals()
   })
 
   it('presents the toolkit as technology lanes without duplicated biography sections', () => {
@@ -79,7 +124,11 @@ describe('portfolio', () => {
   it('links to a scrollable resume preview with an explicit download', () => {
     render(<App />)
 
-    expect(screen.getByRole('img', { name: /Preview of Amir Mohammad Moradi's resume/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', {
+        name: /Preview of Amir Mohammad Moradi's resume/i,
+      }),
+    ).toBeInTheDocument()
     expect(screen.getByLabelText('Scrollable resume preview')).toHaveAttribute('tabindex', '0')
     expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute(
       'href',
@@ -93,7 +142,30 @@ describe('portfolio', () => {
 
     expect(screen.queryByRole('heading', { name: 'Engineering fundamentals.' })).not.toBeInTheDocument()
     expect(screen.getByLabelText('Made with love by Codex')).toBeInTheDocument()
+    expect(document.querySelector('.page-progress')).toBeInTheDocument()
+    expect(document.querySelector('.impact-scroll-progress')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute('href', '#main-content')
     expect(document.querySelector('#main-content')).toBeInTheDocument()
+  })
+
+  it('measures progress across the full document', () => {
+    render(<App />)
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      configurable: true,
+      value: 3000,
+    })
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 1000,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      configurable: true,
+      value: 1000,
+    })
+
+    fireEvent.scroll(window)
+    expect(document.querySelector('.page-progress span')).toHaveStyle({
+      transform: 'scaleX(0.5)',
+    })
   })
 })

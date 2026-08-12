@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { ChevronDown, Download, Heart } from 'lucide-react'
 import { FaAws, FaCodeBranch, FaGithub, FaLinkedinIn, FaRobot } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
@@ -178,27 +178,41 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 }
 
 function App() {
-  const [carouselStep, setCarouselStep] = useState(0)
-  const [carouselPaused, setCarouselPaused] = useState(false)
-  const activeImpact = ((carouselStep % impactStories.length) + impactStories.length) % impactStories.length
+  const [activeImpact, setActiveImpact] = useState(0)
+  const heroRef = useRef<HTMLElement>(null)
   const activeStory = impactStories[activeImpact]
 
   useEffect(() => {
-    const prefersReducedMotion = typeof window.matchMedia === 'function'
-      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (carouselPaused || prefersReducedMotion) return
+    const updateImpactFromScroll = () => {
+      const hero = heroRef.current
+      if (!hero) return
 
-    const timer = window.setInterval(() => setCarouselStep((step) => step + 1), 7000)
-    return () => window.clearInterval(timer)
-  }, [carouselPaused])
+      const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
+      const progress = Math.min(1, Math.max(0, (window.scrollY - hero.offsetTop) / scrollRange))
+      const nextImpact = Math.min(impactStories.length - 1, Math.floor(progress * impactStories.length))
+      setActiveImpact((current) => current === nextImpact ? current : nextImpact)
+    }
+
+    updateImpactFromScroll()
+    window.addEventListener('scroll', updateImpactFromScroll, { passive: true })
+    window.addEventListener('resize', updateImpactFromScroll)
+    return () => {
+      window.removeEventListener('scroll', updateImpactFromScroll)
+      window.removeEventListener('resize', updateImpactFromScroll)
+    }
+  }, [])
 
   const selectImpact = (index: number) => {
-    setCarouselStep((step) => {
-      const current = ((step % impactStories.length) + impactStories.length) % impactStories.length
-      let distance = index - current
-      if (distance > impactStories.length / 2) distance -= impactStories.length
-      if (distance < -impactStories.length / 2) distance += impactStories.length
-      return step + distance
+    setActiveImpact(index)
+    const hero = heroRef.current
+    if (!hero || hero.offsetHeight <= window.innerHeight) return
+
+    const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
+    const prefersReducedMotion = typeof window.matchMedia === 'function'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({
+      top: hero.offsetTop + (index / (impactStories.length - 1)) * scrollRange,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
     })
   }
 
@@ -230,18 +244,14 @@ function App() {
       </header>
 
       <main id="main-content">
-        <section className="hero" id="top" aria-labelledby="hero-title">
+        <section className="hero" id="top" aria-labelledby="hero-title" ref={heroRef}>
           <div
             className="hero-impact"
             aria-roledescription="carousel"
             aria-label="Selected impact"
-            onPointerEnter={() => setCarouselPaused(true)}
-            onPointerLeave={() => setCarouselPaused(false)}
-            onFocusCapture={() => setCarouselPaused(true)}
-            onBlurCapture={() => setCarouselPaused(false)}
             onKeyDown={(event) => {
-              if (event.key === 'ArrowLeft') setCarouselStep((step) => step - 1)
-              if (event.key === 'ArrowRight') setCarouselStep((step) => step + 1)
+              if (event.key === 'ArrowLeft') selectImpact(Math.max(0, activeImpact - 1))
+              if (event.key === 'ArrowRight') selectImpact(Math.min(impactStories.length - 1, activeImpact + 1))
             }}
           >
             <div className="hero-identity">
@@ -251,7 +261,12 @@ function App() {
             </div>
 
             <div className="impact-stage">
-              <article className="impact-focus-card" aria-live="polite">
+              <article
+                className="impact-focus-card"
+                aria-live="polite"
+                data-step={String(activeImpact + 1).padStart(2, '0')}
+                key={activeStory.company}
+              >
                 <div className="impact-card-topline">
                   <p>{activeStory.company}</p>
                   <span>{String(activeImpact + 1).padStart(2, '0')} / 03</span>
@@ -281,14 +296,21 @@ function App() {
                   </button>
                 ))}
               </div>
+              <div className="impact-scroll-progress" aria-hidden="true">
+                <span style={{ '--impact-progress': `${((activeImpact + 1) / impactStories.length) * 100}%` } as CSSProperties} />
+              </div>
             </div>
 
+            <button
+              className="scroll-cue"
+              type="button"
+              aria-label="Explore impact stories"
+              onClick={() => window.scrollBy({ top: window.innerHeight * 0.72, behavior: 'smooth' })}
+            >
+              <span>Scroll through impact stories</span>
+              <ChevronDown aria-hidden="true" />
+            </button>
           </div>
-
-          <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
-            <span>Explore toolkit</span>
-            <ChevronDown aria-hidden="true" />
-          </a>
         </section>
 
         <section className="skills section" id="skills" aria-labelledby="skills-title">

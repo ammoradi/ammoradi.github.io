@@ -51,7 +51,7 @@ describe('portfolio', () => {
   it('keeps the portrait in the header and uses a downward scroll cue', () => {
     render(<App />)
 
-    expect(screen.getByRole('link', { name: 'Scroll to toolkit' })).toHaveAttribute('href', '#skills')
+    expect(screen.getByRole('button', { name: 'Explore impact stories' })).toBeInTheDocument()
     expect(document.querySelector('.hero-identity')?.textContent).toContain('Frontend Tech Lead · AI Product Engineer')
     expect(document.querySelector('.hero-identity')?.textContent).not.toContain('Amir Mohammad Moradi')
     expect(document.querySelector('.portrait-number')).not.toBeInTheDocument()

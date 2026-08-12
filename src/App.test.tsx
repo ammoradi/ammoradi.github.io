@@ -75,7 +75,7 @@ describe('portfolio', () => {
     render(<App />)
 
     expect(screen.queryByRole('heading', { name: 'Engineering fundamentals.' })).not.toBeInTheDocument()
-    expect(screen.getByLabelText('Made with love with Codex')).toBeInTheDocument()
+    expect(screen.getByLabelText('Made with love by Codex')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute('href', '#main-content')
     expect(document.querySelector('#main-content')).toBeInTheDocument()
   })

@@ -337,8 +337,8 @@ function App() {
 
       <footer>
         <p>© {new Date().getFullYear()} Amir Mohammad Moradi</p>
-        <p className="footer-made" aria-label="Made with love with Codex">
-          Made with <Heart aria-hidden="true" /> with Codex
+        <p className="footer-made" aria-label="Made with love by Codex">
+          Made with <Heart aria-hidden="true" /> by Codex
         </p>
         <a href="#top">Back to top ↑</a>
       </footer>

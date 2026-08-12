@@ -585,6 +585,19 @@ ul {
   display: none;
 }
 
+.impact-gallery-bookapo .impact-image-card:nth-child(3) {
+  z-index: 1;
+  right: 0;
+  bottom: 4%;
+  width: 88%;
+  transform: rotate(1deg);
+}
+
+.impact-gallery-bookapo .impact-image-card:nth-child(3) img {
+  aspect-ratio: 2.37 / 1;
+  object-fit: cover;
+}
+
 .impact-metrics div {
   min-width: 0;
   padding-top: 0.8rem;
@@ -1124,6 +1137,12 @@ footer a {
     height: 17rem;
     aspect-ratio: auto;
     object-fit: contain;
+  }
+  .impact-gallery-bookapo .impact-image-card:nth-child(3),
+  .impact-gallery-bookapo .impact-image-card:nth-child(3) img {
+    width: 82vw;
+    max-width: 27rem;
+    aspect-ratio: 2.37 / 1;
   }
   .impact-image-card figcaption {
     display: none;

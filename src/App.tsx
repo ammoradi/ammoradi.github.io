@@ -148,6 +148,11 @@ const impactStories: ImpactStory[] = [
         alt: 'Bookapo mobile app on two phones',
         caption: 'Mobile experience',
       },
+      {
+        src: '/bookapo-web-home.png',
+        alt: 'Bookapo Persian-language website home page',
+        caption: 'Web experience',
+      },
     ],
   },
 ]

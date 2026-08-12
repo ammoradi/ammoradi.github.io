@@ -25,9 +25,12 @@ describe('portfolio', () => {
     expect(screen.getByText('2k → 200k')).toBeInTheDocument()
   })
 
-  it('keeps the header focused on LinkedIn, GitHub, and resume', () => {
+  it('provides section navigation alongside LinkedIn, GitHub, and resume', () => {
     render(<App />)
 
+    expect(screen.getByRole('link', { name: 'Impact' })).toHaveAttribute('href', '#top')
+    expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '#skills')
+    expect(screen.getByRole('link', { name: 'Education' })).toHaveAttribute('href', '#education')
     expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute('href', 'https://www.linkedin.com/in/ammoradi/')
     expect(screen.getByRole('link', { name: 'GitHub profile' })).toHaveAttribute('href', 'https://github.com/ammoradi')
     expect(screen.getByRole('link', { name: /^Resume/i })).toHaveAttribute('href', '#resume')
@@ -50,6 +53,8 @@ describe('portfolio', () => {
     render(<App />)
 
     expect(screen.getByRole('link', { name: 'Scroll to toolkit' })).toHaveAttribute('href', '#skills')
+    expect(document.querySelector('.hero-identity')?.textContent).toContain('Frontend Tech Lead · AI Product Engineer')
+    expect(document.querySelector('.hero-identity')?.textContent).not.toContain('Amir Mohammad Moradi')
     expect(document.querySelector('.portrait-number')).not.toBeInTheDocument()
     expect(document.querySelector('.portrait-label')?.textContent).toBe('FrontendAI')
   })

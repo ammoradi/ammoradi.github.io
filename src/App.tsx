@@ -211,7 +211,12 @@ function App() {
           <span className="monogram" aria-hidden="true">AM</span>
           <span className="brand-name">Amir Mohammad Moradi</span>
         </a>
-        <nav className="header-links" aria-label="Primary navigation">
+        <nav className="site-nav" aria-label="Primary navigation">
+          <a href="#top">Impact</a>
+          <a href="#skills">Toolkit</a>
+          <a href="#education">Education</a>
+        </nav>
+        <div className="header-links" aria-label="Professional profiles">
           <a className="header-icon" href="https://www.linkedin.com/in/ammoradi/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
             <FaLinkedinIn aria-hidden="true" />
           </a>
@@ -219,7 +224,7 @@ function App() {
             <FaGithub aria-hidden="true" />
           </a>
           <a className="header-resume" href="#resume">Resume <span aria-hidden="true">↓</span></a>
-        </nav>
+        </div>
       </header>
 
       <main id="main-content">
@@ -239,7 +244,7 @@ function App() {
           >
             <div className="hero-identity">
               <p className="eyebrow">Helsinki, Finland · 11+ years in software</p>
-              <p>Amir Mohammad Moradi</p>
+              <p>Frontend Tech Lead · AI Product Engineer</p>
             </div>
 
             <div className="impact-stage">
@@ -282,7 +287,6 @@ function App() {
             </div>
 
             <div className="hero-footer">
-              <p>Frontend Tech Lead · AI Product Engineer</p>
               <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
                 <span>Explore toolkit</span>
                 <ChevronDown aria-hidden="true" />

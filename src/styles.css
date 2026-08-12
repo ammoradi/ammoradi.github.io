@@ -117,8 +117,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(2.55);
-  transform-origin: 48% 25%;
+  transform: scale(2.3);
+  transform-origin: 48% 10%;
 }
 
 .brand-name {

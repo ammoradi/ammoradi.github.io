@@ -202,20 +202,6 @@ function App() {
     }
   }, [])
 
-  const selectImpact = (index: number) => {
-    setActiveImpact(index)
-    const hero = heroRef.current
-    if (!hero || hero.offsetHeight <= window.innerHeight) return
-
-    const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
-    const prefersReducedMotion = typeof window.matchMedia === 'function'
-      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    window.scrollTo({
-      top: hero.offsetTop + (index / (impactStories.length - 1)) * scrollRange,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    })
-  }
-
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
@@ -249,10 +235,6 @@ function App() {
             className="hero-impact"
             aria-roledescription="carousel"
             aria-label="Selected impact"
-            onKeyDown={(event) => {
-              if (event.key === 'ArrowLeft') selectImpact(Math.max(0, activeImpact - 1))
-              if (event.key === 'ArrowRight') selectImpact(Math.min(impactStories.length - 1, activeImpact + 1))
-            }}
           >
             <div className="hero-identity">
               <p className="eyebrow">
@@ -282,20 +264,6 @@ function App() {
                   ))}
                 </dl>
               </article>
-              <div className="impact-selector" aria-label="Choose an impact story">
-                {impactStories.map((story, index) => (
-                  <button
-                    type="button"
-                    key={story.company}
-                    aria-label={`Show ${story.company} impact`}
-                    aria-current={activeImpact === index ? 'true' : undefined}
-                    onClick={() => selectImpact(index)}
-                  >
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    {story.company}
-                  </button>
-                ))}
-              </div>
               <div className="impact-scroll-progress" aria-hidden="true">
                 <span style={{ '--impact-progress': `${((activeImpact + 1) / impactStories.length) * 100}%` } as CSSProperties} />
               </div>

@@ -7,20 +7,26 @@ describe('portfolio', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: /Interfaces built to stay on/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /Show Bluefors impact/i })).toHaveAttribute('aria-current', 'true')
+    expect(screen.queryByRole('button', { name: /Show Bluefors impact/i })).not.toBeInTheDocument()
     expect(screen.getByText('80%')).toBeInTheDocument()
     expect(screen.getByText('100+')).toBeInTheDocument()
   })
 
-  it('moves between impact stories with company selectors', () => {
+  it('moves between impact stories as the page scrolls', () => {
     render(<App />)
 
-    fireEvent.click(screen.getByRole('button', { name: /Show AlphaSense impact/i }))
+    const hero = document.querySelector('.hero') as HTMLElement
+    Object.defineProperty(hero, 'offsetHeight', { configurable: true, value: 3000 })
+    Object.defineProperty(hero, 'offsetTop', { configurable: true, value: 0 })
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 1000 })
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1000 })
+    fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
     expect(screen.getByText('4k+')).toBeInTheDocument()
     expect(screen.getByText('100k+')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: /Show Bookapo impact/i }))
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1900 })
+    fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A platform scaled 100×/i })).toBeInTheDocument()
     expect(screen.getByText('2k → 200k')).toBeInTheDocument()
   })

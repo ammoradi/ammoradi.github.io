@@ -1,29 +1,54 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import App from './App'
 
 describe('portfolio', () => {
-  it('presents the core professional story', () => {
+  it('opens with a measurable impact carousel', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: /Engineering interfaces that stay clear under pressure/i })).toBeInTheDocument()
-    expect(screen.getAllByText('Bluefors').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('AlphaSense').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('Bookapo').length).toBeGreaterThan(0)
+
+    expect(screen.getByRole('heading', { name: /Interfaces built to stay on/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Show Bluefors impact/i })).toHaveAttribute('aria-current', 'true')
+    expect(screen.getByText('80%')).toBeInTheDocument()
+    expect(screen.getByText('100+')).toBeInTheDocument()
   })
 
-  it('exposes only the approved social profiles in page links', () => {
+  it('moves between impact stories with explicit controls', () => {
     render(<App />)
-    const hrefs = screen.getAllByRole('link').map((link) => link.getAttribute('href'))
-    expect(hrefs).toContain('https://github.com/ammoradi')
-    expect(hrefs).toContain('https://www.linkedin.com/in/ammoradi/')
-    expect(hrefs.some((href) => href?.startsWith('mailto:'))).toBe(false)
-    expect(document.body.textContent).not.toContain('+358')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next impact' }))
+    expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
+    expect(screen.getByText('4k+')).toBeInTheDocument()
+    expect(screen.getByText('100k+')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /Show Bookapo impact/i }))
+    expect(screen.getByRole('heading', { name: /A platform scaled 100×/i })).toBeInTheDocument()
+    expect(screen.getByText('2k → 200k')).toBeInTheDocument()
+  })
+
+  it('keeps the header focused on LinkedIn, GitHub, and resume', () => {
+    render(<App />)
+
+    expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute('href', 'https://www.linkedin.com/in/ammoradi/')
+    expect(screen.getByRole('link', { name: 'GitHub profile' })).toHaveAttribute('href', 'https://github.com/ammoradi')
+    expect(screen.getByRole('link', { name: /^Resume/i })).toHaveAttribute('href', '#resume')
+    expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument()
+  })
+
+  it('presents the toolkit as technology lanes without duplicated biography sections', () => {
+    render(<App />)
+
+    expect(screen.getByRole('heading', { name: 'The tools behind the outcomes.' })).toBeInTheDocument()
+    expect(screen.getAllByText('TypeScript').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Playwright').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('GraphQL').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Figma').length).toBeGreaterThan(0)
+    expect(screen.queryByText(/A frontend specialist with a whole-product view/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/A decade of building, leading, and learning/i)).not.toBeInTheDocument()
   })
 
   it('links to a scrollable resume preview with an explicit download', () => {
     render(<App />)
 
-    expect(screen.getAllByRole('link', { name: /^resume/i })[0]).toHaveAttribute('href', '#resume')
     expect(screen.getByRole('img', { name: /Preview of Amir Mohammad Moradi's resume/i })).toBeInTheDocument()
     expect(screen.getByLabelText('Scrollable resume preview')).toHaveAttribute('tabindex', '0')
     expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute(
@@ -33,19 +58,11 @@ describe('portfolio', () => {
     expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute('download')
   })
 
-  it('shows the expanded Bookapo and AlphaSense metrics', () => {
+  it('keeps education and keyboard navigation landmarks', () => {
     render(<App />)
 
-    expect(screen.getAllByText('2k+').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('4k+').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('100k+').length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/legacy code modernized/i).length).toBeGreaterThan(0)
-  })
-
-  it('provides semantic navigation and a keyboard skip target', () => {
-    render(<App />)
-
-    expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Engineering fundamentals.' })).toBeInTheDocument()
+    expect(screen.getByText(/Iran University of Science and Technology/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute('href', '#main-content')
     expect(document.querySelector('#main-content')).toBeInTheDocument()
   })

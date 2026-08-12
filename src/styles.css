@@ -102,17 +102,23 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .site-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 
-.monogram {
-  display: grid;
+.brand-avatar {
+  display: block;
   width: 2.7rem;
   height: 2.7rem;
-  place-items: center;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 2px solid var(--yellow);
   border-radius: 50%;
-  color: var(--ink);
   background: var(--yellow);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: -0.05em;
+}
+
+.brand-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% 24%;
+  transform: scale(1.8);
 }
 
 .brand-name {
@@ -158,8 +164,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .hero {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  display: block;
   min-height: calc(100svh - 4.5rem);
   border-bottom: 1px solid var(--ink);
   background: var(--yellow);
@@ -168,6 +173,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero-impact {
   display: grid;
   min-width: 0;
+  min-height: calc(100svh - 4.5rem);
   grid-template-rows: auto minmax(0, 1fr);
   padding: 1.5rem 2.5vw 4.25rem 4vw;
   overflow: hidden;
@@ -189,7 +195,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .impact-stage {
   position: relative;
   display: grid;
-  width: min(100%, 50rem);
+  width: min(100%, 66rem);
   align-self: center;
   justify-self: center;
   gap: 0.8rem;
@@ -354,36 +360,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .scroll-cue svg { width: 1.4rem; height: 1.4rem; stroke-width: 2.5; }
-
-.portrait-panel {
-  position: relative;
-  width: auto;
-  max-width: 90%;
-  height: min(64svh, 450px);
-  min-height: 0;
-  aspect-ratio: 0.8;
-  align-self: center;
-  justify-self: center;
-  overflow: hidden;
-  background: transparent;
-}
-
-.portrait-panel img {
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  animation: portrait-slide-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes portrait-slide-in {
-  from { opacity: 0; transform: translateX(4rem); }
-  to { opacity: 1; transform: translateX(0); }
-}
 
 .section {
   padding: clamp(4.5rem, 8vw, 8rem) 4vw;
@@ -622,24 +598,22 @@ footer a { justify-self: end; }
   .site-header { grid-template-columns: auto 1fr auto; }
   .brand-name { display: none; }
   .site-nav { gap: 1rem; }
-  .hero { grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr); }
   .hero-impact { padding-right: 2.5vw; padding-left: 4vw; }
-  .impact-stage { width: min(100%, 39rem); }
+  .impact-stage { width: min(100%, 54rem); }
   .skill-lane { grid-template-columns: 14rem 1fr; }
 }
 
 @media (max-width: 740px) {
   html { scroll-padding-top: 4rem; }
   .site-header { min-height: 4rem; padding: 0 1rem; }
-  .monogram { width: 2.25rem; height: 2.25rem; }
+  .brand-avatar { width: 2.25rem; height: 2.25rem; }
   .site-nav { gap: 0.65rem; }
   .site-nav a { font-size: 0.54rem; letter-spacing: 0.04em; }
   .header-links { gap: 0.38rem; }
   .header-icon { width: 2rem; height: 2rem; }
   .header-resume { margin-left: 0; padding: 0.55rem 0.7rem; font-size: 0.65rem; }
-  .hero { display: flex; min-height: auto; flex-direction: column; }
-  .portrait-panel { order: 1; width: 100%; max-width: none; height: min(40svh, 20rem); aspect-ratio: auto; }
-  .hero-impact { order: 2; min-height: 43rem; padding: 1.3rem 1rem 1.5rem; }
+  .hero { min-height: auto; }
+  .hero-impact { min-height: 43rem; padding: 1.3rem 1rem 1.5rem; }
   .hero-identity { padding: 0 0.25rem; }
   .impact-stage { width: min(100%, 27rem); padding: 0; }
   .impact-selector { gap: 0.3rem; }

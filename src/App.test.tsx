@@ -48,7 +48,7 @@ describe('portfolio', () => {
     expect(screen.queryByText(/A decade of building, leading, and learning/i)).not.toBeInTheDocument()
   })
 
-  it('keeps the portrait minimal and uses a downward scroll cue', () => {
+  it('keeps the portrait in the header and uses a downward scroll cue', () => {
     render(<App />)
 
     expect(screen.getByRole('link', { name: 'Scroll to toolkit' })).toHaveAttribute('href', '#skills')
@@ -56,6 +56,8 @@ describe('portfolio', () => {
     expect(document.querySelector('.hero-identity')?.textContent).not.toContain('Amir Mohammad Moradi')
     expect(document.querySelector('.portrait-number')).not.toBeInTheDocument()
     expect(document.querySelector('.portrait-label')).not.toBeInTheDocument()
+    expect(document.querySelector('.portrait-panel')).not.toBeInTheDocument()
+    expect(document.querySelector('.brand-avatar img')).toHaveAttribute('src', '/portrait.jpg')
     expect(screen.queryByRole('button', { name: 'Next impact' })).not.toBeInTheDocument()
   })
 

@@ -208,7 +208,9 @@ function App() {
 
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Amir Mohammad Moradi, home">
-          <span className="monogram" aria-hidden="true">AM</span>
+          <span className="brand-avatar" aria-hidden="true">
+            <img src="/portrait.jpg" alt="" />
+          </span>
           <span className="brand-name">Amir Mohammad Moradi</span>
         </a>
         <nav className="site-nav" aria-label="Primary navigation">
@@ -281,10 +283,6 @@ function App() {
               </div>
             </div>
 
-          </div>
-
-          <div className="portrait-panel">
-            <img src="/portrait.jpg" alt="Illustrated portrait of Amir Mohammad Moradi" />
           </div>
 
           <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">

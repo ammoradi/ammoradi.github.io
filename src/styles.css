@@ -396,6 +396,44 @@ ul { margin: 0; padding: 0; list-style: none; }
 .impact-gallery-square .impact-image-card:nth-child(2) { right: 3%; }
 .impact-gallery-square .impact-image-card:nth-child(3) { right: 18%; }
 
+.impact-gallery-bookapo { min-height: clamp(22rem, 53svh, 31rem); }
+
+.impact-gallery-bookapo .impact-image-card:nth-child(1) {
+  z-index: 1;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  border-color: rgba(80, 99, 255, 0.55);
+  background: #334ad6;
+  transform: rotate(-1deg);
+}
+
+.impact-gallery-bookapo .impact-image-card:nth-child(1) img {
+  aspect-ratio: 4.28 / 1;
+  object-fit: cover;
+}
+
+.impact-gallery-bookapo .impact-image-card:nth-child(2) {
+  z-index: 2;
+  top: 0;
+  right: 4%;
+  bottom: auto;
+  width: min(53%, 20rem);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: rotate(1.5deg);
+}
+
+.impact-gallery-bookapo .impact-image-card:nth-child(2) img {
+  width: 100%;
+  height: clamp(20rem, 52svh, 30rem);
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.impact-gallery-bookapo .impact-image-card:nth-child(2) figcaption { display: none; }
+
 .impact-metrics div {
   min-width: 0;
   padding-top: 0.8rem;
@@ -718,6 +756,10 @@ footer a { justify-self: end; }
   .impact-gallery { display: flex; min-height: 0; gap: 0.65rem; margin-top: 0.9rem; overflow-x: auto; padding: 0 0.2rem 0.75rem; scroll-snap-type: x mandatory; }
   .impact-image-card, .impact-image-card:nth-child(n) { position: relative; top: auto; right: auto; bottom: auto; left: auto; width: 78vw; max-width: 25rem; flex: 0 0 auto; transform: none; scroll-snap-align: center; }
   .impact-gallery-square .impact-image-card, .impact-gallery-square .impact-image-card:nth-child(n) { width: 72vw; max-width: 21rem; }
+  .impact-gallery-bookapo .impact-image-card, .impact-gallery-bookapo .impact-image-card:nth-child(n) { width: 82vw; max-width: 27rem; background: var(--white); }
+  .impact-gallery-bookapo .impact-image-card:nth-child(1) img { aspect-ratio: 4.28 / 1; object-fit: cover; }
+  .impact-gallery-bookapo .impact-image-card:nth-child(2) { width: 68vw; max-width: 18rem; background: transparent; }
+  .impact-gallery-bookapo .impact-image-card:nth-child(2) img { height: 17rem; aspect-ratio: auto; object-fit: contain; }
   .impact-image-card figcaption { display: none; }
   .section { padding: 4.5rem 1.25rem; }
   .section-heading { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 3rem; }

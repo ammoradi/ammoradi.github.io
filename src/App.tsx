@@ -43,7 +43,7 @@ type ImpactStory = {
   metrics: Array<{ value: string; label: string }>
   productUrl?: string
   productLabel?: string
-  galleryFormat?: 'landscape' | 'square'
+  galleryFormat?: 'landscape' | 'square' | 'bookapo'
   images?: Array<{ src: string; alt: string; caption: string }>
 }
 
@@ -105,6 +105,13 @@ const impactStories: ImpactStory[] = [
       { value: '2k+', label: 'concurrent users' },
       { value: '−20%', label: 'mobile crash rate' },
       { value: '−80%', label: 'mobile memory use' },
+    ],
+    productUrl: 'https://bookapo.com/',
+    productLabel: 'Visit Bookapo',
+    galleryFormat: 'bookapo',
+    images: [
+      { src: '/bookapo-audio-library.png', alt: 'Bookapo mobile audiobook library', caption: 'Audio library' },
+      { src: '/bookapo-mobile-app.png', alt: 'Bookapo mobile app on two phones', caption: 'Mobile experience' },
     ],
   },
 ]

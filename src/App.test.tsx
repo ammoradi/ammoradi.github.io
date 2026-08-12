@@ -36,6 +36,8 @@ describe('portfolio', () => {
     fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A platform scaled 100×/i })).toBeInTheDocument()
     expect(screen.getByText('2k → 200k')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Visit Bookapo/i })).toHaveAttribute('href', 'https://bookapo.com/')
+    expect(screen.getAllByRole('img', { name: /Bookapo/i })).toHaveLength(2)
   })
 
   it('provides section navigation alongside LinkedIn, GitHub, and resume', () => {

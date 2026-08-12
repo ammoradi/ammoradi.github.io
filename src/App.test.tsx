@@ -38,12 +38,20 @@ describe('portfolio', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: 'The tools behind the outcomes.' })).toBeInTheDocument()
-    expect(screen.getAllByText('TypeScript').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('TypeScript').length).toBe(4)
     expect(screen.getAllByText('Playwright').length).toBeGreaterThan(0)
     expect(screen.getAllByText('GraphQL').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Figma').length).toBeGreaterThan(0)
     expect(screen.queryByText(/A frontend specialist with a whole-product view/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/A decade of building, leading, and learning/i)).not.toBeInTheDocument()
+  })
+
+  it('keeps the portrait minimal and uses a downward scroll cue', () => {
+    render(<App />)
+
+    expect(screen.getByRole('link', { name: 'Scroll to toolkit' })).toHaveAttribute('href', '#skills')
+    expect(document.querySelector('.portrait-number')).not.toBeInTheDocument()
+    expect(document.querySelector('.portrait-label')?.textContent).toBe('FrontendAI')
   })
 
   it('links to a scrollable resume preview with an explicit download', () => {
@@ -65,5 +73,7 @@ describe('portfolio', () => {
     expect(screen.getByText(/Iran University of Science and Technology/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute('href', '#main-content')
     expect(document.querySelector('#main-content')).toBeInTheDocument()
+    expect(document.querySelector('#resume')?.compareDocumentPosition(document.querySelector('#education')!))
+      .toBe(Node.DOCUMENT_POSITION_FOLLOWING)
   })
 })

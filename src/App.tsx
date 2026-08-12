@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import { ChevronLeft, ChevronRight, Download } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight, Download } from 'lucide-react'
 import { FaAws, FaCodeBranch, FaGithub, FaLinkedinIn, FaRobot } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 import {
@@ -242,8 +242,21 @@ function App() {
               <p>Amir Mohammad Moradi</p>
             </div>
 
-            <div className="impact-wheel">
-              <div className="orbit-line" aria-hidden="true" />
+            <div className="impact-stage">
+              <div className="impact-selector" aria-label="Choose an impact story">
+                {impactStories.map((story, index) => (
+                  <button
+                    type="button"
+                    key={story.company}
+                    aria-label={`Show ${story.company} impact`}
+                    aria-current={activeImpact === index ? 'true' : undefined}
+                    onClick={() => selectImpact(index)}
+                  >
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    {story.company}
+                  </button>
+                ))}
+              </div>
               <article className="impact-focus-card" aria-live="polite">
                 <div className="impact-card-topline">
                   <p>{activeStory.company}</p>
@@ -260,51 +273,27 @@ function App() {
                   ))}
                 </dl>
               </article>
-
-              <div className="orbit-options" aria-label="Choose an impact story">
-                {impactStories.map((story, index) => {
-                  const angle = -90 + index * 120 - carouselStep * 120
-                  const style = {
-                    '--orbit-angle': `${angle}deg`,
-                    '--orbit-counter-angle': `${-angle}deg`,
-                  } as CSSProperties
-
-                  return (
-                    <button
-                      className="orbit-option"
-                      style={style}
-                      type="button"
-                      key={story.company}
-                      aria-label={`Show ${story.company} impact`}
-                      aria-current={activeImpact === index ? 'true' : undefined}
-                      onClick={() => selectImpact(index)}
-                    >
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      {story.company}
-                    </button>
-                  )
-                })}
-              </div>
+              <button className="impact-nav impact-nav-previous" type="button" aria-label="Previous impact" onClick={() => setCarouselStep((step) => step - 1)}>
+                <ChevronLeft aria-hidden="true" />
+              </button>
+              <button className="impact-nav impact-nav-next" type="button" aria-label="Next impact" onClick={() => setCarouselStep((step) => step + 1)}>
+                <ChevronRight aria-hidden="true" />
+              </button>
             </div>
 
-            <div className="carousel-controls">
+            <div className="hero-footer">
               <p>Frontend Tech Lead · AI Product Engineer</p>
-              <div>
-                <button type="button" aria-label="Previous impact" onClick={() => setCarouselStep((step) => step - 1)}>
-                  <ChevronLeft aria-hidden="true" />
-                </button>
-                <button type="button" aria-label="Next impact" onClick={() => setCarouselStep((step) => step + 1)}>
-                  <ChevronRight aria-hidden="true" />
-                </button>
-              </div>
+              <a className="scroll-cue" href="#skills" aria-label="Scroll to toolkit">
+                <span>Explore toolkit</span>
+                <ChevronDown aria-hidden="true" />
+              </a>
             </div>
           </div>
 
           <div className="portrait-panel">
-            <div className="portrait-number" aria-hidden="true">11+</div>
             <img src="/portrait.jpg" alt="Illustrated portrait of Amir Mohammad Moradi" />
             <div className="portrait-label" aria-hidden="true">
-              <span>Frontend</span><span>Product</span><span>AI</span>
+              <span>Frontend</span><span>AI</span>
             </div>
           </div>
         </section>
@@ -320,8 +309,9 @@ function App() {
                 </div>
                 <div className="technology-window">
                   <div className="technology-track" style={{ '--marquee-duration': lane.duration } as CSSProperties}>
-                    <TechnologySet technologies={lane.technologies} />
-                    <TechnologySet technologies={lane.technologies} duplicate />
+                    {[0, 1, 2, 3].map((copy) => (
+                      <TechnologySet key={copy} technologies={lane.technologies} duplicate={copy > 0} />
+                    ))}
                   </div>
                 </div>
               </article>
@@ -329,22 +319,8 @@ function App() {
           </div>
         </section>
 
-        <section className="education section" id="education" aria-labelledby="education-title">
-          <SectionHeading id="education-title" eyebrow="02 / Education" title="Engineering fundamentals." />
-          <div className="education-list">
-            <article className="education-item reveal">
-              <p>2014 – 2019</p>
-              <div><h3>Bachelor of Science · Computer Engineering</h3><p>Iran University of Science and Technology · Tehran, Iran</p></div>
-            </article>
-            <article className="education-item reveal">
-              <p>2007 – 2014</p>
-              <div><h3>Diploma · Mathematics Science</h3><p>National Organization for Development of Exceptional Talents · Tonekabon, Iran</p></div>
-            </article>
-          </div>
-        </section>
-
         <section className="resume section" id="resume" aria-labelledby="resume-title">
-          <SectionHeading id="resume-title" eyebrow="03 / Resume" title="The full story, in one page." />
+          <SectionHeading id="resume-title" eyebrow="02 / Resume" title="The full story, in one page." />
           <article className="resume-card reveal" aria-label="Resume preview card">
             <div className="resume-card-header">
               <div>
@@ -360,6 +336,20 @@ function App() {
               <img src="/resume-preview.png" alt="Preview of Amir Mohammad Moradi's resume" />
             </div>
           </article>
+        </section>
+
+        <section className="education section" id="education" aria-labelledby="education-title">
+          <SectionHeading id="education-title" eyebrow="03 / Education" title="Engineering fundamentals." />
+          <div className="education-list">
+            <article className="education-item reveal">
+              <p>2014 – 2019</p>
+              <div><h3>Bachelor of Science · Computer Engineering</h3><p>Iran University of Science and Technology · Tehran, Iran</p></div>
+            </article>
+            <article className="education-item reveal">
+              <p>2007 – 2014</p>
+              <div><h3>Diploma · Mathematics Science</h3><p>National Organization for Development of Exceptional Talents · Tonekabon, Iran</p></div>
+            </article>
+          </div>
         </section>
       </main>
 

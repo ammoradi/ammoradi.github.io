@@ -119,7 +119,6 @@ ul {
   min-height: 4.5rem;
   align-items: center;
   padding: 0 4vw;
-  border-bottom: 1px solid var(--page-line);
   color: var(--page-text);
   background: var(--header-bg);
   backdrop-filter: blur(16px);
@@ -894,8 +893,8 @@ footer {
   grid-template-columns: repeat(3, 1fr);
   padding: 1.5rem 4vw;
   color: var(--muted);
-  border-top: 1px solid var(--page-line);
-  background: var(--page-surface);
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
   font-size: 0.68rem;
   font-weight: 750;
   letter-spacing: 0.05em;

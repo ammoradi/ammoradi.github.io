@@ -6,7 +6,7 @@ describe('portfolio', () => {
   it('opens with a measurable impact carousel', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: /Interfaces built to stay on/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Interfaces built to stay on forever/i })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Show Bluefors impact/i })).not.toBeInTheDocument()
     expect(screen.getByText('7')).toBeInTheDocument()
     expect(screen.getByText('10k+')).toBeInTheDocument()
@@ -36,7 +36,7 @@ describe('portfolio', () => {
       value: 1000,
     })
     fireEvent.scroll(window)
-    expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /A decade of code, made micro-frontends/i })).toBeInTheDocument()
     expect(screen.getByText('4k+')).toBeInTheDocument()
     expect(screen.getByText('100k+')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Visit AlphaSense/i })).toHaveAttribute(
@@ -51,7 +51,7 @@ describe('portfolio', () => {
     })
     fireEvent.scroll(window)
     expect(screen.getByRole('heading', { name: /A platform scaled 100×/i })).toBeInTheDocument()
-    expect(screen.getByText('2k → 200k')).toBeInTheDocument()
+    expect(screen.getByText('2K → 200K+')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Visit Bookapo/i })).toHaveAttribute('href', 'https://bookapo.com/')
     expect(screen.getAllByRole('img', { name: /Bookapo/i })).toHaveLength(3)
   })
@@ -62,6 +62,7 @@ describe('portfolio', () => {
     expect(screen.getByRole('link', { name: 'Impact' })).toHaveAttribute('href', '#top')
     expect(screen.getByRole('link', { name: 'Tools & Skills' })).toHaveAttribute('href', '#skills')
     expect(screen.getAllByRole('link', { name: /^Resume/i })[0]).toHaveAttribute('href', '#resume')
+    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '#contact')
     expect(screen.getByRole('link', { name: 'LinkedIn profile' })).toHaveAttribute(
       'href',
       'https://www.linkedin.com/in/ammoradi/',
@@ -114,8 +115,8 @@ describe('portfolio', () => {
     expect(document.querySelector('.hero')).toHaveClass('hero-mobile')
     expect(document.querySelector('.hero-impact')).not.toBeInTheDocument()
     expect(document.querySelectorAll('.mobile-impact-card')).toHaveLength(3)
-    expect(screen.getByRole('heading', { name: /Interfaces built to stay on/i })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Interfaces built to stay on forever/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /A decade of code, made micro-frontends/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /A platform scaled/i })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Explore impact stories' })).not.toBeInTheDocument()
     expect(screen.queryByText('01 / 03')).not.toBeInTheDocument()
@@ -202,7 +203,7 @@ describe('portfolio', () => {
     expect(firstDestination.top).toBeCloseTo(700, 1)
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 700 })
     fireEvent.scroll(window)
-    expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /A decade of code, made micro-frontends/i })).toBeInTheDocument()
 
     fireEvent.click(cue)
     const secondDestination = scrollTo.mock.calls.at(-1)?.[0] as ScrollToOptions
@@ -232,7 +233,21 @@ describe('portfolio', () => {
       '/Amir_Mohammad_Moradi_Resume.pdf',
     )
     expect(screen.getByRole('link', { name: /Download PDF/i })).toHaveAttribute('download')
+    expect(screen.getByLabelText('Public resume privacy note')).toHaveTextContent(
+      'I omit my personal email address and phone number for privacy',
+    )
+    expect(screen.getByRole('link', { name: /visit the Contact section/i })).toHaveAttribute('href', '#contact')
     expect(screen.queryByText('02 / Resume')).not.toBeInTheDocument()
+  })
+
+  it('offers LinkedIn as the public contact channel', () => {
+    render(<App />)
+
+    expect(screen.getByRole('heading', { name: 'Let’s talk on LinkedIn.' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Message me on LinkedIn/i })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/ammoradi/',
+    )
   })
 
   it('keeps keyboard navigation landmarks and the Codex credit', () => {

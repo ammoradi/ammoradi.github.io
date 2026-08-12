@@ -51,6 +51,14 @@ type SkillLane = {
 }
 
 type Theme = 'light' | 'dark'
+type SectionId = 'top' | 'skills' | 'resume' | 'contact'
+
+const navigationLinks: Array<{ id: SectionId; label: string }> = [
+  { id: 'top', label: 'Impact' },
+  { id: 'skills', label: 'Tools & Skills' },
+  { id: 'resume', label: 'Resume' },
+  { id: 'contact', label: 'Contact' },
+]
 
 function getInitialGalleryPlayback() {
   return !(typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -74,7 +82,7 @@ const impactStories: ImpactStory[] = [
   {
     company: 'Bluefors',
     kicker: 'Leadership & reliability',
-    title: 'Interfaces built to stay on.',
+    title: 'Interfaces built to stay on forever.',
     metrics: [
       { value: '3', label: 'frontend teams led' },
       { value: '7', label: 'products and features designed from 0 to 100' },
@@ -105,7 +113,7 @@ const impactStories: ImpactStory[] = [
   {
     company: 'AlphaSense',
     kicker: 'Architecture at scale',
-    title: 'A decade of code, made modular.',
+    title: 'A decade of code, made micro-frontends.',
     metrics: [
       { value: '10+', label: 'years of legacy code modernized' },
       { value: '20+', label: 'frontend collaborators' },
@@ -138,10 +146,10 @@ const impactStories: ImpactStory[] = [
     kicker: 'Product & engineering',
     title: 'A platform scaled 100×.',
     metrics: [
-      { value: '2k → 200k', label: 'users scaled' },
+      { value: '2K → 200K+', label: 'users scaled' },
       { value: '2k+', label: 'concurrent users' },
-      { value: '−20%', label: 'mobile crash rate' },
-      { value: '−80%', label: 'memory usage' },
+      { value: '−20%', label: 'Android app crash rate' },
+      { value: '−80%', label: 'Android and iOS apps memory usage' },
     ],
     productUrl: 'https://bookapo.com/',
     productLabel: 'Visit Bookapo',
@@ -215,6 +223,7 @@ const skillLanes: SkillLane[] = [
       { name: 'AWS', icon: FaAws },
       { name: 'Terraform', icon: SiTerraform },
       { name: 'GitHub Actions', icon: SiGithubactions },
+      { name: 'Codex', icon: FaRobot },
     ],
   },
   {
@@ -227,7 +236,6 @@ const skillLanes: SkillLane[] = [
       { name: 'SCSS', icon: SiSass },
       { name: 'Responsive UI', icon: TbDevices },
       { name: 'Figma', icon: SiFigma },
-      { name: 'Codex', icon: FaRobot },
     ],
   },
 ]
@@ -286,7 +294,7 @@ function ImpactGallery({ story, emphasizeControl = false }: { story: ImpactStory
 
     const interval = window.setInterval(() => {
       setActiveImage((current) => (current + 1) % imageCount)
-    }, 5200)
+    }, 4600)
 
     return () => window.clearInterval(interval)
   }, [hovered, imageCount, playing])
@@ -378,6 +386,7 @@ function ImpactCard({
 
 function App() {
   const [activeImpact, setActiveImpact] = useState(0)
+  const [activeSection, setActiveSection] = useState<SectionId>('top')
   const [isMobile, setIsMobile] = useState(getInitialMobileLayout)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
@@ -400,6 +409,16 @@ function App() {
       const pageRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
       const pageProgress = Math.min(1, Math.max(0, window.scrollY / pageRange))
       if (pageProgressRef.current) pageProgressRef.current.style.transform = `scaleX(${pageProgress})`
+
+      const activationPoint = window.scrollY + 96
+      const isAtPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
+      const nextSection = isAtPageEnd
+        ? 'contact'
+        : navigationLinks.reduce<SectionId>((current, link) => {
+            const section = document.getElementById(link.id)
+            return section && section.offsetTop <= activationPoint ? link.id : current
+          }, 'top')
+      setActiveSection((current) => (current === nextSection ? current : nextSection))
     }
 
     updateScrollState()
@@ -504,9 +523,16 @@ function App() {
             {mobileMenuOpen && (
               <div className="mobile-menu" id="mobile-menu">
                 <nav aria-label="Primary navigation">
-                  <a href="#top" onClick={() => setMobileMenuOpen(false)}>Impact</a>
-                  <a href="#skills" onClick={() => setMobileMenuOpen(false)}>Tools &amp; Skills</a>
-                  <a href="#resume" onClick={() => setMobileMenuOpen(false)}>Resume</a>
+                  {navigationLinks.map((link) => (
+                    <a
+                      href={`#${link.id}`}
+                      aria-current={activeSection === link.id ? 'location' : undefined}
+                      onClick={() => setMobileMenuOpen(false)}
+                      key={link.id}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
                 </nav>
                 <div className="mobile-menu-actions" aria-label="Social links and appearance">
                   <a href="https://github.com/ammoradi" target="_blank" rel="noreferrer">
@@ -529,9 +555,15 @@ function App() {
         ) : (
           <>
             <nav className="site-nav" aria-label="Primary navigation">
-              <a href="#top">Impact</a>
-              <a href="#skills">Tools &amp; Skills</a>
-              <a href="#resume">Resume</a>
+              {navigationLinks.map((link) => (
+                <a
+                  href={`#${link.id}`}
+                  aria-current={activeSection === link.id ? 'location' : undefined}
+                  key={link.id}
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
             <div className="header-links" aria-label="Header controls">
               <a className="header-icon" href="https://www.linkedin.com/in/ammoradi/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
@@ -623,11 +655,17 @@ function App() {
 
         <section className="resume section" id="resume" aria-labelledby="resume-title">
           <SectionHeading id="resume-title" eyebrow="Resume" title="The full story, in one page." />
+          <aside className="resume-public-note reveal" aria-label="Public resume privacy note">
+            <p>
+              This is the public version of my résumé. I omit my personal email address and phone number for privacy.
+              To get in touch, please <a href="#contact">visit the Contact section</a>.
+            </p>
+          </aside>
           <article className="resume-card reveal" aria-label="Resume preview card">
             <div className="resume-card-header">
               <div>
                 <p className="eyebrow">Amir Mohammad Moradi</p>
-                <p>Résumé · PDF · One page</p>
+                <p>Public résumé · PDF · One page</p>
               </div>
               <a className="button button-dark resume-download" href="/Amir_Mohammad_Moradi_Resume.pdf" download>
                 <Download size={17} strokeWidth={2.25} aria-hidden="true" />
@@ -638,6 +676,23 @@ function App() {
               <img src="/resume-preview.png" alt="Preview of Amir Mohammad Moradi's resume" />
             </div>
           </article>
+        </section>
+
+        <section className="contact section" id="contact" aria-labelledby="contact-title">
+          <SectionHeading id="contact-title" eyebrow="Contact" title="Let’s talk on LinkedIn." />
+          <div className="contact-action reveal">
+            <p>Please visit my LinkedIn profile and send me a message there.</p>
+            <a
+              className="button contact-link"
+              href="https://www.linkedin.com/in/ammoradi/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaLinkedinIn aria-hidden="true" />
+              Message me on LinkedIn
+              <ExternalLink size={16} strokeWidth={2.25} aria-hidden="true" />
+            </a>
+          </div>
         </section>
       </main>
 

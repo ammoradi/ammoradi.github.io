@@ -42,6 +42,8 @@ type ImpactStory = {
   title: string
   metrics: Array<{ value: string; label: string }>
   productUrl?: string
+  productLabel?: string
+  galleryFormat?: 'landscape' | 'square'
   images?: Array<{ src: string; alt: string; caption: string }>
 }
 
@@ -67,6 +69,8 @@ const impactStories: ImpactStory[] = [
       { value: '100+', label: 'manual components removed' },
     ],
     productUrl: 'https://bluefors.com/products/dilution-refrigerator-measurement-systems/control-software/',
+    productLabel: 'View Bluefors control software',
+    galleryFormat: 'landscape',
     images: [
       { src: '/bluefors-data-viewer.png', alt: 'Bluefors control software data viewer', caption: 'Live data' },
       { src: '/bluefors-system-control.png', alt: 'Bluefors control software system diagram', caption: 'System control' },
@@ -82,6 +86,14 @@ const impactStories: ImpactStory[] = [
       { value: '20+', label: 'frontend collaborators' },
       { value: '4k+', label: 'enterprise companies served' },
       { value: '100k+', label: 'visits per month' },
+    ],
+    productUrl: 'https://www.alpha-sense.com/',
+    productLabel: 'Visit AlphaSense',
+    galleryFormat: 'square',
+    images: [
+      { src: '/alphasense-industry-monitoring.png', alt: 'AlphaSense industry monitoring interface', caption: 'Industry intelligence' },
+      { src: '/alphasense-expert-transcripts.png', alt: 'AlphaSense expert transcript interface', caption: 'Expert insights' },
+      { src: '/alphasense-notebook.png', alt: 'AlphaSense notebook and broker research interface', caption: 'Research workflow' },
     ],
   },
   {
@@ -275,7 +287,7 @@ function App() {
                         ))}
                       </dl>
                       <a className="impact-product-link" href={activeStory.productUrl} target="_blank" rel="noreferrer">
-                        View Bluefors control software
+                        {activeStory.productLabel}
                         <ExternalLink aria-hidden="true" />
                       </a>
                     </>
@@ -283,7 +295,10 @@ function App() {
                 </div>
                 <div className="impact-story-side">
                   {activeStory.images ? (
-                    <div className="impact-gallery" aria-label="Bluefors control software screenshots">
+                    <div
+                      className={`impact-gallery impact-gallery-${activeStory.galleryFormat ?? 'landscape'}`}
+                      aria-label={`${activeStory.company} product screenshots`}
+                    >
                       {activeStory.images.map((image) => (
                         <figure className="impact-image-card" key={image.src}>
                           <img src={image.src} alt={image.alt} />

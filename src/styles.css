@@ -390,6 +390,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-transform: uppercase;
 }
 
+.impact-gallery-square .impact-image-card { width: min(65%, 22rem); }
+.impact-gallery-square .impact-image-card img { aspect-ratio: 1; object-fit: contain; }
+.impact-gallery-square .impact-image-card:nth-child(1) { left: 3%; }
+.impact-gallery-square .impact-image-card:nth-child(2) { right: 3%; }
+.impact-gallery-square .impact-image-card:nth-child(3) { right: 18%; }
+
 .impact-metrics div {
   min-width: 0;
   padding-top: 0.8rem;
@@ -711,6 +717,7 @@ footer a { justify-self: end; }
   .impact-product-link { margin-top: 0.8rem; }
   .impact-gallery { display: flex; min-height: 0; gap: 0.65rem; margin-top: 0.9rem; overflow-x: auto; padding: 0 0.2rem 0.75rem; scroll-snap-type: x mandatory; }
   .impact-image-card, .impact-image-card:nth-child(n) { position: relative; top: auto; right: auto; bottom: auto; left: auto; width: 78vw; max-width: 25rem; flex: 0 0 auto; transform: none; scroll-snap-align: center; }
+  .impact-gallery-square .impact-image-card, .impact-gallery-square .impact-image-card:nth-child(n) { width: 72vw; max-width: 21rem; }
   .impact-image-card figcaption { display: none; }
   .section { padding: 4.5rem 1.25rem; }
   .section-heading { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 3rem; }

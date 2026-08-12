@@ -29,6 +29,8 @@ describe('portfolio', () => {
     expect(screen.getByRole('heading', { name: /A decade of code, made modular/i })).toBeInTheDocument()
     expect(screen.getByText('4k+')).toBeInTheDocument()
     expect(screen.getByText('100k+')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Visit AlphaSense/i })).toHaveAttribute('href', 'https://www.alpha-sense.com/')
+    expect(screen.getAllByRole('img', { name: /AlphaSense/i })).toHaveLength(3)
 
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 1900 })
     fireEvent.scroll(window)

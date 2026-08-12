@@ -249,20 +249,6 @@ function App() {
             </div>
 
             <div className="impact-stage">
-              <div className="impact-selector" aria-label="Choose an impact story">
-                {impactStories.map((story, index) => (
-                  <button
-                    type="button"
-                    key={story.company}
-                    aria-label={`Show ${story.company} impact`}
-                    aria-current={activeImpact === index ? 'true' : undefined}
-                    onClick={() => selectImpact(index)}
-                  >
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    {story.company}
-                  </button>
-                ))}
-              </div>
               <article className="impact-focus-card" aria-live="polite">
                 <div className="impact-card-topline">
                   <p>{activeStory.company}</p>
@@ -279,6 +265,20 @@ function App() {
                   ))}
                 </dl>
               </article>
+              <div className="impact-selector" aria-label="Choose an impact story">
+                {impactStories.map((story, index) => (
+                  <button
+                    type="button"
+                    key={story.company}
+                    aria-label={`Show ${story.company} impact`}
+                    aria-current={activeImpact === index ? 'true' : undefined}
+                    onClick={() => selectImpact(index)}
+                  >
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    {story.company}
+                  </button>
+                ))}
+              </div>
             </div>
 
           </div>

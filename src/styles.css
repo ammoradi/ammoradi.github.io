@@ -597,6 +597,12 @@ ul {
   object-fit: cover;
 }
 
+.impact-gallery-bookapo .impact-image-card:hover {
+  z-index: 5;
+  box-shadow: 0 1.35rem 3.5rem rgba(0, 0, 0, 0.48);
+  transform: translateY(-0.6rem) rotate(0deg) scale(1.035);
+}
+
 .impact-metrics div {
   min-width: 0;
   padding-top: 0.8rem;

@@ -24,7 +24,9 @@ export function ResumeSection() {
       >
         <p>
           This is the public version of my résumé. I omit my personal email
-          address and phone number for privacy. To get in touch, please{" "}
+          address and phone number for privacy.{" "}
+          <br className="resume-public-note-break" />
+          To get in touch, please{" "}
           <a href="#contact">visit the Contact section</a>.
         </p>
       </aside>

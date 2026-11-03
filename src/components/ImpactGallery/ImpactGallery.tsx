@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Pause, Play } from "lucide-react";
 import { getInitialGalleryPlayback } from "../../utils/initial-preferences";
 import type { ImpactStory } from "../../utils/portfolio-types";
@@ -6,11 +7,13 @@ import type { ImpactStory } from "../../utils/portfolio-types";
 type ImpactGalleryProps = {
   story: ImpactStory;
   emphasizeControl?: boolean;
+  playbackSlot?: HTMLDivElement | null;
 };
 
 export function ImpactGallery({
   story,
   emphasizeControl = false,
+  playbackSlot,
 }: ImpactGalleryProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [playing, setPlaying] = useState(getInitialGalleryPlayback);
@@ -34,6 +37,19 @@ export function ImpactGallery({
   }, [emphasizeControl]);
 
   if (!story.images) return null;
+
+  const playbackButton = (
+    <button
+      className={`gallery-playback${hintVisible || !playing ? " is-prominent" : ""}`}
+      type="button"
+      aria-label={`${playing ? "Pause" : "Play"} automatic screenshot rotation`}
+      aria-pressed={!playing}
+      onClick={() => setPlaying((current) => !current)}
+    >
+      {playing ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+      <span>{playing ? "Pause auto-play" : "Start auto-play"}</span>
+    </button>
+  );
 
   return (
     <div
@@ -69,16 +85,7 @@ export function ImpactGallery({
           </a>
         </figure>
       ))}
-      <button
-        className={`button gallery-playback${hintVisible || !playing ? " is-prominent" : ""}`}
-        type="button"
-        aria-label={`${playing ? "Pause" : "Play"} automatic screenshot rotation`}
-        aria-pressed={!playing}
-        onClick={() => setPlaying((current) => !current)}
-      >
-        {playing ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
-        <span>{playing ? "Pause auto-play" : "Start auto-play"}</span>
-      </button>
+      {playbackSlot ? createPortal(playbackButton, playbackSlot) : playbackButton}
     </div>
   );
 }

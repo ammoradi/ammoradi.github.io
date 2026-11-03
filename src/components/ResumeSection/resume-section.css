@@ -14,9 +14,24 @@
   line-height: 1.65;
 }
 
+.resume-public-note-break {
+  display: none;
+}
+
+@media (min-width: 741px) {
+  .resume-public-note,
+  .resume-public-note > p {
+    max-width: none;
+  }
+
+  .resume-public-note-break {
+    display: initial;
+  }
+}
+
 .resume-public-note a {
   color: var(--page-text);
-  font-weight: 750;
+  font-weight: 500;
   text-decoration: underline;
   text-decoration-color: var(--yellow);
   text-decoration-thickness: 2px;

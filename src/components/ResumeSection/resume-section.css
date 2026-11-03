@@ -39,12 +39,10 @@
 }
 
 .resume-card {
+  --resume-corner-radius: 0.3rem;
   max-width: 72rem;
   margin-inline: auto;
-  overflow: hidden;
-  border: 1px solid var(--gold);
-  border-radius: 0.3rem;
-  background: var(--page-surface);
+  border-radius: var(--resume-corner-radius);
   box-shadow:
     0 0 0 0.4rem var(--page-bg),
     0 0 0 0.45rem var(--page-line),
@@ -53,11 +51,11 @@
 
 .resume-card-header {
   display: flex;
+  background: var(--section-background);
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
   padding: 1.2rem 1.4rem;
-  border-bottom: 1px solid var(--page-line);
 }
 
 .resume-card-subtitle {
@@ -104,25 +102,9 @@
   overflow: auto;
   overscroll-behavior: contain;
   isolation: isolate;
+  border: 1px solid var(--gold);
+  border-radius: var(--resume-corner-radius);
   background: var(--button-bg);
-  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-  scrollbar-width: thin;
-}
-
-.resume-preview-scroll::-webkit-scrollbar {
-  width: 0.8rem;
-  height: 0.8rem;
-}
-.resume-preview-scroll::-webkit-scrollbar-track {
-  background: var(--scroll-track);
-}
-.resume-preview-scroll::-webkit-scrollbar-thumb {
-  border: 3px solid var(--scroll-track);
-  border-radius: 999px;
-  background: var(--scroll-thumb);
-}
-.resume-preview-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--yellow);
 }
 
 .resume-color-filter {

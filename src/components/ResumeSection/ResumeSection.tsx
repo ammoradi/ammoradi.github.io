@@ -45,6 +45,7 @@ export function ResumeSection() {
         >
           <img
             src="/resume-preview.png"
+            loading="lazy"
             alt="Preview of Amir Mohammad Moradi's resume"
           />
         </div>

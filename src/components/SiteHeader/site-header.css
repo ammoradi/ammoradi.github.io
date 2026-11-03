@@ -1,4 +1,5 @@
 .site-header {
+  --header-gradient: linear-gradient(90deg, var(--secondary), var(--gold));
   position: sticky;
   z-index: 20;
   top: 0;
@@ -26,7 +27,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: var(--yellow);
+  background: var(--header-gradient);
   transform: scaleX(0);
   transform-origin: left center;
   will-change: transform;
@@ -51,64 +52,82 @@
 }
 
 .site-nav a {
-  position: relative;
   font-size: 0.68rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
-.site-nav a::after {
-  position: absolute;
-  right: 0;
-  bottom: -0.35rem;
-  left: 0;
-  height: 2px;
-  background: var(--page-text);
-  content: "";
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 180ms ease;
-}
-
-.site-nav a:hover::after,
-.site-nav a[aria-current="location"]::after {
-  transform: scaleX(1);
-  transform-origin: left;
+:where(:root[data-theme="dark"]) :is(.site-nav, .mobile-menu nav) a {
+  color: #fff;
 }
 
 .site-nav a[aria-current="location"] {
-  color: var(--page-text);
+  color: var(--nav-active);
+  font-weight: 800;
 }
 
-.site-nav a[aria-current="location"]::after {
-  background: var(--nav-active);
+.site-nav a:hover:not([aria-current="location"]) {
+  color: var(--accent);
 }
 
 .brand-avatar {
+  position: relative;
   display: block;
   width: 2.7rem;
   height: 2.7rem;
   flex: 0 0 auto;
   overflow: hidden;
-  border: 2px solid var(--yellow);
-  border-radius: 50%;
-  background: var(--yellow);
+  padding: 2px;
+  border-radius: 45% 45% 0 0;
+  background: color-mix(in srgb, var(--gold) 35%, var(--page-bg));
+}
+
+[data-theme="dark"] .brand-avatar {
+  background: color-mix(in srgb, var(--secondary) 35%, var(--page-bg));
+}
+
+.brand-avatar::after {
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: var(--header-gradient);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  content: "";
+}
+
+.brand-avatar::before {
+  position: absolute;
+  z-index: 1;
+  inset: 2px;
+  background: url("/portrait-cutout.png") center / cover no-repeat;
+  filter: brightness(1.45);
+  mask-image: radial-gradient(ellipse 11% 6% at 45% 36%, #000 35%, transparent 100%);
+  pointer-events: none;
+  content: "";
 }
 
 .brand-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(2.3);
+}
+
+.brand-avatar img,
+.brand-avatar::before {
+  transform: translateY(2px) scale(2.185);
   transform-origin: 48% 10%;
 }
 
 .brand-name {
-  font-size: 0.73rem;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  white-space: nowrap;
+  font-family: var(--display-font);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .header-links {
@@ -146,7 +165,7 @@
   gap: 0.5rem;
   margin-left: 0.35rem;
   padding: 0.65rem 0.9rem;
-  border: 1px solid var(--page-text);
+  border: 1px solid var(--page-line);
   border-radius: 999px;
   color: var(--page-text);
   background: transparent;

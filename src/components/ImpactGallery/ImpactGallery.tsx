@@ -54,7 +54,12 @@ export function ImpactGallery({
             rel="noreferrer"
             aria-label={`Visit ${story.company}: ${image.caption}`}
           >
-            <img src={image.src} alt={image.alt} />
+            <img
+              src={image.src}
+              alt={image.alt}
+              loading={emphasizeControl ? "eager" : "lazy"}
+              fetchPriority={emphasizeControl && index === 0 ? "high" : undefined}
+            />
             <figcaption>
               <span>{image.caption}</span>
               <small>

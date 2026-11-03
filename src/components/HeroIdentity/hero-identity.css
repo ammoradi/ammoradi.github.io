@@ -1,0 +1,33 @@
+.hero-identity {
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  color: var(--page-muted);
+  line-height: 1.6;
+}
+
+.hero-impact .hero-identity {
+  padding-top: var(--hero-edge-inset);
+}
+
+.hero-identity .eyebrow {
+  display: grid;
+  gap: 0.35rem;
+  font-size: clamp(0.65rem, 0.75vw, 0.8rem);
+  font-weight: 600;
+}
+
+.hero-identity .eyebrow span:first-child {
+  color: var(--secondary);
+}
+
+@media (max-width: 740px) {
+  .hero-identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+}

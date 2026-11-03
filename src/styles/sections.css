@@ -1,6 +1,60 @@
+:root {
+  --section-margin: 2.5rem;
+  --section-side-margin: 2vw;
+  --section-background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--page-bg) 97%, transparent),
+    color-mix(in srgb, var(--page-bg) 74%, transparent) 44%,
+    color-mix(in srgb, var(--page-bg) 40%, transparent)
+  );
+}
+
 .section {
+  --section-divider-gap: calc(var(--section-margin) + 2rem);
+  --section-frame-gap: calc(var(--section-divider-gap) + var(--section-side-margin));
+  --section-divider-stroke: 2px solid var(--secondary);
+  position: relative;
+  margin-block: var(--section-divider-gap);
+  margin-inline: var(--section-side-margin);
   padding: clamp(4.5rem, 8vw, 8rem) 4vw;
-  border-bottom: 1px solid var(--page-line);
+  border: 1px solid var(--page-line);
+  background: var(--section-background);
+}
+
+.section + .section {
+  margin-block-start: var(--section-frame-gap);
+}
+
+.section::before,
+.section::after {
+  position: absolute;
+  top: calc(var(--section-frame-gap) / -2);
+  content: "";
+  pointer-events: none;
+}
+
+.section::before {
+  z-index: 1;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  background: var(--secondary);
+  mask: url("/divider-floral.svg") center / contain no-repeat;
+  transform: translate(-50%, -50%);
+}
+
+
+.section::after {
+  inset-inline: calc(-1 * var(--section-side-margin) - 1px);
+  border-top: var(--section-divider-stroke);
+  mask-image: linear-gradient(
+    to right,
+    transparent, black 25%,
+    black calc(50% - 1.6rem), transparent calc(50% - 1.6rem),
+    transparent calc(50% + 1.6rem), black calc(50% + 1.6rem),
+    black 75%, transparent
+  );
+  transform: translateY(-50%);
 }
 
 .section-heading {
@@ -11,7 +65,17 @@
   max-width: 16ch;
   margin-top: 0.8rem;
   font-size: clamp(2.8rem, 5.8vw, 6.2rem);
-  font-weight: 750;
-  letter-spacing: -0.065em;
-  line-height: 0.94;
+  font-family: var(--display-font);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+@media (min-width: 741px) {
+  #skills-title,
+  #resume-title {
+    max-width: none;
+    font-size: clamp(2rem, 4.6vw, 6.2rem);
+    white-space: nowrap;
+  }
 }

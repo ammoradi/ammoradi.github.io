@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { SiReact } from "react-icons/si";
 import type { ImpactStory } from "../../utils/portfolio-types";
 import { ImpactGallery } from "../ImpactGallery/ImpactGallery";
 
@@ -17,7 +16,6 @@ export function ImpactCard({
     <article
       className={`impact-focus-card${mobile ? " mobile-impact-card" : ""}`}
       aria-live={mobile ? undefined : "polite"}
-      data-step={String(index + 1).padStart(2, "0")}
     >
       <div className="impact-card-topline">
         <div className="impact-card-labels">
@@ -52,7 +50,6 @@ export function ImpactCard({
       <div className="impact-story-side">
         <ImpactGallery story={story} emphasizeControl={index === 0} />
       </div>
-      <SiReact className="impact-react-mark" aria-hidden="true" />
     </article>
   );
 }

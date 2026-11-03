@@ -1,6 +1,7 @@
 @import "./base.css";
 @import "../components/SiteHeader/site-header.css";
 @import "../components/ImpactSection/impact-section.css";
+@import "../components/HeroIdentity/hero-identity.css";
 @import "./sections.css";
 @import "../components/SkillsSection/skills-section.css";
 @import "../components/ResumeSection/resume-section.css";

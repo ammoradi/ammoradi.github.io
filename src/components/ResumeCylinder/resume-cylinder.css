@@ -1,0 +1,81 @@
+.resume-cylinder {
+  overflow: hidden;
+  border-top: 1px solid var(--page-line);
+  /* background: radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--gold) 16%, var(--page-surface)), var(--page-surface) 72%); */
+  padding: 2.3rem 1rem 1.6rem;
+}
+:root:not([data-theme="dark"]) .resume-cylinder {
+  background: var(--section-background);
+}
+.cylinder-intro { text-align: center; }
+.cylinder-edition { color: var(--yellow); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.cylinder-intro p { margin-top: .7rem; color: var(--muted); font-family: var(--display-font); font-size: 1.2rem; }
+.cylinder-surface { position: relative; cursor: grab; touch-action: pan-x pinch-zoom; user-select: none; border-radius: 1rem; }
+.cylinder-surface:active { cursor: grabbing; }
+.cylinder-surface {
+  margin-block: 1.25rem;
+}
+.cylinder-surface:focus-visible { outline-offset: -4px; }
+.cylinder-surface::after {
+  content: "";
+  position: absolute;
+  inset: 85% 10% 4%;
+  background: radial-gradient(ellipse, #00000018, transparent 72%);
+  pointer-events: none;
+}
+.cylinder-surface canvas { display: block; width: 100%; height: clamp(240px, 36vw, 420px); }
+.cylinder-loading { position: absolute; inset: 40% 10% auto; color: var(--muted); text-align: center; }
+.cylinder-controls { display: flex; align-items: center; justify-content: center; gap: .8rem; max-width: 31rem; margin: 0 auto; }
+.cylinder-controls button { display: grid; place-items: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; border-radius: 50%; cursor: pointer; }
+.cylinder-controls button:disabled { opacity: .35; }
+.cylinder-position { flex: 1; min-width: 0; }
+.cylinder-position > span { display: flex; justify-content: space-between; gap: .5rem; color: var(--muted); font-size: .67rem; letter-spacing: .06em; text-transform: uppercase; }
+.cylinder-position input { appearance: none; display: block; width: 100%; height: 1.7rem; margin: 0; background: transparent; cursor: pointer; }
+.cylinder-position input {
+  --slider-track-height: 12px;
+  --slider-thumb-size: 18px;
+  --slider-fill: var(--scroll-thumb);
+  --slider-track: linear-gradient(to right, var(--slider-fill) var(--slider-progress), var(--scroll-track) var(--slider-progress));
+}
+.cylinder-position input:hover { --slider-fill: var(--yellow); }
+.cylinder-position input::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  height: var(--slider-track-height);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background: var(--slider-track) padding-box, linear-gradient(var(--scroll-track), var(--scroll-track)) border-box;
+}
+.cylinder-position input::-moz-range-track {
+  box-sizing: border-box;
+  height: var(--slider-track-height);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background: var(--slider-track) padding-box, linear-gradient(var(--scroll-track), var(--scroll-track)) border-box;
+}
+.cylinder-position input::-webkit-slider-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2 - 3px);
+  border: 3px solid var(--slider-fill);
+  border-radius: 50%;
+  background: var(--slider-fill);
+}
+.cylinder-position input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border: 3px solid var(--slider-fill);
+  border-radius: 50%;
+  background: var(--slider-fill);
+}
+.cylinder-help { margin-top: 1.1rem; text-align: center; color: var(--muted); font-size: .75rem; line-height: 1.8; }
+.cylinder-help span { font-size: .7rem; }
+@media (max-width: 740px) {
+  .resume-cylinder { padding-inline: .5rem; }
+  .cylinder-intro { padding-inline: 1rem; }
+  .cylinder-intro p { font-size: 1rem; }
+  .cylinder-controls { gap: .45rem; padding-inline: .5rem; }
+  .cylinder-controls button { width: 2.5rem; height: 2.5rem; }
+}

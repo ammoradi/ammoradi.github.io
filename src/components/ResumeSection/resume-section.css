@@ -68,6 +68,60 @@
   color: var(--muted);
 }
 
+.resume-tabs {
+  display: flex;
+  background: var(--section-background);
+  gap: 0.5rem;
+  padding: 0.3rem 1.4rem 1.2rem;
+}
+
+.resume-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.8rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.resume-tab-label {
+  display: inline-grid;
+}
+
+.resume-tab-label > span {
+  grid-area: 1 / 1;
+}
+
+.resume-tab-label > [aria-hidden="true"] {
+  visibility: hidden;
+  font-weight: 700;
+}
+
+.resume-tabs button[aria-selected="true"] {
+  font-weight: 700;
+  --button-bg: color-mix(in srgb, var(--secondary) 12%, var(--page-surface));
+  --button-text: var(--page-text);
+  --button-hover-bg: color-mix(in srgb, var(--secondary) 18%, var(--page-surface));
+}
+
+.resume-tabs button[aria-selected="true"]::after {
+  border-width: 2px;
+}
+
+:root[data-theme="dark"] .resume-tabs button[aria-selected="true"] {
+  --button-bg: #265052;
+  --button-text: var(--page-text);
+  --button-hover-bg: #2e5b5d;
+}
+
+@media (max-width: 740px) {
+  .resume-tabs { padding-inline: 0.75rem; }
+  .resume-tabs button { flex: 1; padding-inline: 0.5rem; }
+}
+
 @media (min-width: 741px) {
   .resume-card-subtitle small {
     margin-top: 0.4rem;
@@ -104,6 +158,10 @@
   isolation: isolate;
   border: 1px solid var(--gold);
   border-radius: var(--resume-corner-radius);
+  background: #fff;
+}
+
+:root[data-theme="dark"] .resume-preview-scroll {
   background: var(--button-bg);
 }
 
@@ -114,13 +172,32 @@
 .resume-preview-scroll img {
   width: 100%;
   height: auto;
+}
+
+.resume-preview-scroll img,
+.cylinder-surface canvas {
   filter: url("#resume-accent");
+}
+
+.cylinder-surface canvas {
+  filter: url("#resume-cylinder-light");
+}
+
+.resume-preview-scroll img {
   mix-blend-mode: multiply;
 }
 
 :root[data-theme="dark"] .resume-preview-scroll img {
   filter: invert(1) url("#resume-accent-dark");
   mix-blend-mode: screen;
+}
+
+:root[data-theme="dark"] .cylinder-surface canvas {
+  filter: invert(1) url("#resume-cylinder-dark");
+}
+
+:root[data-theme="dark"] .resume-cylinder {
+  isolation: isolate;
 }
 
 

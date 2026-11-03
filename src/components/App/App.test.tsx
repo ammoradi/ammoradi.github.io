@@ -334,6 +334,9 @@ describe("portfolio", () => {
   it("links to a scrollable resume preview with an explicit download", () => {
     render(<App />);
 
+    expect(screen.getByRole("tab", { name: "Cyrus Cylinder" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "PDF preview" }));
+
     expect(
       screen.getByRole("img", {
         name: /Preview of Amir Mohammad Moradi's resume/i,

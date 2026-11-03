@@ -80,11 +80,11 @@
   overflow: hidden;
   padding: 2px;
   border-radius: 45% 45% 0 0;
-  background: color-mix(in srgb, var(--gold) 35%, var(--page-bg));
+  background: color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
 [data-theme="dark"] .brand-avatar {
-  background: color-mix(in srgb, var(--secondary) 35%, var(--page-bg));
+  background: color-mix(in srgb, var(--secondary) 35%, transparent);
 }
 
 .brand-avatar::after {
@@ -118,7 +118,7 @@
 
 .brand-avatar img,
 .brand-avatar::before {
-  transform: translateY(2px) scale(2.185);
+  transform: translate(calc(4% + 2px), 2.5px) scale(-2.185, 2.185);
   transform-origin: 48% 10%;
 }
 
@@ -144,14 +144,12 @@
   background: var(--page-surface);
   transition:
     color 180ms ease,
-    background 180ms ease,
-    transform 180ms ease;
+    background 180ms ease;
 }
 
 .header-icon:hover {
   color: var(--page-bg);
   background: var(--page-text);
-  transform: translateY(-2px);
 }
 
 .header-icon svg {

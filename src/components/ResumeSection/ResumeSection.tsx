@@ -30,7 +30,7 @@ export function ResumeSection() {
             <p>Public résumé · PDF · One page</p>
           </div>
           <a
-            className="button button-dark resume-download"
+            className="button resume-download"
             href="/Amir_Mohammad_Moradi_Resume.pdf"
             download
           >

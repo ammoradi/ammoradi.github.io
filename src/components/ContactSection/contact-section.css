@@ -39,9 +39,6 @@
 .contact-link {
   width: fit-content;
   justify-self: start;
-  border-color: var(--secondary);
-  color: var(--page-bg);
-  background: var(--secondary);
 }
 
 .contact-link > svg:first-child {

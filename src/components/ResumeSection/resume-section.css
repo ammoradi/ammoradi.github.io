@@ -61,21 +61,20 @@
   justify-content: center;
   gap: 0.55rem;
   padding: 0.8rem 1.2rem;
-  border: 1px solid var(--page-text);
+  border: 1px solid var(--secondary);
   border-radius: 999px;
+  color: var(--page-bg);
+  background: var(--secondary);
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: transform 180ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
 .button:hover {
-  transform: translateY(-2px);
-}
-.button-dark {
-  color: var(--page-bg);
-  background: var(--page-text);
+  border-color: var(--page-text);
+  background-color: var(--page-text);
 }
 
 .resume-preview-scroll {

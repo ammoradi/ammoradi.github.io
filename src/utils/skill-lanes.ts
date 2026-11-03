@@ -102,7 +102,7 @@ export const skillLanes: SkillLane[] = [
 
 export const softSkills = [
   "Technical leadership",
-  "Mentoring",
+  "Organization-wide impact",
   "Product thinking",
   "Cross-functional communication",
   "Systems thinking",

@@ -10,6 +10,7 @@
   --yellow: var(--accent);
   --secondary: #166a68;
   --gold: #c6a366;
+  --header-gradient: linear-gradient(90deg, var(--secondary), var(--gold));
   --ink: #000;
   --white: #fffcf4;
   --display-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;

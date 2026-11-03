@@ -1,5 +1,4 @@
 .site-header {
-  --header-gradient: linear-gradient(90deg, var(--secondary), var(--gold));
   position: sticky;
   z-index: 20;
   top: 0;
@@ -7,7 +6,7 @@
   grid-template-columns: 1fr auto 1fr;
   min-height: 4.5rem;
   align-items: center;
-  padding: 0 4vw;
+  padding-inline: var(--hero-inline-padding);
   color: var(--page-text);
   background: var(--header-bg);
   backdrop-filter: blur(16px);
@@ -72,57 +71,36 @@
 }
 
 .brand-avatar {
+  --portrait-bg: var(--button-bg);
   position: relative;
   display: block;
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 2.55rem;
+  height: 2.55rem;
   flex: 0 0 auto;
   overflow: hidden;
-  padding: 2px;
+  border: 2px solid transparent;
   border-radius: 45% 45% 0 0;
-  background: color-mix(in srgb, var(--gold) 35%, transparent);
+  background:
+    linear-gradient(var(--portrait-bg), var(--portrait-bg)) padding-box,
+    var(--header-gradient) border-box;
 }
 
-[data-theme="dark"] .brand-avatar {
-  background: color-mix(in srgb, var(--secondary) 35%, transparent);
-}
-
-.brand-avatar::after {
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  border-radius: inherit;
-  background: var(--header-gradient);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-  content: "";
-}
-
-.brand-avatar::before {
-  position: absolute;
-  z-index: 1;
-  inset: 2px;
-  background: url("/portrait-cutout.png") center / cover no-repeat;
-  filter: brightness(1.45);
-  mask-image: radial-gradient(ellipse 11% 6% at 45% 36%, #000 35%, transparent 100%);
-  pointer-events: none;
-  content: "";
+:root[data-theme="dark"] .brand-avatar {
+  --portrait-bg: color-mix(in srgb, var(--button-bg) 55%, var(--secondary));
 }
 
 .brand-avatar img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.brand-avatar img,
-.brand-avatar::before {
-  transform: translate(calc(4% + 2px), 2.5px) scale(-2.185, 2.185);
+  transform: translate(calc(4% + 1.5px), 2px) scale(-2.3598, 2.3598);
   transform-origin: 48% 10%;
 }
 
 .brand-name {
+  color: var(--button-text);
   white-space: nowrap;
   font-family: var(--display-font);
   font-size: 1.05rem;

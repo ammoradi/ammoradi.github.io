@@ -45,13 +45,20 @@
   border-bottom: 1px solid var(--page-line);
 }
 
-.resume-card-header > div {
-  display: grid;
-  gap: 0.38rem;
+.resume-card-subtitle {
+  color: var(--page-text);
+  font-size: 1rem;
 }
-.resume-card-header > div > p:last-child {
+
+.resume-card-subtitle small {
+  display: block;
   color: var(--muted);
-  font-size: 0.76rem;
+}
+
+@media (min-width: 741px) {
+  .resume-card-subtitle small {
+    margin-top: 0.4rem;
+  }
 }
 
 .button {
@@ -81,11 +88,8 @@
   height: min(68svh, 46rem);
   overflow: auto;
   overscroll-behavior: contain;
-  --resume-paper: color-mix(in srgb, var(--page-bg) 90%, transparent);
   isolation: isolate;
-  background:
-    linear-gradient(var(--resume-paper), var(--resume-paper)),
-    url("/persian-garden.jpg") repeat left top / 360px 640px;
+  background: var(--button-bg);
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   scrollbar-width: thin;
 }
@@ -106,18 +110,19 @@
   background: var(--yellow);
 }
 
+.resume-color-filter {
+  position: absolute;
+}
+
 .resume-preview-scroll img {
   width: 100%;
   height: auto;
+  filter: url("#resume-accent");
   mix-blend-mode: multiply;
 }
 
-:root[data-theme="dark"] .resume-preview-scroll {
-  --resume-paper: color-mix(in srgb, var(--page-bg) 96%, transparent);
-}
-
 :root[data-theme="dark"] .resume-preview-scroll img {
-  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1) url("#resume-accent-dark");
   mix-blend-mode: screen;
 }
 

@@ -8,3 +8,75 @@
 @import "../components/ContactSection/contact-section.css";
 @import "../components/SiteFooter/site-footer.css";
 @import "./responsive.css";
+
+:root {
+  --button-text: color-mix(in srgb, var(--secondary) 50%, var(--ink));
+  --button-bg: var(--white);
+  --button-hover-bg: #fff;
+}
+
+:root[data-theme="dark"] {
+  --button-text: var(--page-text);
+  --button-bg: var(--page-surface);
+  --button-hover-bg: #1c4448;
+}
+
+:where(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a) {
+  position: relative;
+}
+
+:is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a) {
+  isolation: isolate;
+  border-width: 0;
+  color: var(--button-text);
+  background-color: var(--button-bg);
+}
+
+:is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a):hover {
+  color: var(--button-text);
+  background-color: var(--button-hover-bg);
+}
+
+:is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a)::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+  z-index: -1;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--button-bg), var(--button-bg)) padding-box,
+    linear-gradient(var(--button-border-angle), var(--secondary), var(--gold)) border-box;
+}
+
+:is(.button.resume-download, .button.contact-link)::after {
+  border-width: 2px;
+}
+
+:root:not([data-theme="dark"]) :is(.button.resume-download, .button.contact-link) {
+  --button-hover-bg: #fffef9;
+}
+
+:is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a):hover::after {
+  border-width: 2px;
+  background-image:
+    linear-gradient(var(--button-hover-bg), var(--button-hover-bg)),
+    linear-gradient(var(--button-border-angle), var(--secondary), var(--gold));
+}
+
+@property --button-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 90deg;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a)::after {
+    transition: --button-border-angle 300ms ease;
+  }
+
+  :is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a):hover::after {
+    --button-border-angle: 270deg;
+  }
+}

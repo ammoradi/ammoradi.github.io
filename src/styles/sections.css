@@ -1,6 +1,8 @@
 :root {
   --section-margin: 2.5rem;
+  --section-inline-padding: 4vw;
   --section-side-margin: 2vw;
+  --hero-inline-padding: 5vw;
   --section-background: linear-gradient(
     90deg,
     color-mix(in srgb, var(--page-bg) 97%, transparent),
@@ -16,7 +18,7 @@
   position: relative;
   margin-block: var(--section-divider-gap);
   margin-inline: var(--section-side-margin);
-  padding: clamp(4.5rem, 8vw, 8rem) 4vw;
+  padding: clamp(4.5rem, 8vw, 8rem) var(--section-inline-padding);
   border: 1px solid var(--page-line);
   background: var(--section-background);
 }

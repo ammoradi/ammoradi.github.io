@@ -39,7 +39,7 @@ export function SiteHeader({
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Amir Mohammad Moradi, home">
         <span className="brand-avatar" aria-hidden="true">
-          <img src="/portrait-cutout.png" alt="" />
+          <img src="/portrait-teal-illustration.png" alt="" />
         </span>
         <span className="brand-name">Amir Mohammad Moradi</span>
       </a>

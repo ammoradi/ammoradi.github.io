@@ -61,16 +61,16 @@ export function ImpactGallery({
               fetchPriority={emphasizeControl && index === 0 ? "high" : undefined}
             />
             <figcaption>
-              <span>{image.caption}</span>
               <small>
                 © {story.company} / Product imagery: {story.company}
               </small>
+              <span>{image.caption}</span>
             </figcaption>
           </a>
         </figure>
       ))}
       <button
-        className={`gallery-playback${hintVisible || !playing ? " is-prominent" : ""}`}
+        className={`button gallery-playback${hintVisible || !playing ? " is-prominent" : ""}`}
         type="button"
         aria-label={`${playing ? "Pause" : "Play"} automatic screenshot rotation`}
         aria-pressed={!playing}

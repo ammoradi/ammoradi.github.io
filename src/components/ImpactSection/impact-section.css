@@ -16,7 +16,7 @@
   grid-template-rows: auto minmax(0, 1fr);
   row-gap: 1.25rem;
   margin-block: var(--section-side-margin);
-  padding-inline: 5vw;
+  padding-inline: var(--hero-inline-padding);
   overflow: visible;
   color: var(--page-text);
   background: transparent;
@@ -195,43 +195,43 @@
 }
 
 @media (min-width: 741px) {
+  .impact-gallery {
+    left: calc(-1 * clamp(1.75rem, 4vw, 4rem));
+  }
+
   .impact-gallery-square,
   .impact-gallery-bookapo {
     top: -3rem;
   }
+
+  .impact-gallery-landscape {
+    top: -1.5rem;
+  }
+
+  .impact-gallery-bookapo {
+    left: calc(-1 * clamp(1.75rem, 4vw, 4rem) - 48px);
+  }
+
 }
 
-.gallery-playback {
+.gallery-playback.button {
   position: absolute;
   z-index: 8;
   right: 0;
   bottom: -2.25rem;
-  display: inline-flex;
-  align-items: center;
+  min-height: 1.75rem;
   gap: 0.42rem;
-  padding: 0.4rem 0;
-  border: 0;
-  color: var(--page-text);
-  background: transparent;
+  padding: 0.4rem 0.75rem;
   cursor: pointer;
   font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  opacity: 0.72;
-  text-transform: uppercase;
+  opacity: 0.9;
   transition:
-    color 180ms ease,
+    background-color 180ms ease,
     opacity 500ms ease;
 }
 
-.gallery-playback.is-prominent,
-.gallery-playback:hover,
-.gallery-playback:focus-visible {
-  opacity: 0.82;
-}
-
-.gallery-playback:hover {
-  color: var(--yellow);
+.gallery-playback.button:is(.is-prominent, :hover, :focus-visible) {
+  opacity: 1;
 }
 
 .gallery-playback svg {
@@ -245,7 +245,7 @@
   width: min(88%, 31rem);
   margin: 0;
   overflow: hidden;
-  border-radius: 1.35rem 1.35rem 0 0;
+  border-radius: 0;
   background: var(--white);
   box-shadow: 0 1rem 3rem rgba(5, 31, 33, 0.25);
   transform-origin: center;
@@ -288,6 +288,10 @@
   object-fit: cover;
 }
 
+.impact-gallery-landscape .impact-image-card img {
+  object-fit: contain;
+}
+
 .impact-image-link {
   display: block;
   color: inherit;
@@ -317,8 +321,19 @@
   font-size: 0.75rem;
   font-weight: 450;
   letter-spacing: normal;
-  text-align: right;
+  text-align: left;
   text-transform: none;
+}
+
+.impact-image-card figcaption > span {
+  margin-inline-start: auto;
+  font-size: 0.65rem;
+  text-align: right;
+}
+
+.impact-gallery-square .impact-image-card,
+.impact-gallery-bookapo .impact-image-card--portrait {
+  border-radius: 2.5rem 2.5rem 0 0;
 }
 
 .impact-gallery-square .impact-image-card {
@@ -336,6 +351,16 @@
 }
 .impact-gallery-square .impact-image-card:nth-child(3) {
   right: 18%;
+}
+
+@media (min-width: 741px) {
+  .impact-gallery-square .impact-image-card:nth-child(2) {
+    top: calc(22% - 3rem);
+  }
+
+  .impact-gallery-square .impact-image-card:nth-child(3) {
+    bottom: -2rem;
+  }
 }
 
 .impact-gallery-bookapo {
@@ -451,7 +476,6 @@
 .scroll-cue:hover {
   color: var(--yellow);
   background: transparent;
-  transform: translate(-50%, 0.2rem);
 }
 
 .scroll-cue svg {

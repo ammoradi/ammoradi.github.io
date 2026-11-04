@@ -246,7 +246,7 @@ describe("portfolio", () => {
     expect(document.querySelector(".portrait-panel")).not.toBeInTheDocument();
     expect(document.querySelector(".brand-avatar img")).toHaveAttribute(
       "src",
-      "/portrait.jpg",
+      "/portrait-teal-illustration.png",
     );
     expect(
       screen.queryByRole("button", { name: "Next impact" }),

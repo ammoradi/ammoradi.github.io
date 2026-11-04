@@ -29,7 +29,6 @@ import {
   TbPlugConnected,
   TbServer,
   TbTestPipe,
-  TbVector,
   TbWorldWww,
 } from "react-icons/tb";
 import type { SkillLane } from "./portfolio-types";
@@ -57,7 +56,6 @@ export const skillLanes: SkillLane[] = [
       { name: "Jest", icon: SiJest },
       { name: "Testing Library", icon: SiTestinglibrary },
       { name: "End-to-end", icon: FaCodeBranch },
-      { name: "SVG & Canvas", icon: TbVector },
     ],
   },
   {

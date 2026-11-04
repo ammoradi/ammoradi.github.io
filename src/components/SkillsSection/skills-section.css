@@ -173,6 +173,12 @@
   background: var(--secondary);
 }
 
+:root[data-theme="dark"] .technology:hover {
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  color: var(--page-text);
+  background: var(--section-gradient-start);
+}
+
 .technology svg {
   width: 2.35rem;
   height: 2.35rem;

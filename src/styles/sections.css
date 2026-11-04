@@ -3,9 +3,10 @@
   --section-inline-padding: calc(var(--hero-inline-padding) - var(--section-side-margin) - 1px);
   --section-side-margin: 2vw;
   --hero-inline-padding: 5vw;
+  --section-gradient-start: color-mix(in srgb, var(--page-bg) 97%, transparent);
   --section-background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--page-bg) 97%, transparent),
+    var(--section-gradient-start),
     color-mix(in srgb, var(--page-bg) 74%, transparent) 44%,
     color-mix(in srgb, var(--page-bg) 40%, transparent)
   );

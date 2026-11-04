@@ -103,6 +103,7 @@ export const skillLanes: SkillLane[] = [
 export const softSkills = [
   "Technical leadership",
   "Organization-wide impact",
+  "AI-first mindset",
   "Product thinking",
   "Cross-functional communication",
   "Systems thinking",

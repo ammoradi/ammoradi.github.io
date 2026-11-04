@@ -28,6 +28,10 @@
 - Hooks, utilities, data, setup, and style files: `kebab-case`.
 - Exported component names must match their file names.
 
+## Commits
+
+- Use Conventional Commits for commit messages: `type(scope): description` (scope optional), for example `feat: add contact form`.
+
 ## Agent skills
 
 ### Issue tracker

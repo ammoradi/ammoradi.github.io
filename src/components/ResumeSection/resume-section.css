@@ -183,7 +183,7 @@
   isolation: isolate;
   border: 1px solid var(--gold);
   border-radius: var(--resume-corner-radius);
-  background: #fff;
+  background: var(--button-bg);
 }
 
 @media (max-width: 740px) {
@@ -193,7 +193,7 @@
 }
 
 :root[data-theme="dark"] .resume-preview-scroll {
-  background: var(--button-bg);
+  background: #F5F0E4;
 }
 
 .resume-color-filter {
@@ -205,9 +205,12 @@
   height: auto;
 }
 
-.resume-preview-scroll img,
-.cylinder-surface canvas {
+.resume-preview-scroll img {
   filter: url("#resume-accent");
+}
+
+.cylinder-surface canvas {
+  filter: url("#resume-cylinder-paper-light");
 }
 
 .resume-preview-scroll img {
@@ -215,12 +218,14 @@
 }
 
 :root[data-theme="dark"] .resume-preview-scroll img {
-  filter: invert(1) url("#resume-accent-dark");
-  mix-blend-mode: screen;
+  filter: url("#resume-cylinder");
+  mix-blend-mode: multiply;
+}
+
+:root[data-theme="dark"] .cylinder-surface canvas {
+  filter: url("#resume-cylinder-paper");
 }
 
 :root[data-theme="dark"] .resume-cylinder {
   isolation: isolate;
 }
-
-

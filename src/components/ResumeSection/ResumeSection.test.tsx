@@ -19,10 +19,11 @@ describe("résumé views", () => {
   it("rolls with keys, buttons, and the position control; preserves position across tabs", () => {
     render(<ResumeSection />);
     const surface = screen.getByRole("slider", { name: "Roll the résumé cylinder" });
+    expect(surface).toHaveAttribute("aria-valuenow", "13");
     fireEvent.keyDown(surface, { key: "ArrowDown" });
-    expect(surface).toHaveAttribute("aria-valuenow", "6");
+    expect(surface).toHaveAttribute("aria-valuenow", "19");
     fireEvent.click(screen.getByRole("button", { name: "Roll toward résumé end" }));
-    expect(surface).toHaveAttribute("aria-valuenow", "18");
+    expect(surface).toHaveAttribute("aria-valuenow", "31");
     fireEvent.change(screen.getByRole("slider", { name: "Résumé position" }), { target: { value: "63" } });
     fireEvent.click(screen.getByRole("tab", { name: "PDF preview" }));
     fireEvent.click(screen.getByRole("tab", { name: "Cyrus Cylinder" }));
@@ -38,6 +39,7 @@ describe("résumé views", () => {
   it("rolls on wheel input and releases page scrolling at the ends", () => {
     render(<ResumeSection />);
     const surface = screen.getByRole("slider", { name: "Roll the résumé cylinder" });
+    fireEvent.keyDown(surface, { key: "Home" });
     expect(fireEvent.wheel(surface, { deltaY: -100, cancelable: true })).toBe(true);
     expect(fireEvent.wheel(surface, { deltaY: 180, cancelable: true })).toBe(false);
     expect(surface).toHaveAttribute("aria-valuenow", "10");

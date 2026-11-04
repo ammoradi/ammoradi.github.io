@@ -5,9 +5,10 @@ export function useResumeCylinder() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const textureRef = useRef<HTMLCanvasElement | null>(null);
-  const [progress, setProgress] = useState(0);
+  const darkTextureRef = useRef<HTMLCanvasElement | null>(null);
+  const [progress, setProgress] = useState(0.13);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
-  const positionRef = useRef(0);
+  const positionRef = useRef(progress);
   positionRef.current = progress;
 
   function moveTo(value: number) {
@@ -24,6 +25,23 @@ export function useResumeCylinder() {
       if (!context) { setStatus("error"); return; }
       context.drawImage(texture, 0, 0);
       textureRef.current = image;
+      const darkImage = document.createElement("canvas");
+      darkImage.width = image.width;
+      darkImage.height = image.height;
+      const darkContext = darkImage.getContext("2d");
+      if (!darkContext) { setStatus("error"); return; }
+      const pixels = context.getImageData(0, 0, image.width, image.height);
+      // Remove the white paper while preserving the printed colors and antialiasing.
+      for (let i = 0; i < pixels.data.length; i += 4) {
+        const white = Math.min(pixels.data[i], pixels.data[i + 1], pixels.data[i + 2]);
+        const alpha = 255 - white;
+        for (let channel = 0; channel < 3; channel++) {
+          pixels.data[i + channel] = alpha ? (pixels.data[i + channel] - white) * 255 / alpha : 0;
+        }
+        pixels.data[i + 3] = pixels.data[i + 3] * alpha / 255;
+      }
+      darkContext.putImageData(pixels, 0, 0);
+      darkTextureRef.current = darkImage;
       setStatus("ready");
     };
     texture.onerror = () => setStatus("error");
@@ -38,13 +56,16 @@ export function useResumeCylinder() {
     const draw = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        if (textureRef.current) drawResumeCylinder(canvas, textureRef.current, positionRef.current);
+        const texture = document.documentElement.dataset.theme === "dark" ? darkTextureRef.current : textureRef.current;
+        if (texture) drawResumeCylinder(canvas, texture, positionRef.current);
       });
     };
     const observer = new ResizeObserver(draw);
     observer.observe(canvas);
+    const themeObserver = new MutationObserver(draw);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     draw();
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+    return () => { observer.disconnect(); themeObserver.disconnect(); cancelAnimationFrame(frame); };
   }, [status, progress]);
 
   useEffect(() => {

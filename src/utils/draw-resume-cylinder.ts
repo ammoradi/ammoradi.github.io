@@ -50,7 +50,10 @@ export function drawResumeCylinder(
 
     const sourceY = sourceCenter + angle * radius * scale;
     if (sourceY >= 0 && sourceY < texture.height - 1) {
+      // Preserve the body's coverage instead of making the paper rectangle more opaque.
+      surface.globalCompositeOperation = "source-atop";
       surface.drawImage(texture, 80, sourceY, sourceWidth, Math.min(step * scale / Math.max(bulge, 0.12), texture.height - sourceY), x + span * 0.045, y, span * 0.91, step + 0.05);
+      surface.globalCompositeOperation = "source-over";
     }
     const sideFadeDepth = radius * 0.5;
     surface.globalAlpha = 0.8;

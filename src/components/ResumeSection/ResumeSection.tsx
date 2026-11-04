@@ -76,7 +76,7 @@ export function ResumeSection() {
           </a>
         </div>
           <svg width="0" height="0" aria-hidden="true" className="resume-color-filter">
-            {["resume-accent", "resume-accent-dark", "resume-cylinder-light", "resume-cylinder-dark"].map((id) => (
+            {["resume-accent", "resume-accent-dark", "resume-cylinder", "resume-cylinder-paper", "resume-cylinder-paper-light"].map((id) => (
               <filter key={id} id={id} colorInterpolationFilters="sRGB">
                 <feColorMatrix in="SourceGraphic" type="matrix" values={
                   id.endsWith("-dark")
@@ -84,20 +84,13 @@ export function ResumeSection() {
                     : "0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  -2 0 2 0 0"
                 } result="accent-mask" />
                 <feColorMatrix in="SourceGraphic" type="saturate" values="0" result="text" />
-                <feFlood floodColor="var(--secondary)" />
+                <feFlood floodColor={id.startsWith("resume-cylinder") ? "#166a68" : "var(--secondary)"} />
                 <feComposite in2="accent-mask" operator="in" />
                 <feComposite in2="text" operator="over" result="page" />
-                {id === "resume-cylinder-light" && (
+                {(id === "resume-cylinder-paper" || id === "resume-cylinder-paper-light") && (
                   <>
-                    <feFlood floodColor="var(--button-bg)" result="page-background" />
-                    <feBlend in="page" in2="page-background" mode="multiply" />
-                    <feComposite in2="SourceGraphic" operator="in" />
-                  </>
-                )}
-                {id === "resume-cylinder-dark" && (
-                  <>
-                    <feFlood floodColor="var(--button-bg)" result="page-background" />
-                    <feBlend in="page" in2="page-background" mode="screen" />
+                    <feFlood floodColor={id === "resume-cylinder-paper-light" ? "var(--button-bg)" : "#F5F0E4"} result="paper-background" />
+                    <feBlend in="page" in2="paper-background" mode="multiply" />
                     <feComposite in2="SourceGraphic" operator="in" />
                   </>
                 )}

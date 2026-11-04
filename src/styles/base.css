@@ -17,6 +17,7 @@
   --page-bg: #f6f0e4;
   --page-surface: #fffbf2;
   --page-text: var(--ink);
+  --highlight-text: #000;
   --page-muted: #626c64;
   --page-line: rgba(143, 110, 59, 0.3);
   --header-bg: rgba(246, 240, 228, 0.95);
@@ -42,6 +43,7 @@
   --page-bg: #0c282d;
   --page-surface: #15383c;
   --page-text: #f5eddb;
+  --highlight-text: #fff;
   --page-muted: #b5c5bd;
   --page-line: rgba(217, 183, 120, 0.3);
   --header-bg: rgba(12, 40, 45, 0.95);
@@ -78,7 +80,7 @@ body {
 }
 
 :root[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6) {
-  color: #fff;
+  color: var(--highlight-text);
 }
 
 /* Tile the 720 × 1280 source at 2× pixel density for a crisp, smaller pattern. */

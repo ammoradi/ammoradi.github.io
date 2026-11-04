@@ -17,7 +17,7 @@
 
 .skills-inspiration {
   margin-top: 0.7rem;
-  color: var(--page-text);
+  color: var(--highlight-text);
   font-family: var(--display-font);
   font-size: clamp(1rem, 2vw, 1.2rem);
 }
@@ -96,7 +96,7 @@
 .soft-skills li {
   padding: 0.9rem 0;
   border-top: 1px solid var(--page-line);
-  color: var(--page-text);
+  color: var(--highlight-text);
   font-size: clamp(0.78rem, 0.95vw, 0.95rem);
   font-weight: 600;
   line-height: 1.25;

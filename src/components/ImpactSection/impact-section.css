@@ -479,7 +479,7 @@
 
 .impact-metrics dd {
   margin-top: 0.28rem;
-  color: var(--page-text);
+  color: var(--highlight-text);
   font-size: clamp(0.68rem, 0.82vw, 0.8rem);
   font-weight: 700;
   letter-spacing: 0.035em;

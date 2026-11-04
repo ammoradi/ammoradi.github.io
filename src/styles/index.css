@@ -21,6 +21,14 @@
   --button-hover-bg: #1c4448;
 }
 
+:root:not([data-theme="dark"]) a {
+  color: #082d2c !important;
+}
+
+:root:not([data-theme="dark"]) .skip-link {
+  background: var(--white);
+}
+
 :where(button:not(.gallery-playback), .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a) {
   position: relative;
 }

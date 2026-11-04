@@ -67,6 +67,11 @@
 }
 .cylinder-help { margin-top: 1.1rem; text-align: center; color: var(--muted); font-size: .75rem; line-height: 1.8; }
 .cylinder-help span { font-size: .7rem; }
+@media (min-width: 741px) {
+  .cylinder-surface {
+    margin-block: 2rem;
+  }
+}
 @media (max-width: 740px) {
   .resume-cylinder { padding-inline: .5rem; }
   .cylinder-intro { padding-inline: 1rem; }

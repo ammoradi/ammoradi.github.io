@@ -19,6 +19,10 @@
 }
 
 @media (min-width: 741px) {
+  .resume.section {
+    padding-bottom: clamp(3rem, 5vw, 5.7rem);
+  }
+
   .resume-public-note,
   .resume-public-note > p {
     max-width: none;

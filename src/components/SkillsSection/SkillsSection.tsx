@@ -10,11 +10,23 @@ export function SkillsSection() {
       id="skills"
       aria-labelledby="skills-title"
     >
+      <svg width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="skill-icon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="var(--secondary)" />
+            <stop offset="100%" stopColor="var(--gold)" />
+          </linearGradient>
+        </defs>
+      </svg>
       <SectionHeading
         id="skills-title"
         eyebrow="Technical toolkit"
         title="The tools & skills behind the outcomes."
-      />
+      >
+        <p className="skills-inspiration">
+          By the way, the curves are inspired by the <a href="https://en.wikipedia.org/wiki/Sasanian_architecture" target="_blank" rel="noreferrer">Sasanian arch</a>.
+        </p>
+      </SectionHeading>
       <div className="skills-layout">
         <div className="skill-lanes">
           {skillLanes.map((lane) => (

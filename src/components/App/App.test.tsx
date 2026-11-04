@@ -125,13 +125,17 @@ describe("portfolio", () => {
     window.localStorage.removeItem("portfolio-theme");
     render(<App />);
 
-    const toggle = screen.getByRole("button", { name: "Switch to dark theme" });
-    fireEvent.click(toggle);
+    fireEvent.click(screen.getByRole("button", { name: "Color theme: System" }));
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Dark" }));
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     expect(window.localStorage.getItem("portfolio-theme")).toBe("dark");
     expect(
-      screen.getByRole("button", { name: "Switch to light theme" }),
-    ).toHaveAttribute("aria-pressed", "true");
+      screen.getByRole("button", { name: "Color theme: Dark" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(screen.getByRole("button", { name: "Color theme: Dark" }));
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "System" }));
+    expect(screen.getByRole("button", { name: "Color theme: System" })).toBeInTheDocument();
+    expect(window.localStorage.getItem("portfolio-theme")).toBeNull();
   });
 
   it("uses the browser color-scheme preference when no theme is saved", () => {
@@ -147,7 +151,7 @@ describe("portfolio", () => {
     render(<App />);
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     expect(
-      screen.getByRole("button", { name: "Switch to light theme" }),
+      screen.getByRole("button", { name: "Color theme: System" }),
     ).toBeInTheDocument();
     vi.unstubAllGlobals();
   });
@@ -198,8 +202,18 @@ describe("portfolio", () => {
       screen.getByRole("link", { name: "LinkedIn profile" }),
     ).toHaveAttribute("href", "https://www.linkedin.com/in/ammoradi/");
     expect(
-      screen.getByRole("button", { name: "Switch to dark theme" }),
+      screen.getByRole("button", { name: "Color theme: System" }),
     ).toBeInTheDocument();
+
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Color theme: System" }));
+    expect(menu).toHaveAttribute("aria-expanded", "true");
+    fireEvent.pointerDown(screen.getByRole("main"));
+    expect(menu).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("navigation", { name: "Primary navigation" })).not.toBeInTheDocument();
+    fireEvent.click(menu);
+    fireEvent.pointerDown(menu);
+    fireEvent.click(menu);
+    expect(menu).toHaveAttribute("aria-expanded", "false");
 
     vi.unstubAllGlobals();
   });
@@ -246,7 +260,7 @@ describe("portfolio", () => {
     expect(document.querySelector(".portrait-panel")).not.toBeInTheDocument();
     expect(document.querySelector(".brand-avatar img")).toHaveAttribute(
       "src",
-      "/portrait.jpg",
+      "/portrait.png",
     );
     expect(
       screen.queryByRole("button", { name: "Next impact" }),
@@ -333,6 +347,9 @@ describe("portfolio", () => {
 
   it("links to a scrollable resume preview with an explicit download", () => {
     render(<App />);
+
+    expect(screen.getByRole("tab", { name: "Cyrus Cylinder" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "PDF preview" }));
 
     expect(
       screen.getByRole("img", {

@@ -1,27 +1,43 @@
 .hero {
   position: relative;
-  display: block;
+  display: flow-root;
   height: 300svh;
   min-height: 132rem;
-  border-bottom: 1px solid var(--page-line);
-  background: var(--page-bg);
+  background: transparent;
 }
 
 .hero-impact {
+  --impact-control-height: 2.1rem;
+  --hero-edge-inset: 1.75rem;
   position: sticky;
-  top: 4.5rem;
+  top: calc(4.5rem + var(--section-side-margin));
   display: grid;
   min-width: 0;
-  height: calc(100svh - 4.5rem);
+  height: calc(100svh - 4.5rem - 2 * var(--section-side-margin));
   grid-template-rows: auto minmax(0, 1fr);
-  padding: 1.5rem 4vw 3.75rem;
+  row-gap: 1.25rem;
+  margin-block: var(--section-side-margin);
+  padding-inline: var(--hero-inline-padding);
   overflow: visible;
   color: var(--page-text);
-  background: var(--page-bg);
+  background: transparent;
+}
+
+.hero-impact::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 var(--section-side-margin);
+  border: 1px solid var(--page-line);
+  background: var(--section-background);
+  content: "";
+  pointer-events: none;
 }
 
 .mobile-impact-list {
   display: none;
+  background: var(--section-background);
+  margin: var(--section-side-margin);
+  border: 1px solid var(--page-line);
 }
 
 .eyebrow {
@@ -31,27 +47,9 @@
   text-transform: uppercase;
 }
 
-.hero-identity {
-  height: 1.4em;
-  max-width: 100%;
-  color: var(--page-muted);
-  line-height: 1.4;
-  transform: translateY(0.65rem);
-}
-
-.hero-identity .eyebrow {
-  display: grid;
-  gap: 0.15rem;
-  font-size: clamp(0.7rem, 0.82vw, 0.84rem);
-  font-weight: 700;
-}
-
-.hero-identity .eyebrow span:first-child {
-  color: var(--page-text);
-}
-
 .impact-stage {
   position: relative;
+  top: -0.5rem;
   display: grid;
   width: 100%;
   min-height: 0;
@@ -70,10 +68,10 @@
   grid-template-rows: auto 1fr;
   align-items: center;
   column-gap: clamp(1rem, 2.25vw, 2rem);
-  padding: clamp(2rem, 5vw, 5rem) 0;
+  padding: 0 0 2.5rem;
   overflow: visible;
   color: var(--page-text);
-  background: var(--page-bg);
+  background: transparent;
   animation: impact-reveal 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -90,37 +88,13 @@
   }
 }
 
-.impact-react-mark {
-  position: absolute;
-  z-index: 0;
-  right: -4rem;
-  bottom: -6rem;
-  width: clamp(15rem, 25vw, 24rem);
-  height: auto;
-  color: var(--yellow);
-  opacity: 0.13;
-  pointer-events: none;
-}
-
-.impact-focus-card::before {
-  position: absolute;
-  top: -0.12em;
-  right: 0.04em;
-  color: rgba(255, 192, 16, 0.045);
-  content: attr(data-step);
-  font-size: clamp(10rem, 24vw, 24rem);
-  font-weight: 900;
-  letter-spacing: -0.1em;
-  line-height: 1;
-}
-
 .impact-card-topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: var(--page-text);
   font-size: 0.78rem;
-  font-weight: 850;
+  font-weight: 650;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   grid-column: 1 / -1;
@@ -132,10 +106,19 @@
   gap: 0.55rem;
 }
 
+:root:not([data-theme="dark"]) .impact-card-labels p:first-child {
+  color: #153f40;
+}
+
 .impact-card-labels span,
 .impact-card-labels p:last-child,
-.impact-card-topline > span {
+.impact-card-counter {
   color: var(--page-muted);
+}
+
+.impact-card-counter {
+  position: relative;
+  z-index: 8;
 }
 
 .impact-story-copy {
@@ -158,12 +141,13 @@
 .impact-focus-card h1 {
   position: relative;
   z-index: 1;
-  max-width: 11ch;
+  max-width: 15ch;
   margin: 0.6rem 0 clamp(1.5rem, 3vw, 2.5rem);
   font-size: clamp(3.25rem, 5.8vw, 6.3rem);
-  font-weight: 770;
-  letter-spacing: -0.065em;
-  line-height: 0.92;
+  font-family: var(--display-font);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
 }
 
 .impact-metrics {
@@ -188,7 +172,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  margin-top: 1.35rem;
+  margin-top: 1.75rem;
   border-bottom: 1px solid
     color-mix(in srgb, var(--impact-link) 55%, transparent);
   color: var(--impact-link);
@@ -217,37 +201,47 @@
   min-height: clamp(20rem, 51svh, 30rem);
 }
 
+@media (min-width: 741px) {
+  .impact-gallery {
+    left: calc(-1 * clamp(1.75rem, 4vw, 4rem));
+  }
+
+  .impact-gallery-square,
+  .impact-gallery-bookapo {
+    top: -3rem;
+  }
+
+  .impact-gallery-landscape {
+    top: -1.5rem;
+  }
+
+  .impact-gallery-bookapo {
+    left: calc(-1 * clamp(1.75rem, 4vw, 4rem) - 48px);
+  }
+
+}
+
 .gallery-playback {
   position: absolute;
-  z-index: 8;
-  right: 0;
-  bottom: -2.25rem;
   display: inline-flex;
   align-items: center;
   gap: 0.42rem;
-  padding: 0.4rem 0;
+  z-index: 8;
+  right: 0;
+  bottom: -2.25rem;
+  min-height: 1.75rem;
+  padding: 0;
   border: 0;
-  color: var(--page-text);
+  color: var(--page-muted);
   background: transparent;
   cursor: pointer;
   font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
-  opacity: 0.34;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  opacity: 0.9;
   transition:
-    color 180ms ease,
     opacity 500ms ease;
-}
-
-.gallery-playback.is-prominent,
-.gallery-playback:hover,
-.gallery-playback:focus-visible {
-  opacity: 0.82;
-}
-
-.gallery-playback:hover {
-  color: var(--yellow);
 }
 
 .gallery-playback svg {
@@ -256,15 +250,30 @@
   fill: currentColor;
 }
 
+.impact-card-counter .gallery-playback {
+  top: calc(100% + 0.125rem);
+  bottom: auto;
+  height: var(--impact-control-height);
+  padding-block: 0;
+  white-space: nowrap;
+}
+
+.gallery-playback:is(.is-prominent, :hover, :focus-visible) {
+  opacity: 1;
+}
+
+.gallery-playback:hover {
+  color: var(--page-text);
+}
+
 .impact-image-card {
   position: absolute;
   width: min(88%, 31rem);
   margin: 0;
   overflow: hidden;
-  border: 0;
-  border-radius: 0.75rem;
+  border-radius: 0;
   background: var(--white);
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1rem 3rem rgba(5, 31, 33, 0.25);
   transform-origin: center;
   transition:
     z-index 0s,
@@ -305,6 +314,10 @@
   object-fit: cover;
 }
 
+.impact-gallery-landscape .impact-image-card img {
+  object-fit: contain;
+}
+
 .impact-image-link {
   display: block;
   color: inherit;
@@ -323,19 +336,30 @@
   gap: 0.75rem;
   padding: 0.45rem 0.65rem;
   color: var(--ink);
-  font-size: 0.58rem;
-  font-weight: 850;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .impact-image-card figcaption small {
-  color: var(--muted);
-  font-size: 0.46rem;
-  font-weight: 650;
-  letter-spacing: 0.035em;
-  text-align: right;
+  color: #626c64;
+  font-size: 0.75rem;
+  font-weight: 450;
+  letter-spacing: normal;
+  text-align: left;
   text-transform: none;
+}
+
+.impact-image-card figcaption > span {
+  margin-inline-start: auto;
+  font-size: 0.65rem;
+  text-align: right;
+}
+
+.impact-gallery-square .impact-image-card,
+.impact-gallery-bookapo .impact-image-card--portrait {
+  border-radius: 2.5rem 2.5rem 0 0;
 }
 
 .impact-gallery-square .impact-image-card {
@@ -355,6 +379,16 @@
   right: 18%;
 }
 
+@media (min-width: 741px) {
+  .impact-gallery-square .impact-image-card:nth-child(2) {
+    top: calc(22% - 3rem);
+  }
+
+  .impact-gallery-square .impact-image-card:nth-child(3) {
+    bottom: -2rem;
+  }
+}
+
 .impact-gallery-bookapo {
   min-height: clamp(22rem, 53svh, 31rem);
 }
@@ -362,7 +396,7 @@
 .impact-gallery-bookapo .impact-image-card--portrait {
   --bookapo-phone-padding-x: clamp(0.8rem, 1.5vw, 1.35rem);
   z-index: 2;
-  top: 0;
+  top: -1.5rem;
   right: 4%;
   bottom: auto;
   left: auto;
@@ -417,11 +451,30 @@
 }
 
 .impact-metrics dt {
+  width: fit-content;
   color: var(--yellow);
   font-size: clamp(1.8rem, 3.4vw, 3.2rem);
-  font-weight: 790;
-  letter-spacing: -0.055em;
+  font-family: var(--display-font);
+  font-weight: 400;
+  letter-spacing: -0.035em;
   line-height: 1;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  :root[data-theme="dark"] .impact-metrics dt {
+    background-image: linear-gradient(90deg, var(--gold), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  :root .impact-metrics dt,
+  :root[data-theme="dark"] .impact-metrics dt {
+    color: CanvasText;
+    background-image: none;
+  }
 }
 
 .impact-metrics dd {
@@ -437,16 +490,16 @@
 .scroll-cue {
   position: absolute;
   z-index: 5;
-  bottom: 1.15rem;
+  bottom: var(--hero-edge-inset);
   left: 50%;
   display: grid;
   width: auto;
-  height: auto;
+  height: var(--impact-control-height);
   place-items: center;
-  padding: 0.35rem 2rem;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: 0 2rem;
+  border: 1px solid var(--page-line);
+  border-radius: 2rem;
+  background: var(--page-bg);
   color: var(--page-text);
   cursor: pointer;
   transform: translateX(-50%);
@@ -467,7 +520,6 @@
 .scroll-cue:hover {
   color: var(--yellow);
   background: transparent;
-  transform: translate(-50%, 0.2rem);
 }
 
 .scroll-cue svg {

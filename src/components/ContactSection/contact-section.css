@@ -5,17 +5,22 @@
   column-gap: clamp(3rem, 8vw, 9rem);
   padding-top: clamp(3.5rem, 5vw, 5rem);
   padding-bottom: clamp(5rem, 8vw, 8rem);
-  border-bottom: 0;
   color: var(--page-text);
-  background: var(--contact-bg);
 }
 
 .contact .section-heading {
   margin-bottom: 0;
+  container-type: inline-size;
+}
+
+.contact #contact-title {
+  max-width: none;
+  font-size: clamp(1.65rem, 10cqi, 5rem);
+  white-space: nowrap;
 }
 
 .contact .eyebrow {
-  color: var(--nav-active);
+  color: var(--yellow);
 }
 
 .contact-action {
@@ -34,9 +39,6 @@
 .contact-link {
   width: fit-content;
   justify-self: start;
-  border-color: var(--yellow);
-  color: var(--ink);
-  background: var(--yellow);
 }
 
 .contact-link > svg:first-child {

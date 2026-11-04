@@ -29,7 +29,6 @@ import {
   TbPlugConnected,
   TbServer,
   TbTestPipe,
-  TbVector,
   TbWorldWww,
 } from "react-icons/tb";
 import type { SkillLane } from "./portfolio-types";
@@ -57,7 +56,6 @@ export const skillLanes: SkillLane[] = [
       { name: "Jest", icon: SiJest },
       { name: "Testing Library", icon: SiTestinglibrary },
       { name: "End-to-end", icon: FaCodeBranch },
-      { name: "SVG & Canvas", icon: TbVector },
     ],
   },
   {
@@ -102,7 +100,8 @@ export const skillLanes: SkillLane[] = [
 
 export const softSkills = [
   "Technical leadership",
-  "Mentoring",
+  "Organization-wide impact",
+  "AI-first mindset",
   "Product thinking",
   "Cross-functional communication",
   "Systems thinking",

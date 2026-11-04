@@ -28,4 +28,5 @@ export type SkillLane = {
 };
 
 export type Theme = "light" | "dark";
+export type ThemePreference = Theme | "system";
 export type SectionId = "top" | "skills" | "resume" | "contact";

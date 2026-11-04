@@ -1,4 +1,4 @@
-import type { Theme } from "./portfolio-types";
+import type { Theme, ThemePreference } from "./portfolio-types";
 
 export function getInitialGalleryPlayback() {
   return !(
@@ -14,12 +14,16 @@ export function getInitialMobileLayout() {
   );
 }
 
-export function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
+export function getInitialThemePreference(): ThemePreference {
+  try {
+    const savedTheme = window.localStorage.getItem("portfolio-theme");
+    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+  } catch {}
+  return "system";
+}
 
-  const savedTheme = window.localStorage.getItem("portfolio-theme");
-  if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
-  return typeof window.matchMedia === "function" &&
+export function getSystemTheme(): Theme {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";

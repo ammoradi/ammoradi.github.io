@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f5f2ea" />
+    <meta name="theme-color" content="#f6f0e4" />
     <meta name="color-scheme" content="light dark" />
+    <link rel="preload" as="image" href="/bluefors-data-viewer.png" fetchpriority="high" />
     <script>
       ;(() => {
         let saved = null
@@ -16,15 +17,15 @@
         const theme = saved === 'light' || saved === 'dark' ? saved : prefersDark ? 'dark' : 'light'
         document.documentElement.dataset.theme = theme
         document.documentElement.style.colorScheme = theme
-        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#151513' : '#f5f2ea'
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#0c282d' : '#f6f0e4'
       })()
     </script>
     <meta
       name="description"
-      content="Portfolio of Amir Mohammad Moradi — Frontend Tech Lead and AI Product Engineer in Helsinki, Finland."
+      content="Portfolio of Amir Mohammad Moradi — Frontend Tech Lead in Helsinki, Finland."
     />
     <link rel="canonical" href="https://ammoradi.github.io/" />
-    <link rel="icon" type="image/jpeg" href="/portrait.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=portrait-border" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ammoradi.github.io/" />
@@ -45,8 +46,7 @@
         "@type": "Person",
         "name": "Amir Mohammad Moradi",
         "url": "https://ammoradi.github.io/",
-        "image": "https://ammoradi.github.io/portrait.jpg",
-        "jobTitle": "Frontend Tech Lead and AI Product Engineer",
+        "jobTitle": "Frontend Tech Lead",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Espoo",
@@ -61,7 +61,7 @@
       }
     </script>
 
-    <title>Amir Mohammad Moradi — Frontend Tech Lead</title>
+    <title>Amir Mohammad Moradi | Frontend Tech Lead</title>
   </head>
   <body>
     <div id="root"></div>

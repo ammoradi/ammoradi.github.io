@@ -1,15 +1,34 @@
+.skills.section {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+}
+
 .skills {
   padding-right: 0;
   padding-left: 0;
   color: var(--page-text);
-  background: var(--page-bg);
 }
 
 .skills .section-heading {
-  padding: 0 4vw;
+  padding: 0 var(--section-inline-padding);
 }
 .skills .eyebrow {
   color: var(--yellow);
+}
+
+.skills-inspiration {
+  margin-top: 0.7rem;
+  color: var(--page-muted);
+  font-family: var(--display-font);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.skills-inspiration a {
+  color: var(--page-text);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
 }
 
 .skills-layout {
@@ -27,41 +46,55 @@
   grid-template-columns: minmax(15rem, 0.28fr) 1fr;
   min-height: 9rem;
   border-bottom: 1px solid var(--page-line);
-  background: var(--page-bg);
+  background: color-mix(in srgb, var(--page-bg) 45%, transparent);
 }
 
 .skill-lane-heading {
   display: grid;
   align-content: center;
   gap: 0.8rem;
-  padding: 1.3rem 4vw;
+  padding: 1.3rem var(--section-inline-padding);
   border-right: 1px solid var(--page-line);
 }
 
 .skill-lane-heading h3 {
   max-width: 12rem;
-  font-size: clamp(1.05rem, 1.55vw, 1.5rem);
-  letter-spacing: -0.045em;
-  line-height: 1;
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
 }
 
 .soft-skills {
   padding: clamp(2rem, 3vw, 3rem);
   border-bottom: 1px solid var(--page-line);
   border-left: 1px solid var(--page-line);
-  background: color-mix(in srgb, var(--page-text) 2.5%, transparent);
+  background: color-mix(in srgb, var(--secondary) 8%, var(--page-bg));
 }
 
 .soft-skills .eyebrow {
   color: var(--page-muted);
 }
 
+@media (min-width: 741px) {
+  :root:not([data-theme="dark"]) .soft-skills {
+    background: var(--technology-bg);
+  }
+
+}
+
+:root:not([data-theme="dark"]) .soft-skills li {
+  color: var(--ink);
+}
+
 .soft-skills h3 {
-  max-width: 8ch;
+  white-space: nowrap;
   margin: 0.8rem 0 2.2rem;
   font-size: clamp(2rem, 3vw, 3.25rem);
-  letter-spacing: -0.055em;
-  line-height: 0.95;
+  font-family: var(--display-font);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
 }
 
 .soft-skills li {
@@ -69,7 +102,7 @@
   border-top: 1px solid var(--page-line);
   color: var(--page-muted);
   font-size: clamp(0.78rem, 0.95vw, 0.95rem);
-  font-weight: 750;
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -119,6 +152,8 @@
 }
 
 .technology {
+  position: relative;
+  isolation: isolate;
   display: grid;
   width: 7.8rem;
   min-height: 7.2rem;
@@ -128,11 +163,45 @@
   gap: 0.75rem;
   padding: 0.9rem 0.65rem;
   border: 1px solid var(--page-line);
-  border-radius: 1rem;
+  border-radius: 2.5rem 2.5rem 0 0;
   color: var(--page-text);
   background: var(--technology-bg);
-  box-shadow: 0.28rem 0.28rem 0 var(--technology-shadow);
+  box-shadow: 0 0.3rem 0.8rem var(--technology-shadow);
   text-align: center;
+  transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease;
+}
+
+:root:not([data-theme="dark"]) .technology::before {
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  background:
+    linear-gradient(var(--button-bg), var(--button-bg)) padding-box,
+    linear-gradient(var(--button-border-angle), var(--secondary), var(--gold)) border-box;
+  content: "";
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+:root:not([data-theme="dark"]) .technology:hover::before {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .technology:hover {
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  color: var(--page-text);
+  background-color: var(--section-gradient-start);
+}
+
+:root:not([data-theme="dark"]) .technology:hover svg:not([fill="none"]) {
+  fill: url(#skill-icon-gradient);
+}
+
+:root:not([data-theme="dark"]) .technology:hover svg[stroke="currentColor"] {
+  stroke: url(#skill-icon-gradient);
 }
 
 .technology svg {
@@ -153,5 +222,3 @@
     transform: translateX(-25%);
   }
 }
-
-

@@ -5,8 +5,8 @@
 .cylinder-intro { text-align: center; }
 .cylinder-edition { color: var(--yellow); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
 .cylinder-intro p { margin-top: .7rem; color: var(--muted); font-family: var(--display-font); font-size: 1.2rem; }
-.resume-cylinder .cylinder-intro p,
-.resume-cylinder .cylinder-intro a { color: var(--highlight-text); }
+.resume-cylinder .cylinder-intro p { color: var(--highlight-text); }
+.resume-cylinder .cylinder-intro a { color: var(--secondary); }
 .cylinder-surface { position: relative; cursor: grab; touch-action: pan-x pinch-zoom; user-select: none; border-radius: 1rem; }
 .cylinder-surface:active { cursor: grabbing; }
 .cylinder-surface {

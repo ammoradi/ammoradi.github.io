@@ -5,6 +5,7 @@
 - For each ticket, create a separate Git worktree and branch from the latest `origin/master` unless the user explicitly asks otherwise.
 - Name ticket branches `issue-<number>-<short-description>`, for example `issue-10-sth-else`.
 - When creating a pull request, change the ticket label from `ready-for-agent` to `ready-for-human`.
+- For UI changes, attach screenshots to the pull request for all four combinations of light and dark themes and desktop and mobile viewports. Include video when needed.
 
 ## Architecture
 
@@ -27,7 +28,7 @@
 - Test behavior through accessible roles, names, and user-visible text.
 - Prefer component-level tests for isolated behavior and a small App integration suite for cross-section behavior.
 - Run `npm test` and `npm run build` after structural changes.
-- For UI changes, test the UI and attach screenshots to the pull request for all four combinations of light and dark themes and desktop and mobile viewports. Include video when needed.
+- Test the UI for UI changes.
 
 ## Naming
 

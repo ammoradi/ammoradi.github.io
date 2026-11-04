@@ -355,6 +355,9 @@
   .section-heading h2 {
     font-size: clamp(2.8rem, 13vw, 4.5rem);
   }
+  .skills.section {
+    padding-bottom: 2rem;
+  }
   .skills {
     padding-right: 0;
     padding-left: 0;
@@ -390,7 +393,7 @@
     border-top: 1px solid var(--page-line);
     border-bottom: 0;
     border-left: 0;
-    background: var(--page-bg);
+    background: linear-gradient(to bottom, var(--page-bg) calc(100% - 3rem), transparent);
   }
   .soft-skills h3 {
     max-width: none;

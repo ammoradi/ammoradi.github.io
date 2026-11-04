@@ -81,9 +81,10 @@
     background: var(--technology-bg);
   }
 
-  :root:not([data-theme="dark"]) .soft-skills li {
-    color: var(--ink);
-  }
+}
+
+:root:not([data-theme="dark"]) .soft-skills li {
+  color: var(--ink);
 }
 
 .soft-skills h3 {

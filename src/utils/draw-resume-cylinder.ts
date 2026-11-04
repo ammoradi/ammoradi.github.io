@@ -67,6 +67,49 @@ export function drawResumeCylinder(
   }
 
   surface.globalCompositeOperation = "source-atop";
+  // Keep decorative wedge impressions near the ends, clear of the reading area.
+  // Project them with the résumé so they roll and taper with the clay.
+  const impressions = [
+    new Path2D("M-4-3 L1-2 L-4-1 Z M-4 1 L1 2 L-4 3 Z M2-4 L4-4 L3 4 Z"),
+    new Path2D("M-4-4 L-2-4 L-3 3 Z M0-3 L4-2 L0-1 Z M0 1 L4 2 L0 3 Z"),
+    new Path2D("M-4-3 L1-2 L-4-1 Z M-2 0 L3 1 L-2 2 Z M2-4 L4-3 L3 0 Z"),
+  ];
+  // Body-text baselines in the résumé preview are about 37 source pixels apart.
+  const spacing = 37 / (radius * scale);
+  const rotation = sourceCenter / (radius * scale);
+  const markSize = Math.min(9, bodyWidth * 0.016) / 8;
+  const columns = Array.from({ length: 70 }, (_, column) => {
+    const fromEdge = Math.min(column, 69 - column);
+    return {
+      margin: column < 35 ? 0.0165 + fromEdge * 0.014 : 0.9835 - fromEdge * 0.014,
+      edgeOpacity: fromEdge < 4 ? 1 - fromEdge * 0.22 : 0,
+    };
+  });
+  surface.save();
+  surface.fillStyle = "#64584b";
+  for (let index = Math.ceil((rotation - 1.45) / spacing); index * spacing < rotation + 1.45; index++) {
+    const angle = index * spacing - rotation;
+    const bulge = Math.cos(angle);
+    const inset = (1 - bulge) * bodyWidth * 0.035;
+    const span = bodyWidth - inset * 2;
+    const y = center + Math.sin(angle) * radius;
+    // Use the PDF's blank top and bottom margins for short patterned bands.
+    const sourceLine = index * 37;
+    const endOpacity = Math.min(1, Math.max(0, (55 - sourceLine) / 74, (sourceLine - (texture.height - 90)) / 74));
+    for (const [column, { margin, edgeOpacity }] of columns.entries()) {
+      const opacity = Math.max(edgeOpacity, endOpacity);
+      if (!opacity) continue;
+      const impression = impressions[((index + column) % impressions.length + impressions.length) % impressions.length];
+      surface.save();
+      surface.globalAlpha = 0.20 * bulge * opacity;
+      surface.translate(left + inset + span * margin, y);
+      surface.scale(markSize, markSize * bulge);
+      surface.fill(impression);
+      surface.restore();
+    }
+  }
+  surface.restore();
+
   for (const direction of [-1, 1]) {
     const edge = center + direction * radius;
     const shading = surface.createLinearGradient(0, center, 0, edge);

@@ -22,9 +22,9 @@
 }
 
 :root:not([data-theme="dark"]) a {
-  color: #104a48 !important;
-  border-bottom-color: var(--secondary) !important;
-  text-decoration-color: var(--secondary) !important;
+  color: #51442d !important;
+  border-bottom-color: var(--accent) !important;
+  text-decoration-color: var(--accent) !important;
 }
 
 :root:not([data-theme="dark"]) .skip-link {

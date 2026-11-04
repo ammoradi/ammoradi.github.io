@@ -22,7 +22,7 @@
 }
 
 :root:not([data-theme="dark"]) a {
-  color: #082d2c !important;
+  color: #104a48 !important;
 }
 
 :root:not([data-theme="dark"]) .skip-link {

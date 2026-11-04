@@ -9,7 +9,7 @@ export function useTheme() {
     document.documentElement.style.colorScheme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", theme === "dark" ? "#151513" : "#f5f2ea");
+      ?.setAttribute("content", theme === "dark" ? "#0c282d" : "#f6f0e4");
   }, [theme]);
 
   useEffect(() => {

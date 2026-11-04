@@ -190,9 +190,9 @@
   background: var(--button-bg);
 }
 
-@media (max-width: 740px) {
+@media (max-width: 980px) {
   .resume-preview-scroll {
-    width: calc((100% - 1rem) * 0.86);
+    width: 100%;
   }
 }
 

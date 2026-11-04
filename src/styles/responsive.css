@@ -58,6 +58,7 @@
   :root {
     --section-margin: 1rem;
     --section-inline-padding: 1.25rem;
+    --mobile-content-inset: calc(var(--section-side-margin) + var(--section-inline-padding) + 1px);
   }
   html {
     scroll-padding-top: 4rem;
@@ -65,7 +66,7 @@
   .site-header {
     grid-template-columns: minmax(0, 1fr) auto;
     min-height: 4rem;
-    padding-inline: calc(var(--section-side-margin) + var(--section-inline-padding) + 1px);
+    padding-inline: var(--mobile-content-inset);
   }
   .brand {
     min-width: 0;
@@ -116,7 +117,7 @@
     left: 0;
     display: grid;
     gap: 1.5rem;
-    padding: 1.25rem 1rem 1.5rem;
+    padding: 1.25rem var(--mobile-content-inset) 1.5rem;
     border-top: 1px solid var(--page-line);
     border-bottom: 1px solid var(--page-line);
     background: var(--header-bg);
@@ -168,12 +169,12 @@
   }
   .mobile-impact-list {
     display: grid;
-    padding: 1.75rem 1rem 2rem;
+    padding: 1.75rem var(--section-inline-padding) 2rem;
   }
   .mobile-impact-list .hero-identity {
     height: auto;
     margin-bottom: 1.25rem;
-    padding: 0 0.25rem;
+    padding: 0;
     transform: none;
   }
   .mobile-impact-list .hero-identity .eyebrow {
@@ -183,7 +184,7 @@
     min-height: 0;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
-    padding: 2.75rem 0.25rem 4rem;
+    padding: 2.75rem 0 4rem;
     border-top: 1px solid var(--page-line);
     animation: none;
   }

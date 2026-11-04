@@ -263,7 +263,7 @@
 }
 
 .gallery-playback:hover {
-  color: var(--ink);
+  color: var(--page-text);
 }
 
 .impact-image-card {

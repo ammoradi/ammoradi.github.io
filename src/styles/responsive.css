@@ -64,9 +64,14 @@
     scroll-padding-top: 4rem;
   }
   .site-header {
+    position: fixed;
+    inset: 0 0 auto;
     grid-template-columns: minmax(0, 1fr) auto;
     min-height: 4rem;
     padding-inline: var(--mobile-content-inset);
+  }
+  #main-content {
+    padding-top: 4rem;
   }
   .brand {
     min-width: 0;
@@ -74,7 +79,7 @@
   .brand-name {
     display: block;
     overflow: hidden;
-    font-size: 0.85rem;
+    font-size: 1rem;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -169,7 +174,7 @@
   }
   .mobile-impact-list {
     display: grid;
-    padding: 1.75rem var(--section-inline-padding) 2rem;
+    padding: 1.75rem var(--section-inline-padding) 0.5rem;
   }
   .mobile-impact-list .hero-identity {
     height: auto;
@@ -238,17 +243,23 @@
     margin-top: 0.75rem;
   }
   .impact-product-link {
-    margin-top: 0.8rem;
+    margin-top: 1.9rem;
   }
   .mobile-impact-card:last-child .impact-product-link {
-    margin-top: 1.2rem;
+    margin-top: 2.3rem;
   }
   .impact-gallery {
     display: block;
     min-height: 18rem;
-    margin-top: 0.9rem;
+    margin-block: 2rem;
     overflow: visible;
     padding: 0;
+  }
+  .impact-gallery-landscape {
+    margin-bottom: 1rem;
+  }
+  .impact-gallery-square {
+    margin-block: 2rem 3.5rem;
   }
   .impact-image-card,
   .impact-image-card:nth-child(n) {
@@ -281,6 +292,9 @@
   .impact-gallery-bookapo .impact-image-card:nth-child(n) {
     max-width: none;
   }
+  .impact-gallery-bookapo {
+    margin-bottom: 2.5rem;
+  }
   .impact-gallery-bookapo .impact-image-card--portrait img {
     height: 17rem;
     aspect-ratio: auto;
@@ -288,6 +302,8 @@
   }
   .impact-gallery-bookapo .impact-image-card--portrait {
     --bookapo-phone-padding-x: 0.75rem;
+    position: relative;
+    inset: auto;
     width: 68%;
     max-width: 22rem;
     padding-top: 0.75rem;
@@ -311,11 +327,22 @@
     gap: 0.2rem;
   }
   .impact-image-card figcaption small {
+    font-size: 0.7rem;
     text-align: left;
   }
-  .gallery-playback {
-    right: 0.25rem;
-    bottom: -1.8rem;
+  .impact-image-card figcaption > span {
+    order: -1;
+    margin-inline-start: 0;
+    font-size: 0.6rem;
+    text-align: left;
+  }
+  .mobile-impact-playback {
+    position: absolute;
+    left: 0;
+    bottom: 0.75rem;
+  }
+  .mobile-impact-playback .gallery-playback {
+    position: static;
   }
   .section {
     padding: 4.5rem var(--section-inline-padding);
@@ -351,12 +378,12 @@
     max-width: none;
   }
   .technology {
-    width: 6.8rem;
-    min-height: 6.6rem;
+    width: 6.2rem;
+    min-height: 6rem;
   }
   .technology svg {
-    width: 2.1rem;
-    height: 2.1rem;
+    width: 1.9rem;
+    height: 1.9rem;
   }
   .soft-skills {
     padding: 2.5rem 1.25rem 0;
@@ -378,6 +405,7 @@
     margin-left: 0;
   }
   .resume-download {
+    order: -1;
     width: 100%;
   }
   .resume-preview-scroll {

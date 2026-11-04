@@ -205,6 +205,16 @@ describe("portfolio", () => {
       screen.getByRole("button", { name: "Color theme: System" }),
     ).toBeInTheDocument();
 
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Color theme: System" }));
+    expect(menu).toHaveAttribute("aria-expanded", "true");
+    fireEvent.pointerDown(screen.getByRole("main"));
+    expect(menu).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("navigation", { name: "Primary navigation" })).not.toBeInTheDocument();
+    fireEvent.click(menu);
+    fireEvent.pointerDown(menu);
+    fireEvent.click(menu);
+    expect(menu).toHaveAttribute("aria-expanded", "false");
+
     vi.unstubAllGlobals();
   });
 

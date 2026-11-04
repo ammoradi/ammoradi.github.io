@@ -55,8 +55,9 @@ export function ImpactCard({
         )}
       </div>
       <div className="impact-story-side">
-        <ImpactGallery story={story} emphasizeControl={index === 0} playbackSlot={mobile ? undefined : playbackSlot} />
+        <ImpactGallery story={story} emphasizeControl={index === 0} playbackSlot={playbackSlot} />
       </div>
+      {mobile && <div className="mobile-impact-playback" ref={setPlaybackSlot} />}
     </article>
   );
 }

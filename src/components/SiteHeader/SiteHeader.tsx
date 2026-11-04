@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { navigationLinks } from "../../utils/navigation-links";
 import type { SectionId, ThemePreference } from "../../utils/portfolio-types";
@@ -21,9 +21,21 @@ export function SiteHeader({
   pageProgressRef,
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!isMobile) setMenuOpen(false);
   }, [isMobile]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const dismiss = (event: PointerEvent) => {
+      if (event.target instanceof Node &&
+          !menuRef.current?.contains(event.target) &&
+          !menuToggleRef.current?.contains(event.target)) setMenuOpen(false);
+    };
+    document.addEventListener("pointerdown", dismiss);
+    return () => document.removeEventListener("pointerdown", dismiss);
+  }, [menuOpen]);
   const links = navigationLinks.map((link) => (
     <a
       href={`#${link.id}`}
@@ -57,6 +69,7 @@ export function SiteHeader({
             </a>
             <button
               className="mobile-menu-toggle"
+              ref={menuToggleRef}
               type="button"
               aria-label={`${menuOpen ? "Close" : "Open"} navigation menu`}
               aria-controls="mobile-menu"
@@ -71,7 +84,7 @@ export function SiteHeader({
             </button>
           </div>
           {menuOpen && (
-            <div className="mobile-menu" id="mobile-menu">
+            <div className="mobile-menu" id="mobile-menu" ref={menuRef}>
               <nav aria-label="Primary navigation">{links}</nav>
               <div
                 className="mobile-menu-actions"

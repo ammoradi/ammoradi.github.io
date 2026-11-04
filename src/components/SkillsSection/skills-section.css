@@ -15,6 +15,22 @@
   color: var(--yellow);
 }
 
+.skills-inspiration {
+  margin-top: 0.7rem;
+  color: var(--page-muted);
+  font-family: var(--display-font);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.skills-inspiration a {
+  color: var(--page-text);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+
 .skills-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(18rem, 27vw);

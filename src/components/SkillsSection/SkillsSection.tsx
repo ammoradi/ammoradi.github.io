@@ -14,7 +14,11 @@ export function SkillsSection() {
         id="skills-title"
         eyebrow="Technical toolkit"
         title="The tools & skills behind the outcomes."
-      />
+      >
+        <p className="skills-inspiration">
+          By the way, the curves are inspired by the <a href="https://en.wikipedia.org/wiki/Sasanian_architecture" target="_blank" rel="noreferrer">Sasanian arch</a>.
+        </p>
+      </SectionHeading>
       <div className="skills-layout">
         <div className="skill-lanes">
           {skillLanes.map((lane) => (

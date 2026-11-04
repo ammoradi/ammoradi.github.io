@@ -1,6 +1,6 @@
 :root {
   --section-margin: 2.5rem;
-  --section-inline-padding: 4vw;
+  --section-inline-padding: calc(var(--hero-inline-padding) - var(--section-side-margin) - 1px);
   --section-side-margin: 2vw;
   --hero-inline-padding: 5vw;
   --section-background: linear-gradient(

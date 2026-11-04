@@ -1,7 +1,7 @@
 footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 1.5rem 4vw;
+  padding: 1.5rem calc(var(--section-side-margin) + var(--section-inline-padding) + 1px);
   border-top: 1px solid var(--page-line);
   color: var(--muted);
   background: var(--header-bg);

@@ -5,7 +5,7 @@
 }
 
 .skills .section-heading {
-  padding: 0 4vw;
+  padding: 0 var(--section-inline-padding);
 }
 .skills .eyebrow {
   color: var(--yellow);
@@ -33,7 +33,7 @@
   display: grid;
   align-content: center;
   gap: 0.8rem;
-  padding: 1.3rem 4vw;
+  padding: 1.3rem var(--section-inline-padding);
   border-right: 1px solid var(--page-line);
 }
 

@@ -85,17 +85,27 @@ body {
 
 /* Tile the 720 × 1280 source at 2× pixel density for a crisp, smaller pattern. */
 body::before {
-  position: fixed;
+  position: absolute;
   z-index: -1;
   inset: 0;
   background-image: url("/persian-garden.jpg");
   background-repeat: repeat;
   background-position: left top;
+  background-attachment: fixed;
   background-size: 360px 640px;
   content: "";
   opacity: var(--pattern-opacity);
   mix-blend-mode: var(--pattern-blend);
   filter: var(--pattern-filter);
+  pointer-events: none;
+}
+
+body::after {
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  background: var(--page-bg);
+  content: "";
   pointer-events: none;
 }
 

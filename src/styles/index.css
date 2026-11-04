@@ -23,6 +23,8 @@
 
 :root:not([data-theme="dark"]) a {
   color: #104a48 !important;
+  border-bottom-color: var(--secondary) !important;
+  text-decoration-color: var(--secondary) !important;
 }
 
 :root:not([data-theme="dark"]) .skip-link {

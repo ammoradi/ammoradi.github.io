@@ -71,6 +71,22 @@
   initial-value: 90deg;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  :is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a):not([role="tab"]) {
+    transition:
+      translate 220ms ease,
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease,
+      opacity 500ms ease;
+  }
+
+  :is(button, .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a):active:not(:disabled, [role="tab"]) {
+    translate: 0 2px;
+  }
+}
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   :is(button:not(.gallery-playback), .button, .header-icon, .mobile-header-linkedin, .mobile-menu-actions a)::after {
     transition: --button-border-angle 300ms ease;

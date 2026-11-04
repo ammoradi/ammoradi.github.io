@@ -451,12 +451,30 @@
 }
 
 .impact-metrics dt {
+  width: fit-content;
   color: var(--yellow);
   font-size: clamp(1.8rem, 3.4vw, 3.2rem);
   font-family: var(--display-font);
   font-weight: 400;
   letter-spacing: -0.035em;
   line-height: 1;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  :root[data-theme="dark"] .impact-metrics dt {
+    background-image: linear-gradient(90deg, var(--gold), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  :root .impact-metrics dt,
+  :root[data-theme="dark"] .impact-metrics dt {
+    color: CanvasText;
+    background-image: none;
+  }
 }
 
 .impact-metrics dd {

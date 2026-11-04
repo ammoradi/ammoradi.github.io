@@ -1,3 +1,7 @@
+.resume.section {
+  padding-top: clamp(3rem, 6vw, 5.5rem);
+}
+
 .resume .section-heading .eyebrow {
   color: var(--yellow);
 }
@@ -228,4 +232,10 @@
 
 :root[data-theme="dark"] .resume-cylinder {
   isolation: isolate;
+}
+
+@media (max-width: 740px) {
+  .resume.section {
+    padding-top: 3rem;
+  }
 }

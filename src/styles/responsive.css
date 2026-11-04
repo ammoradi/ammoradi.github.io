@@ -372,10 +372,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1.25rem;
   }
-  .resume-card-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
   .resume-public-note {
     margin-right: 0;
     margin-left: 0;

@@ -12,7 +12,7 @@ export function ResumeCylinder() {
     <div className="resume-cylinder">
       <div className="cylinder-intro">
         <span className="cylinder-edition">A résumé, inscribed.</span>
-        <p>Inspired by the Cyrus Cylinder. A different way to unroll my story.</p>
+        <p>Inspired by the <a href="https://en.wikipedia.org/wiki/Cyrus_Cylinder" target="_blank" rel="noreferrer">Cyrus Cylinder</a>. A different way to unroll my story.</p>
       </div>
       <div
         ref={surfaceRef}

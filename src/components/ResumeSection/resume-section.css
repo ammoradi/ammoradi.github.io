@@ -29,7 +29,8 @@
   }
 }
 
-.resume-public-note a {
+.resume-public-note a,
+.cylinder-intro a {
   color: var(--page-text);
   font-weight: 500;
   text-decoration: underline;
@@ -40,39 +41,50 @@
 
 .resume-card {
   --resume-corner-radius: 0.3rem;
-  max-width: 72rem;
-  margin-inline: auto;
-  border-radius: var(--resume-corner-radius);
-  box-shadow:
-    0 0 0 0.4rem var(--page-bg),
-    0 0 0 0.45rem var(--page-line),
-    0 1.4rem 4rem rgba(5, 31, 33, 0.12);
 }
 
-.resume-card-header {
+.resume-toolbar {
   display: flex;
-  background: var(--section-background);
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.2rem 1.4rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--page-line);
 }
 
-.resume-card-subtitle {
-  color: var(--page-text);
-  font-size: 1rem;
-}
-
-.resume-card-subtitle small {
+.resume-updated {
   display: block;
+  margin-top: 0.75rem;
   color: var(--muted);
 }
 
 .resume-tabs {
   display: flex;
-  background: var(--section-background);
-  gap: 0.5rem;
-  padding: 0.3rem 1.4rem 1.2rem;
+  padding: 0;
+  gap: 0;
+}
+
+.resume-panels {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 741px) {
+  .resume-panels {
+    display: grid;
+  }
+
+  .resume-panels > [role="tabpanel"] {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+
+  /* Reserve the larger view's space so changing tabs cannot shift the page. */
+  .resume-panels > [role="tabpanel"][hidden] {
+    display: block;
+    visibility: hidden;
+  }
 }
 
 .resume-tabs button {
@@ -82,10 +94,14 @@
   gap: 0.5rem;
   min-height: 2.8rem;
   padding: 0.65rem 1.15rem;
-  border-radius: 999px;
+  border-radius: 0;
   font-size: 0.8rem;
   cursor: pointer;
 }
+
+.resume-tabs button:first-child { border-radius: 999px 0 0 999px; }
+.resume-tabs button:last-child { margin-left: -1px; border-radius: 0 999px 999px 0; }
+.resume-tabs button:focus-visible { z-index: 1; }
 
 .resume-tab-label {
   display: inline-grid;
@@ -101,14 +117,16 @@
 }
 
 .resume-tabs button[aria-selected="true"] {
+  z-index: 1;
   font-weight: 700;
   --button-bg: color-mix(in srgb, var(--secondary) 12%, var(--page-surface));
   --button-text: var(--page-text);
   --button-hover-bg: color-mix(in srgb, var(--secondary) 18%, var(--page-surface));
 }
 
-.resume-tabs button[aria-selected="true"]::after {
-  border-width: 2px;
+.resume-tabs button[aria-selected="true"]::after,
+.resume-tabs button[aria-selected="true"]:hover:not(:disabled)::after {
+  border-width: 3px;
 }
 
 :root[data-theme="dark"] .resume-tabs button[aria-selected="true"] {
@@ -118,15 +136,10 @@
 }
 
 @media (max-width: 740px) {
-  .resume-tabs { padding-inline: 0.75rem; }
+  .resume-tabs { flex: 1; }
   .resume-tabs button { flex: 1; padding-inline: 0.5rem; }
 }
 
-@media (min-width: 741px) {
-  .resume-card-subtitle small {
-    margin-top: 0.4rem;
-  }
-}
 
 .button {
   display: inline-flex;
@@ -151,7 +164,15 @@
   background-color: var(--page-text);
 }
 
+.resume-pdf-intro {
+  padding-top: 2.3rem;
+}
+
 .resume-preview-scroll {
+  margin-top: 2.3rem;
+  margin-inline: auto;
+  /* Match the cylinder body: 86% of its canvas after the side padding. */
+  width: calc((100% - 2rem) * 0.86);
   height: min(68svh, 46rem);
   overflow: auto;
   overscroll-behavior: contain;
@@ -159,6 +180,12 @@
   border: 1px solid var(--gold);
   border-radius: var(--resume-corner-radius);
   background: #fff;
+}
+
+@media (max-width: 740px) {
+  .resume-preview-scroll {
+    width: calc((100% - 1rem) * 0.86);
+  }
 }
 
 :root[data-theme="dark"] .resume-preview-scroll {
@@ -179,10 +206,6 @@
   filter: url("#resume-accent");
 }
 
-.cylinder-surface canvas {
-  filter: url("#resume-cylinder-light");
-}
-
 .resume-preview-scroll img {
   mix-blend-mode: multiply;
 }
@@ -190,10 +213,6 @@
 :root[data-theme="dark"] .resume-preview-scroll img {
   filter: invert(1) url("#resume-accent-dark");
   mix-blend-mode: screen;
-}
-
-:root[data-theme="dark"] .cylinder-surface canvas {
-  filter: invert(1) url("#resume-cylinder-dark");
 }
 
 :root[data-theme="dark"] .resume-cylinder {

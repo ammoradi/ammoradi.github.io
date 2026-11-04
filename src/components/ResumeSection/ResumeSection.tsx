@@ -22,7 +22,7 @@ export function ResumeSection() {
       <SectionHeading
         id="resume-title"
         eyebrow="Resume"
-        title="The full story, in one page."
+        title="The story so far."
       />
       <aside
         className="resume-public-note reveal"
@@ -35,24 +35,10 @@ export function ResumeSection() {
           To get in touch, please{" "}
           <a href="#contact">visit the Contact section</a>.
         </p>
+        <small className="resume-updated">Last updated <time dateTime={__RESUME_MODIFIED_AT__}>{resumeModifiedDate}</time></small>
       </aside>
       <article className="resume-card reveal" aria-label="Resume preview card">
-        <div className="resume-card-header">
-          <p className="resume-card-subtitle">
-            Public résumé · One story, two perspectives
-            <small>
-              (Last updated <time dateTime={__RESUME_MODIFIED_AT__}>{resumeModifiedDate}</time>)
-            </small>
-          </p>
-          <a
-            className="button resume-download"
-            href="/Amir_Mohammad_Moradi_Resume.pdf"
-            download
-          >
-            <Download size={17} strokeWidth={2.25} aria-hidden="true" />
-            Download PDF
-          </a>
-        </div>
+        <div className="resume-toolbar">
         <div className="resume-tabs" role="tablist" aria-label="Résumé view">
           {(["cylinder", "pdf"] as const).map((tab) => (
             <button
@@ -79,6 +65,15 @@ export function ResumeSection() {
               </span>
             </button>
           ))}
+        </div>
+          <a
+            className="button resume-download"
+            href="/Amir_Mohammad_Moradi_Resume.pdf"
+            download
+          >
+            <Download size={17} strokeWidth={2.25} aria-hidden="true" />
+            Download PDF
+          </a>
         </div>
           <svg width="0" height="0" aria-hidden="true" className="resume-color-filter">
             {["resume-accent", "resume-accent-dark", "resume-cylinder-light", "resume-cylinder-dark"].map((id) => (
@@ -109,10 +104,15 @@ export function ResumeSection() {
               </filter>
             ))}
           </svg>
+        <div className="resume-panels">
         <div role="tabpanel" id="resume-panel-cylinder" aria-labelledby="resume-tab-cylinder" hidden={view !== "cylinder"}>
           <ResumeCylinder />
         </div>
         <div role="tabpanel" id="resume-panel-pdf" aria-labelledby="resume-tab-pdf" hidden={view !== "pdf"}>
+          <div className="cylinder-intro resume-pdf-intro">
+            <span className="cylinder-edition">A résumé, on paper.</span>
+            <p>The full story, in one page</p>
+          </div>
         <div
           className="resume-preview-scroll"
           tabIndex={0}
@@ -123,6 +123,7 @@ export function ResumeSection() {
             loading="lazy"
             alt="Preview of Amir Mohammad Moradi's resume"
           />
+        </div>
         </div>
         </div>
       </article>

@@ -1,11 +1,6 @@
 .resume-cylinder {
   overflow: hidden;
-  border-top: 1px solid var(--page-line);
-  /* background: radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--gold) 16%, var(--page-surface)), var(--page-surface) 72%); */
   padding: 2.3rem 1rem 1.6rem;
-}
-:root:not([data-theme="dark"]) .resume-cylinder {
-  background: var(--section-background);
 }
 .cylinder-intro { text-align: center; }
 .cylinder-edition { color: var(--yellow); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }

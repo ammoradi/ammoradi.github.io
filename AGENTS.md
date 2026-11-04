@@ -3,6 +3,7 @@
 ## Ticket workflow
 
 - For each ticket, create a separate Git worktree and branch from the latest `origin/master` unless the user explicitly asks otherwise.
+- Name ticket branches `issue-<number>-<short-description>`, for example `issue-10-sth-else`.
 - When creating a pull request, change the ticket label from `ready-for-agent` to `ready-for-human`.
 
 ## Architecture

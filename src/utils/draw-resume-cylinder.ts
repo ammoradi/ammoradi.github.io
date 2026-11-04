@@ -30,12 +30,13 @@ export function drawResumeCylinder(
   if (!surface) return;
   surface.scale(density, density);
   const step = 1 / density;
-  const addEdgeFade = (shading: CanvasGradient) => {
+  const isDark = document.documentElement.dataset.theme === "dark";
+  const addEdgeFade = (shading: CanvasGradient, vertical = false) => {
     shading.addColorStop(0, "#00000000");
-    shading.addColorStop(0.84, "#00000000");
-    shading.addColorStop(0.90, "#00000002");
-    shading.addColorStop(0.96, "#00000009");
-    shading.addColorStop(1, "#00000010");
+    shading.addColorStop(isDark ? (vertical ? 0.82 : 0.70) : 0.84, "#00000000");
+    shading.addColorStop(isDark ? (vertical ? 0.90 : 0.84) : 0.90, isDark ? "#00000008" : "#00000002");
+    shading.addColorStop(isDark ? (vertical ? 0.97 : 0.94) : 0.96, isDark ? "#0000001c" : "#00000009");
+    shading.addColorStop(1, isDark ? "#00000030" : "#00000010");
   };
   for (let row = -radius; row <= radius; row += step) {
     const normalized = Math.max(-0.999, Math.min(0.999, row / radius));
@@ -113,7 +114,7 @@ export function drawResumeCylinder(
   for (const direction of [-1, 1]) {
     const edge = center + direction * radius;
     const shading = surface.createLinearGradient(0, center, 0, edge);
-    addEdgeFade(shading);
+    addEdgeFade(shading, true);
     surface.fillStyle = shading;
     surface.fillRect(0, Math.min(center, edge), width, radius + step);
   }

@@ -125,13 +125,17 @@ describe("portfolio", () => {
     window.localStorage.removeItem("portfolio-theme");
     render(<App />);
 
-    const toggle = screen.getByRole("button", { name: "Switch to dark theme" });
-    fireEvent.click(toggle);
+    fireEvent.click(screen.getByRole("button", { name: "Color theme: System" }));
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Dark" }));
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     expect(window.localStorage.getItem("portfolio-theme")).toBe("dark");
     expect(
-      screen.getByRole("button", { name: "Switch to light theme" }),
-    ).toHaveAttribute("aria-pressed", "true");
+      screen.getByRole("button", { name: "Color theme: Dark" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(screen.getByRole("button", { name: "Color theme: Dark" }));
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "System" }));
+    expect(screen.getByRole("button", { name: "Color theme: System" })).toBeInTheDocument();
+    expect(window.localStorage.getItem("portfolio-theme")).toBeNull();
   });
 
   it("uses the browser color-scheme preference when no theme is saved", () => {
@@ -147,7 +151,7 @@ describe("portfolio", () => {
     render(<App />);
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     expect(
-      screen.getByRole("button", { name: "Switch to light theme" }),
+      screen.getByRole("button", { name: "Color theme: System" }),
     ).toBeInTheDocument();
     vi.unstubAllGlobals();
   });
@@ -198,7 +202,7 @@ describe("portfolio", () => {
       screen.getByRole("link", { name: "LinkedIn profile" }),
     ).toHaveAttribute("href", "https://www.linkedin.com/in/ammoradi/");
     expect(
-      screen.getByRole("button", { name: "Switch to dark theme" }),
+      screen.getByRole("button", { name: "Color theme: System" }),
     ).toBeInTheDocument();
 
     vi.unstubAllGlobals();

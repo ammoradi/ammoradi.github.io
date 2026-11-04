@@ -12,7 +12,7 @@ import { SkillsSection } from "../SkillsSection/SkillsSection";
 
 export default function App() {
   const isMobile = useMobileLayout();
-  const { theme, toggleTheme } = useTheme();
+  const { themePreference, changeTheme } = useTheme();
   const heroRef = useRef<HTMLElement>(null);
   const scroll = usePageScroll(heroRef, isMobile, impactStories.length);
   return (
@@ -23,8 +23,8 @@ export default function App() {
       <SiteHeader
         isMobile={isMobile}
         activeSection={scroll.activeSection}
-        theme={theme}
-        onToggleTheme={toggleTheme}
+        themePreference={themePreference}
+        onChangeTheme={changeTheme}
         pageProgressRef={scroll.pageProgressRef}
       />
       <main id="main-content">

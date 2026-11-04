@@ -2,22 +2,22 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState, type RefObject } from "react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { navigationLinks } from "../../utils/navigation-links";
-import type { SectionId, Theme } from "../../utils/portfolio-types";
+import type { SectionId, ThemePreference } from "../../utils/portfolio-types";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
 type Props = {
   isMobile: boolean;
   activeSection: SectionId;
-  theme: Theme;
-  onToggleTheme: () => void;
+  themePreference: ThemePreference;
+  onChangeTheme: (preference: ThemePreference) => void;
   pageProgressRef: RefObject<HTMLSpanElement | null>;
 };
 
 export function SiteHeader({
   isMobile,
   activeSection,
-  theme,
-  onToggleTheme,
+  themePreference,
+  onChangeTheme,
   pageProgressRef,
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -84,7 +84,7 @@ export function SiteHeader({
                 >
                   <FaGithub aria-hidden="true" /> GitHub
                 </a>
-                <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+                <ThemeToggle preference={themePreference} onChange={onChangeTheme} />
               </div>
             </div>
           )}
@@ -113,7 +113,7 @@ export function SiteHeader({
             >
               <FaGithub aria-hidden="true" />
             </a>
-            <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
+            <ThemeToggle preference={themePreference} onChange={onChangeTheme} compact />
           </div>
         </>
       )}

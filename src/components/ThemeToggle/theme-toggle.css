@@ -25,6 +25,20 @@
   padding-block: 0;
 }
 
+.theme-picker .theme-toggle[aria-expanded]:active {
+  translate: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .theme-picker .theme-toggle[aria-expanded="true"] {
+    animation: theme-toggle-press 220ms ease;
+  }
+}
+
+@keyframes theme-toggle-press {
+  50% { translate: 0 2px; }
+}
+
 .theme-toggle svg {
   flex-shrink: 0;
 }

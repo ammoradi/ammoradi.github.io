@@ -31,7 +31,7 @@
 
 .contact-action > p {
   max-width: 42rem;
-  color: var(--page-muted);
+  color: var(--page-text);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   line-height: 1.6;
 }

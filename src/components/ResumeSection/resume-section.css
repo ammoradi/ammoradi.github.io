@@ -13,7 +13,7 @@
 
 .resume-public-note > p {
   max-width: 54rem;
-  color: var(--muted);
+  color: var(--page-text);
   font-size: clamp(0.95rem, 1.4vw, 1.16rem);
   line-height: 1.65;
 }

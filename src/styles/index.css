@@ -21,7 +21,7 @@
   --button-hover-bg: #1c4448;
 }
 
-:root:not([data-theme="dark"]) a {
+:root:not([data-theme="dark"]) a:not(.button, .site-header a, .hero a, footer a) {
   color: #51442d !important;
   border-bottom-color: var(--accent) !important;
   text-decoration-color: var(--accent) !important;

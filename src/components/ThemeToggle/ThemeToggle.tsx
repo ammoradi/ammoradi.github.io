@@ -19,9 +19,24 @@ export function ThemeToggle({ preference, onChange, compact = false }: ThemeTogg
   const [open, setOpen] = useState(false);
   const picker = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+  const openAtPointerDown = useRef<boolean | null>(null);
   const menuId = useId();
   const selected = themes.find((theme) => theme.value === preference)!;
   const Icon = selected.icon;
+
+  useEffect(() => {
+    const clearOutsidePress = (event: PointerEvent) => {
+      if (event.type === "pointercancel" || !trigger.current?.contains(event.target as Node)) {
+        openAtPointerDown.current = null;
+      }
+    };
+    document.addEventListener("pointerup", clearOutsidePress);
+    document.addEventListener("pointercancel", clearOutsidePress);
+    return () => {
+      document.removeEventListener("pointerup", clearOutsidePress);
+      document.removeEventListener("pointercancel", clearOutsidePress);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -56,7 +71,12 @@ export function ThemeToggle({ preference, onChange, compact = false }: ThemeTogg
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        onClick={() => setOpen(!open)}
+        onPointerDown={(event) => { if (event.button === 0) openAtPointerDown.current = open; }}
+        onClick={(event) => {
+          const previous = event.detail === 0 ? null : openAtPointerDown.current;
+          openAtPointerDown.current = null;
+          setOpen((wasOpen) => !(previous ?? wasOpen));
+        }}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             event.preventDefault();

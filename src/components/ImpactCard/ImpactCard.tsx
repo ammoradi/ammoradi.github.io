@@ -7,17 +7,20 @@ export function ImpactCard({
   story,
   index,
   mobile = false,
+  active = true,
 }: {
   story: ImpactStory;
   index: number;
   mobile?: boolean;
+  active?: boolean;
 }) {
   const Heading = mobile ? "h2" : "h1";
   const [playbackSlot, setPlaybackSlot] = useState<HTMLDivElement | null>(null);
   return (
     <article
       className={`impact-focus-card${mobile ? " mobile-impact-card" : ""}`}
-      aria-live={mobile ? undefined : "polite"}
+      inert={!active}
+      aria-hidden={active ? undefined : true}
     >
       <div className="impact-card-topline">
         <div className="impact-card-labels">
@@ -33,7 +36,9 @@ export function ImpactCard({
         )}
       </div>
       <div className="impact-story-copy">
-        <Heading id={mobile ? undefined : "hero-title"}>{story.title}</Heading>
+        <Heading id={!mobile && active ? "hero-title" : undefined}>
+          {story.title}
+        </Heading>
         <dl className="impact-metrics impact-metrics-compact">
           {story.metrics.map((metric) => (
             <div key={metric.label}>
@@ -55,7 +60,12 @@ export function ImpactCard({
         )}
       </div>
       <div className="impact-story-side">
-        <ImpactGallery story={story} emphasizeControl={index === 0} playbackSlot={playbackSlot} />
+        <ImpactGallery
+          story={story}
+          emphasizeControl={index === 0}
+          playbackSlot={playbackSlot}
+          active={active}
+        />
       </div>
       {mobile && <div className="mobile-impact-playback" ref={setPlaybackSlot} />}
     </article>

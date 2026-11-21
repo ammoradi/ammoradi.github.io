@@ -8,12 +8,14 @@ type ImpactGalleryProps = {
   story: ImpactStory;
   emphasizeControl?: boolean;
   playbackSlot?: HTMLDivElement | null;
+  active: boolean;
 };
 
 export function ImpactGallery({
   story,
   emphasizeControl = false,
   playbackSlot,
+  active,
 }: ImpactGalleryProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [playing, setPlaying] = useState(getInitialGalleryPlayback);
@@ -22,13 +24,17 @@ export function ImpactGallery({
   const imageCount = story.images?.length ?? 0;
 
   useEffect(() => {
+    if (!active) {
+      setHovered(false);
+      return;
+    }
     if (imageCount < 2 || !playing || hovered) return;
     const interval = window.setInterval(
       () => setActiveImage((current) => (current + 1) % imageCount),
       4600,
     );
     return () => window.clearInterval(interval);
-  }, [hovered, imageCount, playing]);
+  }, [active, hovered, imageCount, playing]);
 
   useEffect(() => {
     if (!emphasizeControl) return;

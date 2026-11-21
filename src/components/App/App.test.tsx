@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import App from "./App";
 
@@ -14,9 +14,11 @@ describe("portfolio", () => {
     expect(
       screen.queryByRole("button", { name: /Show Bluefors impact/i }),
     ).not.toBeInTheDocument();
-    expect(screen.getByText("7")).toBeInTheDocument();
-    expect(screen.getByText("10k+")).toBeInTheDocument();
-    expect(screen.getByText("2k+")).toBeInTheDocument();
+    const impact = within(screen.getByRole("region", { name: "Impact stories" }));
+    const activeCard = within(impact.getByRole("article"));
+    expect(activeCard.getByText("7")).toBeInTheDocument();
+    expect(activeCard.getByText("10k+")).toBeInTheDocument();
+    expect(activeCard.getByText("2k+")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /View Bluefors control software/i }),
     ).toHaveAttribute(
@@ -62,7 +64,11 @@ describe("portfolio", () => {
     expect(
       screen.getByRole("link", { name: /^Visit AlphaSense$/i }),
     ).toHaveAttribute("href", "https://www.alpha-sense.com/");
-    expect(screen.getAllByRole("img", { name: /AlphaSense/i })).toHaveLength(3);
+    const alphaSenseImages = screen.getAllByRole("img", { name: /AlphaSense/i });
+    expect(alphaSenseImages).toHaveLength(3);
+    fireEvent.click(
+      screen.getByRole("button", { name: "Pause automatic screenshot rotation" }),
+    );
     expect(
       screen.getAllByText("© AlphaSense / Product imagery: AlphaSense"),
     ).toHaveLength(3);
@@ -89,6 +95,22 @@ describe("portfolio", () => {
     expect(
       screen.getAllByRole("link", { name: /^Visit Bookapo:/i }),
     ).toHaveLength(2);
+    expect(
+      screen.queryByRole("link", { name: /^Visit AlphaSense$/i }),
+    ).not.toBeInTheDocument();
+    expect(alphaSenseImages[0].closest("article")).toHaveAttribute("inert");
+
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 1000,
+    });
+    fireEvent.scroll(window);
+    expect(screen.getAllByRole("img", { name: /AlphaSense/i })[0]).toBe(
+      alphaSenseImages[0],
+    );
+    expect(
+      screen.getByRole("button", { name: "Play automatic screenshot rotation" }),
+    ).toBeInTheDocument();
   });
 
   it("provides section navigation alongside LinkedIn, GitHub, and resume", () => {

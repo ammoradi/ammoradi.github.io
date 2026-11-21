@@ -60,12 +60,15 @@ export function ImpactSection({
           aria-label="Selected impact"
         >
           <HeroIdentity />
-          <div className="impact-stage">
-            <ImpactCard
-              story={impactStories[activeImpact]}
-              index={activeImpact}
-              key={impactStories[activeImpact].company}
-            />
+          <div className="impact-stage" aria-live="polite">
+            {impactStories.map((story, index) => (
+              <ImpactCard
+                story={story}
+                index={index}
+                active={index === activeImpact}
+                key={story.company}
+              />
+            ))}
           </div>
           <button
             className="scroll-cue"

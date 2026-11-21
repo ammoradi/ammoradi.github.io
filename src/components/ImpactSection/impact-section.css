@@ -72,6 +72,15 @@
   overflow: visible;
   color: var(--page-text);
   background: transparent;
+}
+
+.impact-stage > .impact-focus-card[aria-hidden="true"] {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.impact-stage > .impact-focus-card:not([aria-hidden]) {
   animation: impact-reveal 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 

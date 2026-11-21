@@ -78,12 +78,10 @@
 @keyframes impact-reveal {
   from {
     opacity: 0.15;
-    filter: blur(8px);
     transform: translateY(2rem) scale(0.985);
   }
   to {
     opacity: 1;
-    filter: blur(0);
     transform: translateY(0) scale(1);
   }
 }

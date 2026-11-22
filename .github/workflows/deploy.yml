@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vitest:
-    name: Vitest
+  unit-test:
+    name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -89,7 +89,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    needs: [build, vitest]
+    needs: [build, unit-test]
     runs-on: ubuntu-latest
     permissions:
       pages: write

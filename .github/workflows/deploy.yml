@@ -2,6 +2,7 @@ name: Validate and deploy portfolio
 
 on:
   push:
+    branches: [master]
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -14,7 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  unit-test:
+    name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -29,8 +31,48 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      - name: Publish coverage summary
+        if: ${{ !cancelled() && hashFiles('coverage/coverage-summary.json') != '' }}
+        continue-on-error: true
+        run: node scripts/print-coverage-summary.js >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload HTML coverage report
+        if: ${{ !cancelled() && hashFiles('coverage/index.html') != '' }}
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: vitest-coverage-${{ github.run_attempt }}
+          path: coverage/
+
+  coverage-comment:
+    name: Unit Test Coverage
+    if: >-
+      !cancelled() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.id == github.event.repository.id
+    needs: unit-test
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/coverage-comment.yml
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build portfolio
         run: npm run build
@@ -47,7 +89,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    needs: build
+    needs: [build, unit-test]
     runs-on: ubuntu-latest
     permissions:
       pages: write

@@ -1,0 +1,39 @@
+name: Report PR coverage
+
+on:
+  workflow_call:
+  workflow_run:
+    workflows: [Validate and deploy portfolio]
+    types: [completed]
+
+jobs:
+  comment:
+    name: PR comment
+    # Publish from the trusted base workflow when the test run has a read-only token.
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event.workflow_run.event == 'pull_request' &&
+       (github.event.workflow_run.head_repository.id != github.event.repository.id ||
+        github.event.workflow_run.actor.login == 'dependabot[bot]') &&
+       github.event.workflow_run.conclusion != 'cancelled')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: coverage-${{ github.event.pull_request.head.repo.id || github.event.workflow_run.head_repository.id }}-${{ github.event.pull_request.head.ref || github.event.workflow_run.head_branch }}
+      queue: max
+    steps:
+      - name: Check out coverage scripts
+        uses: actions/checkout@v6
+        continue-on-error: true
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Update coverage comment
+        uses: actions/github-script@v9
+        continue-on-error: true
+        with:
+          script: await require('./scripts/comment-pr-coverage.js').default({ github, context, core })

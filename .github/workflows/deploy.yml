@@ -1,4 +1,4 @@
-name: Deploy
+name: CD
 
 on:
   push:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate
+    name: CI
     # The reusable workflow also declares the PR-only coverage comment job.
     permissions:
       actions: read

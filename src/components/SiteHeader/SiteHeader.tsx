@@ -96,7 +96,7 @@ export function SiteHeader({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <FaGithub aria-hidden="true" /> GitHub
+                  <FaGithub aria-hidden="true" /> Github
                 </a>
                 <ThemeToggle preference={themePreference} onChange={onChangeTheme} />
               </div>

@@ -91,11 +91,12 @@ export function SiteHeader({
                 aria-label="Social links and appearance"
               >
                 <a
+                  className="mobile-menu-github"
                   href="https://github.com/ammoradi"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <FaGithub aria-hidden="true" /> GitHub
+                  <FaGithub aria-hidden="true" /> Github
                 </a>
                 <ThemeToggle preference={themePreference} onChange={onChangeTheme} />
               </div>

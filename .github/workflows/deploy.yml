@@ -14,7 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  vitest:
+    name: Vitest
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -29,8 +30,47 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      - name: Publish coverage summary
+        if: ${{ !cancelled() && hashFiles('coverage/coverage-summary.json') != '' }}
+        run: |
+          node --input-type=module <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          import { readFileSync } from 'node:fs'
+
+          const { total } = JSON.parse(readFileSync('coverage/coverage-summary.json', 'utf8'))
+          console.log('## Vitest coverage\n\n| Metric | Covered | Total | Coverage |\n| --- | ---: | ---: | ---: |')
+          for (const metric of ['lines', 'branches', 'functions', 'statements']) {
+            const { covered, total: count, pct } = total[metric]
+            console.log(`| ${metric} | ${covered} | ${count} | ${pct}% |`)
+          }
+          NODE
+
+      - name: Upload HTML coverage report
+        if: ${{ !cancelled() && hashFiles('coverage/index.html') != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: vitest-coverage
+          path: |
+            coverage/
+            !coverage/coverage-summary.json
+          overwrite: true
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build portfolio
         run: npm run build
@@ -47,7 +87,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    needs: build
+    needs: [build, vitest]
     runs-on: ubuntu-latest
     permissions:
       pages: write

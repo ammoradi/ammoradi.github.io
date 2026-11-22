@@ -3,7 +3,7 @@ name: Report PR coverage
 on:
   workflow_call:
   workflow_run:
-    workflows: [Validate and deploy portfolio]
+    workflows: [Portfolio]
     types: [completed]
 
 jobs:

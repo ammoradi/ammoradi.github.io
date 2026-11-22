@@ -91,6 +91,7 @@ export function SiteHeader({
                 aria-label="Social links and appearance"
               >
                 <a
+                  className="mobile-menu-github"
                   href="https://github.com/ammoradi"
                   target="_blank"
                   rel="noreferrer"

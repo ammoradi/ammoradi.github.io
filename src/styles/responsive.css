@@ -160,6 +160,7 @@
     border-radius: 999px;
     color: var(--page-text);
     background: var(--page-surface);
+    font-size: 0.58rem;
     font-weight: 800;
     text-transform: uppercase;
   }

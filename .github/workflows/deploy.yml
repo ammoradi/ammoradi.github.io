@@ -53,12 +53,13 @@ jobs:
         continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: vitest-coverage
+          name: vitest-coverage-${{ github.run_attempt }}
           path: coverage/
-          overwrite: true
 
   coverage-comment:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.repository.id }}
+    if: >-
+      !cancelled() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.id == github.event.repository.id
     needs: unit-test
     permissions:
       actions: read

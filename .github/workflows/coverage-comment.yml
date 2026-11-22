@@ -8,11 +8,12 @@ on:
 
 jobs:
   comment:
-    # Fork workflows have read-only tokens, so publish from the trusted base workflow.
+    # Publish from the trusted base workflow when the test run has a read-only token.
     if: >-
       github.event_name == 'pull_request' ||
       (github.event.workflow_run.event == 'pull_request' &&
-       github.event.workflow_run.head_repository.id != github.event.repository.id &&
+       (github.event.workflow_run.head_repository.id != github.event.repository.id ||
+        github.event.workflow_run.actor.login == 'dependabot[bot]') &&
        github.event.workflow_run.conclusion != 'cancelled')
     runs-on: ubuntu-latest
     permissions:
@@ -24,6 +25,7 @@ jobs:
     steps:
       - name: Update coverage comment
         uses: actions/github-script@v9
+        continue-on-error: true
         with:
           script: |
             const { execFileSync } = require('node:child_process')
@@ -51,7 +53,7 @@ jobs:
             const repositoryUrl = `${context.serverUrl}/${repo.owner}/${repo.repo}`
             const runUrl = `${repositoryUrl}/actions/runs/${runId}`
             const { data } = await github.rest.actions.listWorkflowRunArtifacts({
-              ...repo, run_id: runId, name: 'vitest-coverage',
+              ...repo, run_id: runId, name: `vitest-coverage-${attempt}`,
             })
             const artifact = data.artifacts.find(item => !item.expired)
             let report = 'Coverage is unavailable for this run.'

@@ -1,0 +1,6 @@
+{
+  "github-actions": {
+    // The coverage workflow loads this file from an inline github-script step.
+    "entry": ["scripts/comment-pr-coverage.js"]
+  }
+}

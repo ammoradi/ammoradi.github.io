@@ -21,7 +21,7 @@ jobs:
       pull-requests: write
     concurrency:
       group: coverage-${{ github.event.pull_request.head.repo.id || github.event.workflow_run.head_repository.id }}-${{ github.event.pull_request.head.ref || github.event.workflow_run.head_branch }}
-      cancel-in-progress: false
+      queue: max
     steps:
       - name: Update coverage comment
         uses: actions/github-script@v9

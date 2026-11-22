@@ -37,17 +37,7 @@ jobs:
       - name: Publish coverage summary
         if: ${{ !cancelled() && hashFiles('coverage/coverage-summary.json') != '' }}
         continue-on-error: true
-        run: |
-          node --input-type=module <<'NODE' >> "$GITHUB_STEP_SUMMARY"
-          import { readFileSync } from 'node:fs'
-
-          const { total } = JSON.parse(readFileSync('coverage/coverage-summary.json', 'utf8'))
-          console.log('## Vitest coverage\n\n| Metric | Covered | Total | Coverage |\n| --- | ---: | ---: | ---: |')
-          for (const metric of ['lines', 'branches', 'functions', 'statements']) {
-            const { covered, total: count, pct } = total[metric]
-            console.log(`| ${metric} | ${covered} | ${count} | ${pct}% |`)
-          }
-          NODE
+        run: node scripts/print-coverage-summary.js >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload HTML coverage report
         if: ${{ !cancelled() && hashFiles('coverage/index.html') != '' }}
@@ -65,6 +55,7 @@ jobs:
     needs: unit-test
     permissions:
       actions: read
+      contents: read
       pull-requests: write
     uses: ./.github/workflows/coverage-comment.yml
 

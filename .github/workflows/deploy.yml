@@ -20,7 +20,7 @@ jobs:
       actions: read
       contents: read
       pull-requests: write
-    uses: ./.github/workflows/validate.yml
+    uses: ./.github/workflows/ci.yml
 
   deploy:
     if: github.ref == 'refs/heads/master'

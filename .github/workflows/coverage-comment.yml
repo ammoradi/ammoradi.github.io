@@ -1,0 +1,101 @@
+name: Report PR coverage
+
+on:
+  workflow_call:
+  workflow_run:
+    workflows: [Validate and deploy portfolio]
+    types: [completed]
+
+jobs:
+  comment:
+    # Fork workflows have read-only tokens, so publish from the trusted base workflow.
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event.workflow_run.event == 'pull_request' &&
+       github.event.workflow_run.head_repository.id != github.event.repository.id &&
+       github.event.workflow_run.conclusion != 'cancelled')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    concurrency:
+      group: coverage-${{ github.event.pull_request.head.repo.id || github.event.workflow_run.head_repository.id }}-${{ github.event.pull_request.head.ref || github.event.workflow_run.head_branch }}
+      cancel-in-progress: false
+    steps:
+      - name: Update coverage comment
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { execFileSync } = require('node:child_process')
+            const { writeFileSync } = require('node:fs')
+            const { join } = require('node:path')
+            const repo = context.repo
+            const run = context.payload.workflow_run
+            const headSha = run?.head_sha ?? context.payload.pull_request.head.sha
+            const runId = run?.id ?? context.runId
+            const runNumber = run?.run_number ?? Number(process.env.GITHUB_RUN_NUMBER)
+            const attempt = run?.run_attempt ?? Number(process.env.GITHUB_RUN_ATTEMPT)
+            let number = context.payload.pull_request?.number
+
+            if (run) {
+              const { data: pulls } = await github.rest.pulls.list({
+                ...repo, state: 'open', base: 'master',
+                head: `${run.head_repository.owner.login}:${run.head_branch}`,
+              })
+              const matching = pulls.filter(pr =>
+                pr.head.repo?.id === run.head_repository.id && pr.head.sha === headSha)
+              if (matching.length !== 1) return
+              number = matching[0].number
+            }
+
+            const repositoryUrl = `${context.serverUrl}/${repo.owner}/${repo.repo}`
+            const runUrl = `${repositoryUrl}/actions/runs/${runId}`
+            const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+              ...repo, run_id: runId, name: 'vitest-coverage',
+            })
+            const artifact = data.artifacts.find(item => !item.expired)
+            let report = 'Coverage is unavailable for this run.'
+            if (artifact && artifact.size_in_bytes <= 10 * 1024 * 1024) {
+              // Read only the JSON entry from the untrusted archive. Render numeric totals only.
+              try {
+                const { data: archive } = await github.rest.actions.downloadArtifact({
+                  ...repo, artifact_id: artifact.id, archive_format: 'zip',
+                })
+                const zip = join(process.env.RUNNER_TEMP, 'portfolio-coverage.zip')
+                writeFileSync(zip, Buffer.from(archive))
+                const { total } = JSON.parse(execFileSync('unzip', ['-p', zip, 'coverage-summary.json'], {
+                  encoding: 'utf8', maxBuffer: 1024 * 1024,
+                }))
+                const rows = ['lines', 'branches', 'functions', 'statements'].map(metric => {
+                  const { covered, total: count, pct } = total[metric]
+                  if (![covered, count, pct].every(Number.isFinite)) throw Error('Invalid coverage totals')
+                  return `| ${metric} | ${covered} | ${count} | ${pct}% |`
+                })
+                report = ['| Metric | Covered | Total | Coverage |', '| --- | ---: | ---: | ---: |', ...rows].join('\n')
+                report += `\n\n[Download the HTML report](${runUrl}/artifacts/${artifact.id})`
+              } catch (error) {
+                core.warning(`Could not read coverage totals: ${error.name}`)
+              }
+            }
+
+            const { data: pr } = await github.rest.pulls.get({ ...repo, pull_number: number })
+            if (pr.state !== 'open' || pr.head.sha !== headSha) return
+
+            const thread = { ...repo, issue_number: number }
+            const marker = '<!-- portfolio-coverage:'
+            const comments = await github.paginate(github.rest.issues.listComments, { ...thread, per_page: 100 })
+            const previous = comments.find(comment =>
+              comment.user?.login === 'github-actions[bot]' && comment.body?.startsWith(marker))
+            const version = previous?.body.match(/^<!-- portfolio-coverage:(\d+):(\d+) -->/)
+            if (version && (Number(version[1]) > runNumber ||
+                (Number(version[1]) === runNumber && Number(version[2]) > attempt))) return
+
+            const body = `${marker}${runNumber}:${attempt} -->\n### Vitest coverage\n\n` +
+              `Unit, component, and integration tests · [Run for \`${headSha.slice(0, 7)}\`](${runUrl})\n\n${report}`
+            if (previous) {
+              if (previous.body !== body) {
+                await github.rest.issues.updateComment({ ...repo, comment_id: previous.id, body })
+              }
+            } else {
+              await github.rest.issues.createComment({ ...thread, body })
+            }

@@ -8,6 +8,7 @@ on:
 
 jobs:
   comment:
+    name: PR comment
     # Publish from the trusted base workflow when the test run has a read-only token.
     if: >-
       github.event_name == 'pull_request' ||

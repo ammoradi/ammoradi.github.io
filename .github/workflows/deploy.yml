@@ -58,6 +58,7 @@ jobs:
           path: coverage/
 
   coverage-comment:
+    name: Coverage
     if: >-
       !cancelled() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' &&
       github.event.pull_request.head.repo.id == github.event.repository.id

@@ -28,14 +28,7 @@ Open the local URL printed by Vite.
 | `npm run build` | Type-checks the project and writes the production site to `dist/`. |
 | `npm run preview` | Serves the production build locally after `npm run build`. |
 
-## Update portfolio content
-
-| Content | Where to edit |
-| --- | --- |
-| Project case studies and gallery entries | [src/utils/impact-stories.ts](src/utils/impact-stories.ts). Put new screenshots in [public/](public/) and update their paths and alt text in the story data. |
-| Technical and soft skills | [src/utils/skill-lanes.ts](src/utils/skill-lanes.ts) |
-| Hero and contact information | [HeroIdentity.tsx](src/components/HeroIdentity/HeroIdentity.tsx) and [ContactSection.tsx](src/components/ContactSection/ContactSection.tsx) |
-| Page title, description, and social sharing metadata | [index.html](index.html). The social preview image is [public/og.png](public/og.png). |
+## Update the résumé
 
 To update the résumé, replace [public/Amir_Mohammad_Moradi_Resume.pdf](public/Amir_Mohammad_Moradi_Resume.pdf) with the new one-page PDF under the same filename. Regenerate the image used by the résumé preview and interactive cylinder. This step requires Python 3 with `pypdfium2` and `Pillow` installed:
 
@@ -45,6 +38,6 @@ python3 scripts/render-resume-preview.py
 
 Commit the PDF and the regenerated [public/resume-preview.png](public/resume-preview.png) together.
 
-## Deploy
+## CI/CD
 
 [CI](.github/workflows/ci.yml) runs Knip, tests with coverage, and the production build on pull requests targeting `master`. After a merge, the push to `master` triggers [CD](.github/workflows/deploy.yml). CD runs the tests and build, uploads `dist/` as a Pages artifact, and deploys it to GitHub Pages. To redeploy manually, run the **CD** workflow from the repository’s **Actions** tab and select `master`.

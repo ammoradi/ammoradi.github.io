@@ -11,7 +11,7 @@ Use Node.js **22.22.2 or later in the 22.x series** and npm. CI uses Node.js 22,
 From the repository root:
 
 ```sh
-npm ci
+npm install
 npm run dev
 ```
 
